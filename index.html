@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Korean by Hanja</title>
+<meta name="description" content="Învață coreeana prin cele 214 hanja de bază — citire, sens și cuvinte reale.">
+<meta name="theme-color" content="#b3402c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<header class="kbh-header">
+  <div class="kbh-titleWrap">
+    <h1 class="kbh-title" id="pgTitle">Korean by Hanja</h1>
+    <p class="kbh-sub" id="pgSub">Învață coreeana prin cele 214 hanja de bază</p>
+  </div>
+  <div class="kbh-controls">
+    <button type="button" id="langBtn" class="ctrlBtn"></button>
+    <button type="button" id="darkBtn" class="ctrlBtn" title="Temă">◐</button>
+  </div>
+</header>
+
+<div class="kbh-badges">
+  <div class="badge ok" id="bCorrect"><span class="dot"></span><span>Corecte: 0</span></div>
+  <div class="badge" id="bTotal"><span class="dot"></span><span>Total: 0</span></div>
+  <div class="badge" id="bStreak"><span class="dot"></span><span>Streak: 0</span></div>
+  <div class="badge" id="bXP"><span class="dot"></span><span>⭐ 0 XP</span></div>
+  <div class="badge" id="bMastered"><span class="dot"></span><span>Stăpânite: 0/0</span></div>
+</div>
+
+<div class="kbh-barWrap">
+  <div class="kbh-barBg"><div class="kbh-barFill" id="barFill"></div></div>
+</div>
+
+<main class="kbh-main">
+  <div class="kbh-card">
+    <div class="typeLabel" id="typeLabel"></div>
+    <div class="promptWrap">
+      <div id="promptText"></div>
+      <div id="promptSub"></div>
+      <button type="button" id="speakBtn" class="hidden" title="Ascultă">▶</button>
+    </div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+    <button type="button" id="nextBtn"></button>
+  </div>
+</main>
+
+<footer class="kbh-footer">
+  <p id="footerNote">Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser</p>
+</footer>
+
+<script src="./app.js"></script>
+</body>
+</html>
