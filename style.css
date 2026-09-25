@@ -189,6 +189,20 @@ html, body {
   text-align: center;
 }
 
+#promptText .hl {
+  color: var(--seal);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+#promptHint {
+  font-size: 11.5px;
+  color: var(--ink3);
+  text-align: center;
+  font-weight: 700;
+}
+
 #speakBtn {
   margin-top: 4px;
   width: 38px; height: 38px;

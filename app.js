@@ -20,6 +20,35 @@ var Store = {
   }
 };
 
+/* Câteva hanja (年, 力, 金, 老) au două citiri valide în coreeană,
+   stocate ca "년 연" (regulă de sunet inițial / 두음법칙). Prima
+   listată e citirea principală, folosită pentru quiz și vorbire;
+   la evidențiere încercăm toate citirile, ca să găsim cea folosită
+   efectiv în cuvântul curent. */
+function readingList(item) {
+  return item.ko_reading.split(' ').filter(Boolean);
+}
+function primaryReading(item) {
+  return readingList(item)[0];
+}
+
+/* Evidențiază silaba din cuvânt care corespunde citirii acestui hanja —
+   nu presupunem NICIODATĂ care hanja e cealaltă silabă (multe silabe
+   coreene au 3-5 hanja omofone posibile în acest set; o presupunere
+   greșită ar preda o asociere hanja greșită). Evidențiem doar silaba
+   verificată, cea a hanja-ului curent. */
+function highlightSyllable(word, item) {
+  if (!word) return word;
+  var readings = readingList(item);
+  for (var i = 0; i < readings.length; i++) {
+    var syllable = readings[i];
+    if (word.indexOf(syllable) >= 0) {
+      return word.replace(syllable, '<span class="hl">' + syllable + '</span>');
+    }
+  }
+  return word;
+}
+
 function shuffle(arr) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {
@@ -112,6 +141,7 @@ var UI = {
     },
     correctMsg: 'Corect!', wrongMsg: 'Greșit',
     next: 'Următorul →',
+    hlHint: 'Silaba evidențiată = citirea acestui hanja în cuvânt',
     footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser'
   },
   en: {
@@ -126,6 +156,7 @@ var UI = {
     },
     correctMsg: 'Correct!', wrongMsg: 'Wrong',
     next: 'Next →',
+    hlHint: 'Highlighted syllable = this hanja’s reading in the word',
     footer: 'Standalone app · no account, no server · progress is saved locally in this browser'
   }
 };
@@ -141,6 +172,7 @@ var elBarFill  = document.getElementById('barFill');
 var elTypeLbl  = document.getElementById('typeLabel');
 var elPrompt   = document.getElementById('promptText');
 var elPromptSub= document.getElementById('promptSub');
+var elPromptHint = document.getElementById('promptHint');
 var elSpeakBtn = document.getElementById('speakBtn');
 var elAnswers  = document.getElementById('answers');
 var elFeedback = document.getElementById('feedback');
@@ -178,7 +210,7 @@ function boot() {
     elDarkBtn.textContent = isDark ? '◑' : '◐';
   });
   elSpeakBtn.addEventListener('click', function() {
-    if (current && current.item) speak(current.item.ko_reading || current.item.hanja);
+    if (current && current.item) speak(primaryReading(current.item) || current.item.hanja);
   });
   elNextBtn.addEventListener('click', function() {
     if (locked) nextQuestion();
@@ -267,9 +299,8 @@ function buildQuestion() {
     correctVal = meaningOf(item);
     options = distractorValues(di, meaningOf, 3).concat([correctVal]);
   } else if (type === 'hanja-reading') {
-    var readingOf = function(h) { return h.ko_reading; };
-    correctVal = readingOf(item);
-    options = distractorValues(di, readingOf, 3).concat([correctVal]);
+    correctVal = primaryReading(item);
+    options = distractorValues(di, primaryReading, 3).concat([correctVal]);
   } else if (type === 'word-hanja') {
     wordUsed = item.words[Math.floor(Math.random() * item.words.length)];
     correctVal = item.hanja;
@@ -305,15 +336,19 @@ function renderQuestion() {
 
   var isGlyphOption = (c.type === 'word-hanja' || c.type === 'meaning-hanja');
 
+  elPromptHint.classList.add('hidden');
+
   if (c.type === 'hanja-meaning' || c.type === 'hanja-reading') {
     elPrompt.textContent = c.item.hanja;
     elPrompt.classList.add('glyph');
     elPromptSub.textContent = '';
     elSpeakBtn.classList.toggle('hidden', c.type !== 'hanja-reading');
   } else if (c.type === 'word-hanja') {
-    elPrompt.textContent = c.wordUsed.ko;
+    elPrompt.innerHTML = highlightSyllable(c.wordUsed.ko, c.item);
     elPrompt.classList.remove('glyph');
     elPromptSub.textContent = c.wordUsed[lang] || c.wordUsed.ro;
+    elPromptHint.textContent = l.hlHint;
+    elPromptHint.classList.remove('hidden');
     elSpeakBtn.classList.remove('hidden');
   } else { // meaning-hanja
     elPrompt.textContent = c.item.meaning[lang] || c.item.meaning.ro;
@@ -357,7 +392,7 @@ function submitAnswer(chosen, btn) {
   elNextBtn.classList.add('show');
 
   if (isCorrect) {
-    var say = c.type === 'word-hanja' ? c.wordUsed.ko : c.item.ko_reading;
+    var say = c.type === 'word-hanja' ? c.wordUsed.ko : primaryReading(c.item);
     speak(say);
   }
 
