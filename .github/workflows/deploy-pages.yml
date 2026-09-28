@@ -23,6 +23,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Cache-bust local assets
+        run: |
+          V="${GITHUB_SHA::8}"
+          sed -i "s/style\\.css\"/style.css?v=$V\"/; s/app\\.js\"/app.js?v=$V\"/; s/hanja\\.json'/hanja.json?v=$V'/" index.html app.js
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload site
