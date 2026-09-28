@@ -168,6 +168,7 @@ var UI = {
     hlHint: 'Silaba evidențiată e cea din întrebare',
     tabLearn: 'Învață', tabPractice: 'Exersează',
     learnWords: 'Cuvinte care folosesc această silabă',
+    learnEtym: 'Etimologie (context, nu se testează)',
     footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser'
   },
   en: {
@@ -185,6 +186,7 @@ var UI = {
     hlHint: 'The highlighted syllable is the one being asked about',
     tabLearn: 'Learn', tabPractice: 'Practice',
     learnWords: 'Words that use this syllable',
+    learnEtym: 'Etymology (background, not tested)',
     footer: 'Standalone app · no account, no server · progress is saved locally in this browser'
   }
 };
@@ -223,6 +225,8 @@ var elLearnSpeak  = document.getElementById('learnSpeak');
 var elLearnMeaning= document.getElementById('learnMeaning');
 var elLearnWordsLabel = document.getElementById('learnWordsLabel');
 var elLearnWords  = document.getElementById('learnWords');
+var elLearnEtymLabel = document.getElementById('learnEtymLabel');
+var elLearnEtym   = document.getElementById('learnEtym');
 
 /* ── boot ─────────────────────────────────────────────────── */
 fetch('./data/hanja.json')
@@ -298,6 +302,7 @@ function renderStatic() {
   elTabLearn.textContent = l.tabLearn;
   elTabPractice.textContent = l.tabPractice;
   elLearnWordsLabel.textContent = l.learnWords;
+  elLearnEtymLabel.textContent = l.learnEtym;
 }
 
 /* ── mastery / progress ──────────────────────────────────── */
@@ -355,6 +360,8 @@ function renderLearn() {
         '<div class="lwSentenceTr">' + escapeHtml(w['sentence_' + lang] || w.sentence_ro) + '</div>' +
       '</div>';
   }).join('');
+
+  elLearnEtym.textContent = item.etymology[lang] || item.etymology.ro;
 }
 
 /* ── question queue — SRS-aware ──────────────────────────────
