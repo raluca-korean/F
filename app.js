@@ -616,21 +616,37 @@ function submitAnswer(key, btn) {
 
 /* ── puzzle mode — word builder ────────────────────────────────
    Pick a real example word for a (SRS-prioritized) hanja root,
-   break it into its Hangul syllable tiles, shuffle them, and have
-   the learner tap them back into the correct order. The root is
-   shown only as a small hint chip (syllable + hanja tag) — same
-   rule as everywhere else in the app: never a recognition target,
-   just disambiguation. No decoy tiles: with only the real
-   syllables in play, getting the *order* right is still the real
-   task (e.g. 수영 vs the meaningless 영수), so it stays a genuine
-   puzzle without risking a fabricated wrong word among the tiles. */
+   break it into its Hangul syllable tiles, mix in a few decoy
+   syllables pulled from other real words, shuffle, and have the
+   learner tap the CORRECT tiles back in the correct order — the
+   decoys stay unused in the bank. This is what makes a 2-syllable
+   word non-trivial too: with only its own 2 tiles, order is a
+   coin flip; mixed into ~6 tiles you first have to recognize which
+   ones belong. The root is still shown only as a small hint chip
+   (syllable + hanja tag) — never a recognition target, just
+   disambiguation. Decoys are real syllables from real words, so
+   nothing fabricated ever appears, even among the wrong choices. */
+function randomDecoySyllables(excludeWord, n) {
+  var pool = [];
+  DATA.forEach(function(e) {
+    e.words.forEach(function(w) {
+      if (w.ko !== excludeWord) {
+        w.ko.split('').forEach(function(ch) { pool.push(ch); });
+      }
+    });
+  });
+  return shuffle(pool).slice(0, n);
+}
+
 function buildPuzzleQuestion() {
   var di = pickPuzzleItem();
   var item = DATA[di];
   var word = item.words[Math.floor(Math.random() * item.words.length)];
-  var chars = word.ko.split('');
-  var tiles = chars.map(function(ch, i) { return { id: i, ch: ch }; });
-  return { di: di, item: item, word: word, tiles: shuffle(tiles), placed: [] };
+  var answerChars = word.ko.split('');
+  var decoyCount = answerChars.length <= 2 ? 4 : (answerChars.length === 3 ? 3 : 2);
+  var pool = answerChars.concat(randomDecoySyllables(word.ko, decoyCount));
+  var tiles = pool.map(function(ch, i) { return { id: i, ch: ch }; });
+  return { di: di, item: item, word: word, answerLen: answerChars.length, tiles: shuffle(tiles), placed: [] };
 }
 
 function nextPuzzle() {
@@ -652,12 +668,14 @@ function renderPuzzle() {
     '<span class="hcTag">' + escapeHtml(item.hanja) + '</span>';
   elPuzzlePrompt.textContent = c.word[lang] || c.word.ro;
 
-  elAnswerSlots.innerHTML = c.tiles.map(function(_, i) {
-    if (i >= c.placed.length) return '<div class="slot"></div>';
+  var slots = [];
+  for (var i = 0; i < c.answerLen; i++) {
+    if (i >= c.placed.length) { slots.push('<div class="slot"></div>'); continue; }
     var id = c.placed[i];
     var t = c.tiles.filter(function(x) { return x.id === id; })[0];
-    return '<div class="slot filled" data-id="' + t.id + '">' + escapeHtml(t.ch) + '</div>';
-  }).join('');
+    slots.push('<div class="slot filled" data-id="' + t.id + '">' + escapeHtml(t.ch) + '</div>');
+  }
+  elAnswerSlots.innerHTML = slots.join('');
 
   elTileBank.innerHTML = c.tiles.map(function(tile) {
     var used = c.placed.indexOf(tile.id) >= 0;
@@ -669,10 +687,10 @@ function renderPuzzle() {
 function placeTile(id) {
   if (puzzleLocked) return;
   var c = puzzleCurrent;
-  if (c.placed.indexOf(id) >= 0 || c.placed.length >= c.tiles.length) return;
+  if (c.placed.indexOf(id) >= 0 || c.placed.length >= c.answerLen) return;
   c.placed.push(id);
   renderPuzzle();
-  if (c.placed.length === c.tiles.length) checkPuzzle();
+  if (c.placed.length === c.answerLen) checkPuzzle();
 }
 
 function removeTile(id) {
@@ -691,6 +709,9 @@ function checkPuzzle() {
 
   Array.prototype.forEach.call(elAnswerSlots.children, function(slotEl) {
     slotEl.classList.add(isCorrect ? 'correct' : 'wrong');
+  });
+  Array.prototype.forEach.call(elTileBank.children, function(tileEl) {
+    tileEl.disabled = true;
   });
 
   srsData[c.di] = srsStep(srsData[c.di], isCorrect);

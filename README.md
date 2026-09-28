@@ -24,7 +24,7 @@ Trei moduri, ca niște tab-uri:
 - **Cuvânt → sens**: ce înseamnă silaba evidențiată dintr-un cuvânt coreean real
 - **Sens → cuvânt**: care e cuvântul coreean corect pentru un anumit sens
 
-**Puzzle** — formează cuvântul: pornind de la sensul unui cuvânt real, atingi silabele (amestecate) în ordinea corectă ca să-l reconstitui. Rădăcina hanja din care pornește cuvântul apare doar ca indiciu mic (silabă + etichetă hanja) — nu e niciodată dată de-a gata, doar ordinea contează. Fără piese-capcană: doar silabele reale ale cuvântului, amestecate.
+**Puzzle** — formează cuvântul: pornind de la sensul unui cuvânt real, atingi silabele corecte, în ordinea corectă, ca să-l reconstitui. Rădăcina hanja din care pornește cuvântul apare doar ca indiciu mic (silabă + etichetă hanja) — nu e niciodată dată de-a gata. Tava are mereu ~6 silabe (silabele cuvântului + „momeli" — silabe reale din alte cuvinte, care nu se folosesc), ca puzzle-ul să nu fie banal nici la un cuvânt de 2 silabe: trebuie mai întâi să recunoști care silabe aparțin cuvântului, apoi în ce ordine.
 
 ## Deploy
 
