@@ -1016,6 +1016,30 @@
         "sentence_en": "This is a temporary measure.",
         "ro": "temporar",
         "en": "temporary"
+      },
+      {
+        "ko": "시각",
+        "sentence": "정확한 시각을 알려주세요.",
+        "sentence_ro": "Vă rog spuneți-mi ora exactă.",
+        "sentence_en": "Please tell me the exact time.",
+        "ro": "momentul exact",
+        "en": "point in time"
+      },
+      {
+        "ko": "수시",
+        "sentence": "수시로 확인하세요.",
+        "sentence_ro": "Verificați frecvent.",
+        "sentence_en": "Check frequently.",
+        "ro": "frecvent, oricând",
+        "en": "frequently, at any time"
+      },
+      {
+        "ko": "즉시",
+        "sentence": "즉시 오세요.",
+        "sentence_ro": "Veniți imediat.",
+        "sentence_en": "Come immediately.",
+        "ro": "imediat",
+        "en": "immediately"
       }
     ]
   },
@@ -1074,6 +1098,30 @@
         "sentence_en": "I go to work on weekdays.",
         "ro": "zi lucrătoare",
         "en": "weekday"
+      },
+      {
+        "ko": "금일",
+        "sentence": "금일 휴업입니다.",
+        "sentence_ro": "Astăzi este închis.",
+        "sentence_en": "Closed today.",
+        "ro": "astăzi (formal)",
+        "en": "today (formal)"
+      },
+      {
+        "ko": "일기예보",
+        "sentence": "일기예보를 확인했어요.",
+        "sentence_ro": "Am verificat prognoza meteo.",
+        "sentence_en": "I checked the weather forecast.",
+        "ro": "prognoza meteo",
+        "en": "weather forecast"
+      },
+      {
+        "ko": "일과",
+        "sentence": "아침 일과를 시작해요.",
+        "sentence_ro": "Îmi încep rutina de dimineață.",
+        "sentence_en": "I start my morning routine.",
+        "ro": "rutina zilnică",
+        "en": "daily routine"
       }
     ]
   },
@@ -1132,6 +1180,30 @@
         "sentence_en": "I lived in Korea for three months.",
         "ro": "lună (unitate de timp)",
         "en": "month (counter)"
+      },
+      {
+        "ko": "월세",
+        "sentence": "월세를 냈어요.",
+        "sentence_ro": "Am plătit chiria lunară.",
+        "sentence_en": "I paid the monthly rent.",
+        "ro": "chirie lunară",
+        "en": "monthly rent"
+      },
+      {
+        "ko": "정월",
+        "sentence": "정월 초하루예요.",
+        "sentence_ro": "Este prima zi a anului nou.",
+        "sentence_en": "It's New Year's Day.",
+        "ro": "prima lună a anului",
+        "en": "first month of the year"
+      },
+      {
+        "ko": "만월",
+        "sentence": "오늘 밤은 만월이에요.",
+        "sentence_ro": "În seara asta este lună plină.",
+        "sentence_en": "Tonight is a full moon.",
+        "ro": "lună plină",
+        "en": "full moon"
       }
     ]
   },
@@ -1746,6 +1818,30 @@
         "sentence_en": "Korean grammar is difficult.",
         "ro": "gramatică",
         "en": "grammar"
+      },
+      {
+        "ko": "문명",
+        "sentence": "고대 문명을 연구해요.",
+        "sentence_ro": "Studiez civilizațiile antice.",
+        "sentence_en": "I study ancient civilizations.",
+        "ro": "civilizație",
+        "en": "civilization"
+      },
+      {
+        "ko": "작문",
+        "sentence": "작문 숙제가 있어요.",
+        "sentence_ro": "Am o temă de compunere.",
+        "sentence_en": "I have a writing assignment.",
+        "ro": "compunere",
+        "en": "composition, writing"
+      },
+      {
+        "ko": "문구",
+        "sentence": "문구점에서 펜을 샀어요.",
+        "sentence_ro": "Am cumpărat un pix de la papetărie.",
+        "sentence_en": "I bought a pen at the stationery store.",
+        "ro": "papetărie",
+        "en": "stationery"
       }
     ]
   },
@@ -1886,6 +1982,30 @@
         "sentence_en": "He is full of charm.",
         "ro": "farmec",
         "en": "charm"
+      },
+      {
+        "ko": "폭력",
+        "sentence": "폭력은 나빠요.",
+        "sentence_ro": "Violența este rea.",
+        "sentence_en": "Violence is bad.",
+        "ro": "violență",
+        "en": "violence"
+      },
+      {
+        "ko": "압력",
+        "sentence": "압력이 높아요.",
+        "sentence_ro": "Presiunea este mare.",
+        "sentence_en": "The pressure is high.",
+        "ro": "presiune",
+        "en": "pressure"
+      },
+      {
+        "ko": "협력",
+        "sentence": "서로 협력해요.",
+        "sentence_ro": "Cooperăm unii cu alții.",
+        "sentence_en": "We cooperate with each other.",
+        "ro": "cooperare",
+        "en": "cooperation"
       }
     ]
   },
@@ -1944,6 +2064,30 @@
         "sentence_en": "This place name has a deep history.",
         "ro": "nume de loc",
         "en": "place name"
+      },
+      {
+        "ko": "명단",
+        "sentence": "참가자 명단을 확인했어요.",
+        "sentence_ro": "Am verificat lista participanților.",
+        "sentence_en": "I checked the list of participants.",
+        "ro": "listă de nume",
+        "en": "name list, roster"
+      },
+      {
+        "ko": "익명",
+        "sentence": "익명으로 제보했어요.",
+        "sentence_ro": "Am raportat anonim.",
+        "sentence_en": "I reported anonymously.",
+        "ro": "anonimat",
+        "en": "anonymity"
+      },
+      {
+        "ko": "명작",
+        "sentence": "이 소설은 명작이에요.",
+        "sentence_ro": "Acest roman este o capodoperă.",
+        "sentence_en": "This novel is a masterpiece.",
+        "ro": "capodoperă",
+        "en": "masterpiece"
       }
     ]
   },
@@ -2002,6 +2146,30 @@
         "sentence_en": "The light bulb burned out.",
         "ro": "bec",
         "en": "light bulb"
+      },
+      {
+        "ko": "전지",
+        "sentence": "전지를 교체했어요.",
+        "sentence_ro": "Am schimbat bateria.",
+        "sentence_en": "I replaced the battery.",
+        "ro": "baterie",
+        "en": "battery"
+      },
+      {
+        "ko": "정전",
+        "sentence": "정전이 됐어요.",
+        "sentence_ro": "A fost o pană de curent.",
+        "sentence_en": "There was a power outage.",
+        "ro": "pană de curent",
+        "en": "power outage"
+      },
+      {
+        "ko": "가전제품",
+        "sentence": "가전제품을 샀어요.",
+        "sentence_ro": "Am cumpărat un aparat electrocasnic.",
+        "sentence_en": "I bought a home appliance.",
+        "ro": "aparat electrocasnic",
+        "en": "home appliance"
       }
     ]
   },
@@ -2142,6 +2310,30 @@
         "sentence_en": "The prince lives in the castle.",
         "ro": "prinț",
         "en": "prince"
+      },
+      {
+        "ko": "왕비",
+        "sentence": "왕비가 아름다워요.",
+        "sentence_ro": "Regina consoartă este frumoasă.",
+        "sentence_en": "The queen consort is beautiful.",
+        "ro": "regină consoartă",
+        "en": "queen consort"
+      },
+      {
+        "ko": "제왕",
+        "sentence": "제왕적 권력이에요.",
+        "sentence_ro": "Este o putere monarhică.",
+        "sentence_en": "It's imperial, monarchical power.",
+        "ro": "monarh",
+        "en": "emperor, monarch"
+      },
+      {
+        "ko": "왕관",
+        "sentence": "왕관을 썼어요.",
+        "sentence_ro": "A purtat coroana.",
+        "sentence_en": "He wore the crown.",
+        "ro": "coroană",
+        "en": "crown"
       }
     ]
   },
@@ -2364,6 +2556,30 @@
         "sentence_en": "There are swans on the lake.",
         "ro": "lebădă",
         "en": "swan"
+      },
+      {
+        "ko": "백사장",
+        "sentence": "백사장에서 놀았어요.",
+        "sentence_ro": "Ne-am jucat pe plaja cu nisip.",
+        "sentence_en": "We played on the sandy beach.",
+        "ro": "plajă cu nisip",
+        "en": "sandy beach"
+      },
+      {
+        "ko": "백지장",
+        "sentence": "백지장처럼 창백해요.",
+        "sentence_ro": "E palid ca hârtia.",
+        "sentence_en": "He's pale as a sheet.",
+        "ro": "alb ca hârtia",
+        "en": "pale as a sheet (idiom)"
+      },
+      {
+        "ko": "표백",
+        "sentence": "옷을 표백했어요.",
+        "sentence_ro": "Am înălbit hainele.",
+        "sentence_en": "I bleached the clothes.",
+        "ro": "albire",
+        "en": "bleaching"
       }
     ]
   },
@@ -2422,6 +2638,30 @@
         "sentence_en": "I'm saving for old age.",
         "ro": "bătrânețe",
         "en": "old age"
+      },
+      {
+        "ko": "원로",
+        "sentence": "그는 정치계의 원로예요.",
+        "sentence_ro": "El este un veteran al vieții politice.",
+        "sentence_en": "He is a senior figure in politics.",
+        "ro": "veteran, decan de vârstă",
+        "en": "elder statesman, senior figure"
+      },
+      {
+        "ko": "노약자",
+        "sentence": "노약자석에 앉으세요.",
+        "sentence_ro": "Vă rog așezați-vă pe locul pentru vârstnici.",
+        "sentence_en": "Please sit in the seat for the elderly.",
+        "ro": "persoane vârstnice și vulnerabile",
+        "en": "the elderly and infirm"
+      },
+      {
+        "ko": "경로당",
+        "sentence": "할머니는 경로당에 자주 가세요.",
+        "sentence_ro": "Bunica merge des la centrul pentru vârstnici.",
+        "sentence_en": "Grandma often goes to the senior center.",
+        "ro": "centru pentru vârstnici",
+        "en": "senior citizens' center"
       }
     ]
   },
@@ -3118,6 +3358,30 @@
         "sentence_en": "Namdaemun is a famous gate in Seoul.",
         "ro": "Namdaemun (poartă)",
         "en": "Namdaemun (gate)"
+      },
+      {
+        "ko": "남풍",
+        "sentence": "남풍이 불어요.",
+        "sentence_ro": "Bate vântul de sud.",
+        "sentence_en": "The south wind blows.",
+        "ro": "vânt de sud",
+        "en": "south wind"
+      },
+      {
+        "ko": "남부",
+        "sentence": "남부 지방은 따뜻해요.",
+        "sentence_ro": "Regiunea sudică este caldă.",
+        "sentence_en": "The southern region is warm.",
+        "ro": "regiune sudică",
+        "en": "southern region"
+      },
+      {
+        "ko": "남미",
+        "sentence": "남미를 여행하고 싶어요.",
+        "sentence_ro": "Vreau să călătoresc în America de Sud.",
+        "sentence_en": "I want to travel to South America.",
+        "ro": "America de Sud",
+        "en": "South America"
       }
     ]
   },
@@ -3176,6 +3440,30 @@
         "sentence_en": "The northern region is very cold in winter.",
         "ro": "regiune nordică",
         "en": "northern region"
+      },
+      {
+        "ko": "북미",
+        "sentence": "북미에 살아요.",
+        "sentence_ro": "Locuiesc în America de Nord.",
+        "sentence_en": "I live in North America.",
+        "ro": "America de Nord",
+        "en": "North America"
+      },
+      {
+        "ko": "북상",
+        "sentence": "태풍이 북상하고 있어요.",
+        "sentence_ro": "Taifunul se deplasează spre nord.",
+        "sentence_en": "The typhoon is moving northward.",
+        "ro": "deplasare spre nord",
+        "en": "moving northward"
+      },
+      {
+        "ko": "이북",
+        "sentence": "이북 사투리예요.",
+        "sentence_ro": "Este un dialect din Coreea de Nord.",
+        "sentence_en": "It's a North Korean dialect.",
+        "ro": "Coreea de Nord (informal)",
+        "en": "North (Korea, informal)"
       }
     ]
   },
@@ -3234,6 +3522,30 @@
         "sentence_en": "I caught a cold.",
         "ro": "răceală",
         "en": "cold (illness)"
+      },
+      {
+        "ko": "경기",
+        "sentence": "경기가 안 좋아요.",
+        "sentence_ro": "Economia nu merge bine.",
+        "sentence_en": "The economy is bad.",
+        "ro": "economie (situație)",
+        "en": "economy (conditions)"
+      },
+      {
+        "ko": "기력",
+        "sentence": "기력이 없어요.",
+        "sentence_ro": "Nu mai am vigoare.",
+        "sentence_en": "I have no energy.",
+        "ro": "vigoare",
+        "en": "energy, vigor"
+      },
+      {
+        "ko": "대기",
+        "sentence": "대기 오염이 심해요.",
+        "sentence_ro": "Poluarea atmosferică este gravă.",
+        "sentence_en": "Air pollution is severe.",
+        "ro": "atmosferă",
+        "en": "atmosphere"
       }
     ]
   },
@@ -3620,6 +3932,30 @@
         "sentence_en": "Outdoor activities are good for health.",
         "ro": "în aer liber",
         "en": "outdoor"
+      },
+      {
+        "ko": "외과",
+        "sentence": "외과 의사예요.",
+        "sentence_ro": "Este chirurg.",
+        "sentence_en": "He is a surgeon.",
+        "ro": "chirurgie",
+        "en": "surgery (department)"
+      },
+      {
+        "ko": "외교",
+        "sentence": "외교 정책을 논의해요.",
+        "sentence_ro": "Discutăm politica diplomatică.",
+        "sentence_en": "We discuss diplomatic policy.",
+        "ro": "diplomație",
+        "en": "diplomacy"
+      },
+      {
+        "ko": "제외",
+        "sentence": "저를 제외해 주세요.",
+        "sentence_ro": "Vă rog excludeți-mă.",
+        "sentence_en": "Please exclude me.",
+        "ro": "excludere",
+        "en": "exclusion"
       }
     ]
   },
@@ -4202,6 +4538,30 @@
         "sentence_en": "I got the correct answer.",
         "ro": "răspuns corect",
         "en": "correct answer"
+      },
+      {
+        "ko": "정식",
+        "sentence": "정식으로 신청했어요.",
+        "sentence_ro": "Am aplicat oficial.",
+        "sentence_en": "I applied formally.",
+        "ro": "oficial",
+        "en": "formal, official"
+      },
+      {
+        "ko": "수정",
+        "sentence": "오류를 수정했어요.",
+        "sentence_ro": "Am corectat eroarea.",
+        "sentence_en": "I corrected the error.",
+        "ro": "corectare",
+        "en": "correction, revision"
+      },
+      {
+        "ko": "정면",
+        "sentence": "정면으로 부딪혔어요.",
+        "sentence_ro": "Ne-am ciocnit frontal.",
+        "sentence_en": "We collided head-on.",
+        "ro": "fața, parte frontală",
+        "en": "front side, head-on"
       }
     ]
   },
@@ -4260,6 +4620,30 @@
         "sentence_en": "This is a precondition.",
         "ro": "premisă",
         "en": "premise, precondition"
+      },
+      {
+        "ko": "이전",
+        "sentence": "이전보다 나아졌어요.",
+        "sentence_ro": "E mai bine decât înainte.",
+        "sentence_en": "It's better than before.",
+        "ro": "înainte, anterior",
+        "en": "before, previous"
+      },
+      {
+        "ko": "전방",
+        "sentence": "전방에 주의하세요.",
+        "sentence_ro": "Fiți atenți în față.",
+        "sentence_en": "Watch out ahead.",
+        "ro": "în față",
+        "en": "the front, forward"
+      },
+      {
+        "ko": "사전",
+        "sentence": "사전에 예약하세요.",
+        "sentence_ro": "Vă rog faceți rezervarea în prealabil.",
+        "sentence_en": "Please make a reservation beforehand.",
+        "ro": "în prealabil",
+        "en": "beforehand, in advance"
       }
     ]
   },
@@ -4318,6 +4702,30 @@
         "sentence_en": "I regret that decision.",
         "ro": "regret",
         "en": "regret"
+      },
+      {
+        "ko": "후배",
+        "sentence": "후배들을 잘 챙겨요.",
+        "sentence_ro": "Am grijă de colegii mai tineri.",
+        "sentence_en": "I take good care of my juniors.",
+        "ro": "coleg mai tânăr (în vechime)",
+        "en": "junior (colleague, schoolmate)"
+      },
+      {
+        "ko": "향후",
+        "sentence": "향후 계획이 있어요?",
+        "sentence_ro": "Ai planuri de acum înainte?",
+        "sentence_en": "Do you have future plans?",
+        "ro": "de acum înainte",
+        "en": "from now on, hereafter"
+      },
+      {
+        "ko": "후유증",
+        "sentence": "수술 후유증이 있어요.",
+        "sentence_ro": "Sunt sechele după operație.",
+        "sentence_en": "There are aftereffects from the surgery.",
+        "ro": "sechelă",
+        "en": "aftereffect"
       }
     ]
   },
@@ -4490,6 +4898,30 @@
         "sentence_en": "This city developed through industry.",
         "ro": "industrie",
         "en": "industry"
+      },
+      {
+        "ko": "인공",
+        "sentence": "인공지능을 연구해요.",
+        "sentence_ro": "Studiez inteligența artificială.",
+        "sentence_en": "I study artificial intelligence.",
+        "ro": "artificial",
+        "en": "artificial"
+      },
+      {
+        "ko": "공대",
+        "sentence": "공대에 다녀요.",
+        "sentence_ro": "Studiez la facultatea de inginerie.",
+        "sentence_en": "I attend engineering college.",
+        "ro": "facultate de inginerie",
+        "en": "engineering college"
+      },
+      {
+        "ko": "가공",
+        "sentence": "가공식품은 몸에 안 좋아요.",
+        "sentence_ro": "Alimentele procesate nu sunt bune pentru organism.",
+        "sentence_en": "Processed food isn't good for the body.",
+        "ro": "procesare",
+        "en": "processing"
       }
     ]
   },
@@ -4548,6 +4980,30 @@
         "sentence_en": "The traffic light turned green.",
         "ro": "verde",
         "en": "green"
+      },
+      {
+        "ko": "특색",
+        "sentence": "이 도시는 특색이 있어요.",
+        "sentence_ro": "Acest oraș are o caracteristică distinctivă.",
+        "sentence_en": "This city has a distinctive character.",
+        "ro": "caracteristică distinctivă",
+        "en": "distinctive feature"
+      },
+      {
+        "ko": "안색",
+        "sentence": "안색이 안 좋아요.",
+        "sentence_ro": "Ai tenul palid, nu arăți bine.",
+        "sentence_en": "Your complexion looks bad.",
+        "ro": "ten (culoarea feței)",
+        "en": "complexion"
+      },
+      {
+        "ko": "배색",
+        "sentence": "배색이 예뻐요.",
+        "sentence_ro": "Combinația de culori este frumoasă.",
+        "sentence_en": "The color combination is pretty.",
+        "ro": "combinație de culori",
+        "en": "color combination"
       }
     ]
   },
@@ -4770,6 +5226,30 @@
         "sentence_en": "All the students participated.",
         "ro": "întreg",
         "en": "whole, entire"
+      },
+      {
+        "ko": "건전",
+        "sentence": "건전한 취미예요.",
+        "sentence_ro": "Este un hobby sănătos.",
+        "sentence_en": "It's a healthy hobby.",
+        "ro": "sănătos (figurat)",
+        "en": "healthy, sound"
+      },
+      {
+        "ko": "만전",
+        "sentence": "만전을 기했어요.",
+        "sentence_ro": "Am avut o grijă maximă.",
+        "sentence_en": "I took utmost care.",
+        "ro": "pregătire perfectă",
+        "en": "perfect readiness"
+      },
+      {
+        "ko": "전액",
+        "sentence": "전액을 환불받았어요.",
+        "sentence_ro": "Am primit suma integrală înapoi.",
+        "sentence_en": "I got a full refund.",
+        "ro": "suma integrală",
+        "en": "full amount"
       }
     ]
   },
@@ -4828,6 +5308,30 @@
         "sentence_en": "I've lost a lot of weight.",
         "ro": "greutate corporală",
         "en": "body weight"
+      },
+      {
+        "ko": "중복",
+        "sentence": "내용이 중복돼요.",
+        "sentence_ro": "Conținutul se suprapune.",
+        "sentence_en": "The content is duplicated.",
+        "ro": "suprapunere",
+        "en": "duplication, overlap"
+      },
+      {
+        "ko": "존중",
+        "sentence": "서로 존중해야 해요.",
+        "sentence_ro": "Trebuie să ne respectăm reciproc.",
+        "sentence_en": "We must respect each other.",
+        "ro": "respect",
+        "en": "respect"
+      },
+      {
+        "ko": "비중",
+        "sentence": "이 과목의 비중이 커요.",
+        "sentence_ro": "Această materie are o pondere mare.",
+        "sentence_en": "This subject carries a lot of weight.",
+        "ro": "pondere",
+        "en": "proportion, weight, importance"
       }
     ]
   },
@@ -4886,6 +5390,30 @@
         "sentence_en": "Don't force it on me.",
         "ro": "constrângere",
         "en": "compulsion, force"
+      },
+      {
+        "ko": "강인",
+        "sentence": "강인한 정신력이에요.",
+        "sentence_ro": "Este o putere mentală rezistentă.",
+        "sentence_en": "It's a tough, resilient mindset.",
+        "ro": "rezistent, tenace",
+        "en": "tough, resilient"
+      },
+      {
+        "ko": "최강",
+        "sentence": "최강 팀이에요.",
+        "sentence_ro": "Este cea mai puternică echipă.",
+        "sentence_en": "It's the strongest team.",
+        "ro": "cel mai puternic",
+        "en": "the strongest"
+      },
+      {
+        "ko": "강행",
+        "sentence": "계획을 강행했어요.",
+        "sentence_ro": "Au forțat planul mai departe.",
+        "sentence_en": "They pushed the plan through.",
+        "ro": "a forța o acțiune",
+        "en": "forcing through"
       }
     ]
   },
@@ -4944,6 +5472,30 @@
         "sentence_en": "Please introduce yourself.",
         "ro": "auto-prezentare",
         "en": "self-introduction"
+      },
+      {
+        "ko": "자립",
+        "sentence": "경제적 자립을 이뤘어요.",
+        "sentence_ro": "Am obținut autonomia financiară.",
+        "sentence_en": "I achieved financial independence.",
+        "ro": "autonomie",
+        "en": "self-reliance, independence"
+      },
+      {
+        "ko": "자존심",
+        "sentence": "자존심이 강해요.",
+        "sentence_ro": "Are o mândrie puternică.",
+        "sentence_en": "He has strong pride.",
+        "ro": "mândrie",
+        "en": "pride, self-esteem"
+      },
+      {
+        "ko": "자백",
+        "sentence": "범인이 자백했어요.",
+        "sentence_ro": "Criminalul a mărturisit.",
+        "sentence_en": "The criminal confessed.",
+        "ro": "mărturisire",
+        "en": "confession"
       }
     ]
   },
@@ -5002,6 +5554,30 @@
         "sentence_en": "Our boss is strict.",
         "ro": "director, patron",
         "en": "company president, boss"
+      },
+      {
+        "ko": "입사",
+        "sentence": "이 회사에 입사했어요.",
+        "sentence_ro": "M-am angajat la această companie.",
+        "sentence_en": "I joined this company.",
+        "ro": "angajare (la o companie)",
+        "en": "joining a company"
+      },
+      {
+        "ko": "사설",
+        "sentence": "신문 사설을 읽었어요.",
+        "sentence_ro": "Am citit editorialul ziarului.",
+        "sentence_en": "I read the newspaper editorial.",
+        "ro": "editorial",
+        "en": "editorial"
+      },
+      {
+        "ko": "지사",
+        "sentence": "부산 지사에서 일해요.",
+        "sentence_ro": "Lucrez la sucursala din Busan.",
+        "sentence_en": "I work at the Busan branch office.",
+        "ro": "sucursală",
+        "en": "branch office"
       }
     ]
   },
@@ -5060,6 +5636,30 @@
         "sentence_en": "This association has many members.",
         "ro": "asociație",
         "en": "association"
+      },
+      {
+        "ko": "사회자",
+        "sentence": "사회자가 진행해요.",
+        "sentence_ro": "Moderatorul conduce evenimentul.",
+        "sentence_en": "The host leads the event.",
+        "ro": "gazdă, moderator",
+        "en": "host, MC"
+      },
+      {
+        "ko": "총회",
+        "sentence": "주주 총회가 열려요.",
+        "sentence_ro": "Are loc adunarea generală a acționarilor.",
+        "sentence_en": "The shareholders' general meeting is held.",
+        "ro": "adunare generală",
+        "en": "general assembly, meeting"
+      },
+      {
+        "ko": "연회",
+        "sentence": "연회에 초대받았어요.",
+        "sentence_ro": "Am fost invitat la un banchet.",
+        "sentence_en": "I was invited to a banquet.",
+        "ro": "banchet",
+        "en": "banquet, reception"
       }
     ]
   },
@@ -5118,6 +5718,30 @@
         "sentence_en": "This company is world-famous.",
         "ro": "întreprindere",
         "en": "enterprise, company"
+      },
+      {
+        "ko": "창업",
+        "sentence": "창업을 준비하고 있어요.",
+        "sentence_ro": "Mă pregătesc să încep o afacere.",
+        "sentence_en": "I'm preparing to start a business.",
+        "ro": "înființarea unei afaceri",
+        "en": "starting a business"
+      },
+      {
+        "ko": "취업",
+        "sentence": "취업 준비를 해요.",
+        "sentence_ro": "Mă pregătesc pentru angajare.",
+        "sentence_en": "I'm preparing for job hunting.",
+        "ro": "angajare",
+        "en": "getting a job"
+      },
+      {
+        "ko": "농업",
+        "sentence": "농업이 발전했어요.",
+        "sentence_ro": "Agricultura s-a dezvoltat.",
+        "sentence_en": "Agriculture has developed.",
+        "ro": "agricultură",
+        "en": "agriculture"
       }
     ]
   },
@@ -5176,6 +5800,30 @@
         "sentence_en": "There's no space in the parking lot.",
         "ro": "parcare",
         "en": "parking lot"
+      },
+      {
+        "ko": "현장",
+        "sentence": "사고 현장에 갔어요.",
+        "sentence_ro": "Am mers la locul accidentului.",
+        "sentence_en": "I went to the scene of the accident.",
+        "ro": "locul faptei",
+        "en": "the scene, on-site"
+      },
+      {
+        "ko": "등장",
+        "sentence": "새 캐릭터가 등장했어요.",
+        "sentence_ro": "A apărut un personaj nou.",
+        "sentence_en": "A new character appeared.",
+        "ro": "apariție, intrare în scenă",
+        "en": "appearance, entrance"
+      },
+      {
+        "ko": "매장",
+        "sentence": "매장에서 물건을 샀어요.",
+        "sentence_ro": "Am cumpărat lucruri din magazin.",
+        "sentence_en": "I bought items at the store.",
+        "ro": "magazin",
+        "en": "store, shop"
       }
     ]
   },
@@ -5234,6 +5882,30 @@
         "sentence_en": "Let's meet in front of city hall.",
         "ro": "primărie",
         "en": "city hall"
+      },
+      {
+        "ko": "시립",
+        "sentence": "시립 도서관이에요.",
+        "sentence_ro": "Este o bibliotecă municipală.",
+        "sentence_en": "It's a municipal library.",
+        "ro": "municipal",
+        "en": "municipal, city-run"
+      },
+      {
+        "ko": "증시",
+        "sentence": "증시가 하락했어요.",
+        "sentence_ro": "Bursa de valori a scăzut.",
+        "sentence_en": "The stock market fell.",
+        "ro": "bursa de valori",
+        "en": "stock market"
+      },
+      {
+        "ko": "시가",
+        "sentence": "이 그림의 시가는 얼마예요?",
+        "sentence_ro": "Care este prețul de piață al acestui tablou?",
+        "sentence_en": "What's the market price of this painting?",
+        "ro": "preț de piață",
+        "en": "market price"
       }
     ]
   },
@@ -5374,6 +6046,30 @@
         "sentence_en": "My nickname is Bear.",
         "ro": "poreclă",
         "en": "nickname"
+      },
+      {
+        "ko": "차별",
+        "sentence": "차별은 나빠요.",
+        "sentence_ro": "Discriminarea este rea.",
+        "sentence_en": "Discrimination is bad.",
+        "ro": "discriminare",
+        "en": "discrimination"
+      },
+      {
+        "ko": "개별",
+        "sentence": "개별로 상담해요.",
+        "sentence_ro": "Consultăm individual.",
+        "sentence_en": "We consult individually.",
+        "ro": "individual, separat",
+        "en": "individual, separate"
+      },
+      {
+        "ko": "성별",
+        "sentence": "성별을 표시하세요.",
+        "sentence_ro": "Vă rog indicați genul.",
+        "sentence_en": "Please indicate your gender.",
+        "ro": "gen, sex",
+        "en": "gender"
       }
     ]
   },
@@ -5514,6 +6210,30 @@
         "sentence_en": "I sought advice from an expert.",
         "ro": "consultanță",
         "en": "advice, consultation"
+      },
+      {
+        "ko": "심문",
+        "sentence": "경찰이 심문했어요.",
+        "sentence_ro": "Poliția l-a interogat.",
+        "sentence_en": "The police interrogated him.",
+        "ro": "interogatoriu",
+        "en": "interrogation"
+      },
+      {
+        "ko": "문안",
+        "sentence": "문안 인사를 드려요.",
+        "sentence_ro": "Vă transmit salutări respectuoase.",
+        "sentence_en": "I pay my respectful regards.",
+        "ro": "salut respectuos",
+        "en": "respectful greeting, inquiry"
+      },
+      {
+        "ko": "위문",
+        "sentence": "군인들을 위문했어요.",
+        "sentence_ro": "Am vizitat soldații pentru a-i încuraja.",
+        "sentence_en": "We visited soldiers to comfort them.",
+        "ro": "vizită de mângâiere",
+        "en": "comfort visit"
       }
     ]
   },
@@ -5654,6 +6374,30 @@
         "sentence_en": "The teacher explained in detail.",
         "ro": "explicație",
         "en": "explanation"
+      },
+      {
+        "ko": "증명",
+        "sentence": "신분증으로 증명했어요.",
+        "sentence_ro": "Am dovedit cu buletinul.",
+        "sentence_en": "I proved it with my ID.",
+        "ro": "dovadă",
+        "en": "proof, certification"
+      },
+      {
+        "ko": "조명",
+        "sentence": "조명이 밝아요.",
+        "sentence_ro": "Iluminatul este puternic.",
+        "sentence_en": "The lighting is bright.",
+        "ro": "iluminat",
+        "en": "lighting"
+      },
+      {
+        "ko": "판명",
+        "sentence": "사실로 판명됐어요.",
+        "sentence_ro": "S-a dovedit a fi adevărat.",
+        "sentence_en": "It turned out to be true.",
+        "ro": "a se dovedi",
+        "en": "to turn out to be, be revealed as"
       }
     ]
   },
@@ -5794,6 +6538,30 @@
         "sentence_en": "You need to read this book carefully.",
         "ro": "lectură atentă",
         "en": "careful reading"
+      },
+      {
+        "ko": "애독",
+        "sentence": "그 작가의 책을 애독해요.",
+        "sentence_ro": "Sunt un cititor pasionat al cărților acelui autor.",
+        "sentence_en": "I'm an avid reader of that author's books.",
+        "ro": "cititor pasionat",
+        "en": "avid reading"
+      },
+      {
+        "ko": "구독",
+        "sentence": "잡지를 구독해요.",
+        "sentence_ro": "Sunt abonat la o revistă.",
+        "sentence_en": "I subscribe to a magazine.",
+        "ro": "abonament",
+        "en": "subscription"
+      },
+      {
+        "ko": "독자",
+        "sentence": "이 책의 독자는 많아요.",
+        "sentence_ro": "Această carte are mulți cititori.",
+        "sentence_en": "This book has many readers.",
+        "ro": "cititor",
+        "en": "reader"
       }
     ]
   },
@@ -5852,6 +6620,30 @@
         "sentence_en": "A bird flies in the air.",
         "ro": "în aer, în văzduh",
         "en": "in the air, midair"
+      },
+      {
+        "ko": "공군",
+        "sentence": "그는 공군이에요.",
+        "sentence_ro": "El este în forțele aeriene.",
+        "sentence_en": "He is in the air force.",
+        "ro": "forțele aeriene",
+        "en": "air force"
+      },
+      {
+        "ko": "공백",
+        "sentence": "이력서에 공백이 있어요.",
+        "sentence_ro": "Este un gol în CV.",
+        "sentence_en": "There's a gap in the resume.",
+        "ro": "gol, spațiu liber",
+        "en": "blank, gap"
+      },
+      {
+        "ko": "공상",
+        "sentence": "공상 과학 영화를 좋아해요.",
+        "sentence_ro": "Îmi plac filmele science fiction.",
+        "sentence_en": "I like science fiction movies.",
+        "ro": "fantezie",
+        "en": "fantasy, sci-fi"
       }
     ]
   },
@@ -5910,6 +6702,30 @@
         "sentence_en": "I work at night.",
         "ro": "timpul nopții",
         "en": "nighttime"
+      },
+      {
+        "ko": "시간표",
+        "sentence": "시간표를 확인했어요.",
+        "sentence_ro": "Am verificat orarul.",
+        "sentence_en": "I checked the timetable.",
+        "ro": "orar",
+        "en": "timetable"
+      },
+      {
+        "ko": "인간관계",
+        "sentence": "인간관계가 중요해요.",
+        "sentence_ro": "Relațiile interumane sunt importante.",
+        "sentence_en": "Interpersonal relationships are important.",
+        "ro": "relații interumane",
+        "en": "interpersonal relationships"
+      },
+      {
+        "ko": "세간",
+        "sentence": "세간의 관심을 받았어요.",
+        "sentence_ro": "A primit atenția publicului.",
+        "sentence_en": "It received public attention.",
+        "ro": "atenția publicului",
+        "en": "public attention"
       }
     ]
   },
@@ -5968,6 +6784,30 @@
         "sentence_en": "It's quiet all around.",
         "ro": "toate direcțiile",
         "en": "all directions, all around"
+      },
+      {
+        "ko": "방식",
+        "sentence": "새로운 방식을 시도했어요.",
+        "sentence_ro": "Am încercat o metodă nouă.",
+        "sentence_en": "I tried a new method.",
+        "ro": "metodă",
+        "en": "method, way"
+      },
+      {
+        "ko": "방정식",
+        "sentence": "방정식을 풀었어요.",
+        "sentence_ro": "Am rezolvat ecuația.",
+        "sentence_en": "I solved the equation.",
+        "ro": "ecuație",
+        "en": "equation"
+      },
+      {
+        "ko": "근방",
+        "sentence": "이 근방에 살아요.",
+        "sentence_ro": "Locuiesc în vecinătatea aceasta.",
+        "sentence_en": "I live in this vicinity.",
+        "ro": "vecinătate",
+        "en": "vicinity, nearby"
       }
     ]
   },
@@ -6026,6 +6866,30 @@
         "sentence_en": "He achieved career success at a young age.",
         "ro": "succes în carieră",
         "en": "career success"
+      },
+      {
+        "ko": "후세",
+        "sentence": "후세에 물려줘요.",
+        "sentence_ro": "Îl transmitem generațiilor viitoare.",
+        "sentence_en": "We hand it down to future generations.",
+        "ro": "posteritate",
+        "en": "future generations, posterity"
+      },
+      {
+        "ko": "세속적",
+        "sentence": "세속적인 욕심이에요.",
+        "sentence_ro": "Este o lăcomie lumească.",
+        "sentence_en": "It's worldly greed.",
+        "ro": "lumesc",
+        "en": "worldly, secular"
+      },
+      {
+        "ko": "별세",
+        "sentence": "할아버지께서 별세하셨어요.",
+        "sentence_ro": "Bunicul a decedat.",
+        "sentence_en": "Grandfather passed away.",
+        "ro": "a deceda (onorific)",
+        "en": "to pass away (honorific)"
       }
     ]
   },
@@ -6084,6 +6948,30 @@
         "sentence_en": "Ordinary people's lives are difficult.",
         "ro": "oameni de rând",
         "en": "common people"
+      },
+      {
+        "ko": "민간인",
+        "sentence": "민간인은 피해를 입으면 안 돼요.",
+        "sentence_ro": "Civilii nu trebuie să fie afectați.",
+        "sentence_en": "Civilians should not be harmed.",
+        "ro": "civil",
+        "en": "civilian"
+      },
+      {
+        "ko": "시민권",
+        "sentence": "시민권을 취득했어요.",
+        "sentence_ro": "Am obținut cetățenia.",
+        "sentence_en": "I obtained citizenship.",
+        "ro": "cetățenie",
+        "en": "citizenship"
+      },
+      {
+        "ko": "민속",
+        "sentence": "민속촌에 갔어요.",
+        "sentence_ro": "Am fost la un sat tradițional.",
+        "sentence_en": "I went to a folk village.",
+        "ro": "folclor",
+        "en": "folk (customs)"
       }
     ]
   },
@@ -6142,6 +7030,30 @@
         "sentence_en": "Please bring your textbook.",
         "ro": "manual (carte)",
         "en": "textbook"
+      },
+      {
+        "ko": "서적",
+        "sentence": "다양한 서적이 있어요.",
+        "sentence_ro": "Sunt diverse cărți.",
+        "sentence_en": "There's a variety of books.",
+        "ro": "cărți",
+        "en": "books, publications"
+      },
+      {
+        "ko": "백서",
+        "sentence": "정부가 백서를 발표했어요.",
+        "sentence_ro": "Guvernul a publicat un raport oficial.",
+        "sentence_en": "The government published a white paper.",
+        "ro": "raport oficial",
+        "en": "white paper (official report)"
+      },
+      {
+        "ko": "계약서",
+        "sentence": "계약서에 서명했어요.",
+        "sentence_ro": "Am semnat contractul.",
+        "sentence_en": "I signed the contract.",
+        "ro": "contract",
+        "en": "contract (document)"
       }
     ]
   },
@@ -6200,6 +7112,30 @@
         "sentence_en": "I'm thankful for his kindness.",
         "ro": "bunăvoință",
         "en": "goodwill, kindness"
+      },
+      {
+        "ko": "부주의",
+        "sentence": "부주의로 사고가 났어요.",
+        "sentence_ro": "Accidentul s-a produs din neatenție.",
+        "sentence_en": "The accident happened due to carelessness.",
+        "ro": "neatenție",
+        "en": "carelessness"
+      },
+      {
+        "ko": "고의",
+        "sentence": "고의로 그런 게 아니에요.",
+        "sentence_ro": "Nu am făcut-o intenționat.",
+        "sentence_en": "I didn't do it on purpose.",
+        "ro": "intenționat",
+        "en": "intentional, on purpose"
+      },
+      {
+        "ko": "의외",
+        "sentence": "의외의 결과예요.",
+        "sentence_ro": "Este un rezultat neașteptat.",
+        "sentence_en": "It's an unexpected result.",
+        "ro": "neașteptat",
+        "en": "unexpected"
       }
     ]
   },
@@ -6258,6 +7194,30 @@
         "sentence_en": "Please explain specifically.",
         "ro": "concret",
         "en": "specific, concrete"
+      },
+      {
+        "ko": "체제",
+        "sentence": "새로운 체제가 도입됐어요.",
+        "sentence_ro": "A fost introdus un sistem nou.",
+        "sentence_en": "A new system was introduced.",
+        "ro": "sistem, regim",
+        "en": "system, regime"
+      },
+      {
+        "ko": "물체",
+        "sentence": "이상한 물체를 발견했어요.",
+        "sentence_ro": "Am descoperit un obiect ciudat.",
+        "sentence_en": "I discovered a strange object.",
+        "ro": "obiect fizic",
+        "en": "physical object"
+      },
+      {
+        "ko": "체험",
+        "sentence": "김치 만들기를 체험했어요.",
+        "sentence_ro": "Am experimentat prepararea kimchi-ului.",
+        "sentence_en": "I experienced making kimchi.",
+        "ro": "experiență practică",
+        "en": "hands-on experience"
       }
     ]
   },
@@ -6316,6 +7276,30 @@
         "sentence_en": "We move around by bus.",
         "ro": "deplasare",
         "en": "movement, moving"
+      },
+      {
+        "ko": "충동",
+        "sentence": "충동적으로 샀어요.",
+        "sentence_ro": "Am cumpărat impulsiv.",
+        "sentence_en": "I bought it impulsively.",
+        "ro": "impuls",
+        "en": "impulse"
+      },
+      {
+        "ko": "노동",
+        "sentence": "노동 시간이 길어요.",
+        "sentence_ro": "Orele de muncă sunt lungi.",
+        "sentence_en": "The working hours are long.",
+        "ro": "muncă",
+        "en": "labor"
+      },
+      {
+        "ko": "동물원",
+        "sentence": "동물원에 갔어요.",
+        "sentence_ro": "Am fost la grădina zoologică.",
+        "sentence_en": "I went to the zoo.",
+        "ro": "grădină zoologică",
+        "en": "zoo"
       }
     ]
   },
@@ -6374,6 +7358,30 @@
         "sentence_en": "I sent it by registered mail.",
         "ro": "recomandată (poștă)",
         "en": "registered (mail)"
+      },
+      {
+        "ko": "필기",
+        "sentence": "필기를 열심히 해요.",
+        "sentence_ro": "Iau notițe cu sârguință.",
+        "sentence_en": "I take notes diligently.",
+        "ro": "a lua notițe",
+        "en": "note-taking"
+      },
+      {
+        "ko": "표기",
+        "sentence": "발음대로 표기했어요.",
+        "sentence_ro": "Am notat-o așa cum se pronunță.",
+        "sentence_en": "I wrote it as pronounced.",
+        "ro": "notație",
+        "en": "notation, spelling"
+      },
+      {
+        "ko": "전기",
+        "sentence": "위인전기를 읽었어요.",
+        "sentence_ro": "Am citit biografia unei persoane mari.",
+        "sentence_en": "I read a biography of a great person.",
+        "ro": "biografie",
+        "en": "biography"
       }
     ]
   },
@@ -6432,6 +7440,30 @@
         "sentence_en": "There's a half moon in the sky.",
         "ro": "semilună",
         "en": "half moon"
+      },
+      {
+        "ko": "반액",
+        "sentence": "반액 할인이에요.",
+        "sentence_ro": "Este o reducere de 50%.",
+        "sentence_en": "It's 50% off.",
+        "ro": "jumătate din preț",
+        "en": "half price"
+      },
+      {
+        "ko": "반신반의",
+        "sentence": "반신반의하며 들었어요.",
+        "sentence_ro": "Am ascultat pe jumătate crezând.",
+        "sentence_en": "I listened half-believing.",
+        "ro": "pe jumătate crezând",
+        "en": "half-believing, skeptical"
+      },
+      {
+        "ko": "반원",
+        "sentence": "반원을 그렸어요.",
+        "sentence_ro": "Am desenat un semicerc.",
+        "sentence_en": "I drew a semicircle.",
+        "ro": "semicerc",
+        "en": "semicircle"
       }
     ]
   },
@@ -6490,6 +7522,30 @@
         "sentence_en": "I looked it up in the encyclopedia.",
         "ro": "enciclopedie",
         "en": "encyclopedia"
+      },
+      {
+        "ko": "학과",
+        "sentence": "무슨 학과예요?",
+        "sentence_ro": "La ce secție/catedră ești?",
+        "sentence_en": "What department are you in?",
+        "ro": "catedră, secție (facultate)",
+        "en": "academic department"
+      },
+      {
+        "ko": "교과목",
+        "sentence": "교과목이 다양해요.",
+        "sentence_ro": "Există o varietate de materii școlare.",
+        "sentence_en": "There's a variety of school subjects.",
+        "ro": "materie școlară",
+        "en": "school subject"
+      },
+      {
+        "ko": "안과",
+        "sentence": "안과에 가서 시력검사를 했어요.",
+        "sentence_ro": "Am fost la oftalmolog pentru un test de vedere.",
+        "sentence_en": "I went to the eye doctor for a vision test.",
+        "ro": "oftalmologie",
+        "en": "ophthalmology"
       }
     ]
   },
@@ -6662,6 +7718,30 @@
         "sentence_en": "I have a close relationship with him.",
         "ro": "apropiat",
         "en": "familiar, close"
+      },
+      {
+        "ko": "부근",
+        "sentence": "역 부근에 살아요.",
+        "sentence_ro": "Locuiesc în apropierea gării.",
+        "sentence_en": "I live near the station.",
+        "ro": "apropiere, vecinătate",
+        "en": "vicinity, nearby area"
+      },
+      {
+        "ko": "근래",
+        "sentence": "근래에 바빴어요.",
+        "sentence_ro": "Am fost ocupat recent.",
+        "sentence_en": "I've been busy recently.",
+        "ro": "recent",
+        "en": "recently, of late"
+      },
+      {
+        "ko": "측근",
+        "sentence": "대통령의 측근이에요.",
+        "sentence_ro": "Este un apropiat al președintelui.",
+        "sentence_en": "He is a close aide of the president.",
+        "ro": "apropiat, confident",
+        "en": "close aide, confidant"
       }
     ]
   },
@@ -6720,6 +7800,30 @@
         "sentence_en": "That singer hits high notes well.",
         "ro": "notă înaltă",
         "en": "high note, high pitch"
+      },
+      {
+        "ko": "음성",
+        "sentence": "음성 메시지를 남겼어요.",
+        "sentence_ro": "Am lăsat un mesaj vocal.",
+        "sentence_en": "I left a voice message.",
+        "ro": "voce, audio",
+        "en": "voice, audio"
+      },
+      {
+        "ko": "녹음",
+        "sentence": "회의를 녹음했어요.",
+        "sentence_ro": "Am înregistrat ședința.",
+        "sentence_en": "I recorded the meeting.",
+        "ro": "înregistrare audio",
+        "en": "audio recording"
+      },
+      {
+        "ko": "화음",
+        "sentence": "화음이 아름다워요.",
+        "sentence_ro": "Armonia este frumoasă.",
+        "sentence_en": "The harmony is beautiful.",
+        "ro": "armonie muzicală",
+        "en": "harmony, chord"
       }
     ]
   },
@@ -6778,6 +7882,30 @@
         "sentence_en": "It's easy to understand because there are subtitles.",
         "ro": "subtitrare",
         "en": "subtitles"
+      },
+      {
+        "ko": "적자",
+        "sentence": "회사가 적자예요.",
+        "sentence_ro": "Compania este pe deficit.",
+        "sentence_en": "The company is in deficit.",
+        "ro": "deficit",
+        "en": "deficit"
+      },
+      {
+        "ko": "오자",
+        "sentence": "오자가 있어요.",
+        "sentence_ro": "Este o greșeală de scriere.",
+        "sentence_en": "There's a typo.",
+        "ro": "greșeală de scriere",
+        "en": "typo, misprint"
+      },
+      {
+        "ko": "십자가",
+        "sentence": "십자가를 걸었어요.",
+        "sentence_ro": "Am atârnat o cruce.",
+        "sentence_en": "I hung up a cross.",
+        "ro": "cruce",
+        "en": "cross, crucifix"
       }
     ]
   },
@@ -6836,6 +7964,30 @@
         "sentence_en": "I passed the exam.",
         "ro": "a reuși (la examen)",
         "en": "passing (an exam)"
+      },
+      {
+        "ko": "통합",
+        "sentence": "두 회사가 통합됐어요.",
+        "sentence_ro": "Cele două companii au fuzionat.",
+        "sentence_en": "The two companies merged.",
+        "ro": "integrare, unificare",
+        "en": "integration, unification"
+      },
+      {
+        "ko": "화합",
+        "sentence": "가족이 화합해요.",
+        "sentence_ro": "Familia trăiește în armonie.",
+        "sentence_en": "The family gets along harmoniously.",
+        "ro": "armonie",
+        "en": "harmony, getting along"
+      },
+      {
+        "ko": "합창",
+        "sentence": "합창단에서 노래해요.",
+        "sentence_ro": "Cânt într-un cor.",
+        "sentence_en": "I sing in a choir.",
+        "ro": "cor",
+        "en": "chorus, choral singing"
       }
     ]
   },
@@ -6894,6 +8046,30 @@
         "sentence_en": "Today's topic is the environment.",
         "ro": "subiect",
         "en": "topic"
+      },
+      {
+        "ko": "주최",
+        "sentence": "회사가 행사를 주최했어요.",
+        "sentence_ro": "Compania a organizat evenimentul.",
+        "sentence_en": "The company hosted the event.",
+        "ro": "a organiza (un eveniment)",
+        "en": "hosting, organizing"
+      },
+      {
+        "ko": "주부",
+        "sentence": "저희 어머니는 주부예요.",
+        "sentence_ro": "Mama mea este casnică.",
+        "sentence_en": "My mother is a housewife.",
+        "ro": "casnică",
+        "en": "housewife"
+      },
+      {
+        "ko": "자주",
+        "sentence": "자주적인 결정이에요.",
+        "sentence_ro": "Este o decizie autonomă.",
+        "sentence_en": "It's an autonomous decision.",
+        "ro": "autonom",
+        "en": "autonomous, self-reliant"
       }
     ]
   },
@@ -6952,6 +8128,30 @@
         "sentence_en": "I watched a volleyball match.",
         "ro": "volei",
         "en": "volleyball"
+      },
+      {
+        "ko": "지구본",
+        "sentence": "지구본을 봤어요.",
+        "sentence_ro": "M-am uitat la globul pământesc.",
+        "sentence_en": "I looked at the globe.",
+        "ro": "glob pământesc",
+        "en": "globe"
+      },
+      {
+        "ko": "안구",
+        "sentence": "안구가 건조해요.",
+        "sentence_ro": "Globii oculari îmi sunt uscați.",
+        "sentence_en": "My eyes are dry.",
+        "ro": "glob ocular",
+        "en": "eyeball"
+      },
+      {
+        "ko": "반구",
+        "sentence": "북반구에 살아요.",
+        "sentence_ro": "Locuiesc în emisfera nordică.",
+        "sentence_en": "I live in the northern hemisphere.",
+        "ro": "emisferă",
+        "en": "hemisphere"
       }
     ]
   },
@@ -7124,6 +8324,30 @@
         "sentence_en": "It developed rapidly.",
         "ro": "rapid",
         "en": "rapid"
+      },
+      {
+        "ko": "시속",
+        "sentence": "시속 100킬로로 달려요.",
+        "sentence_ro": "Conduc cu 100 km/h.",
+        "sentence_en": "Driving at 100 km/h.",
+        "ro": "viteză pe oră",
+        "en": "speed per hour"
+      },
+      {
+        "ko": "속독",
+        "sentence": "속독법을 배워요.",
+        "sentence_ro": "Învăț citirea rapidă.",
+        "sentence_en": "I'm learning speed reading.",
+        "ro": "citire rapidă",
+        "en": "speed reading"
+      },
+      {
+        "ko": "초고속",
+        "sentence": "초고속 인터넷을 써요.",
+        "sentence_ro": "Folosesc internet ultra-rapid.",
+        "sentence_en": "I use ultra-high-speed internet.",
+        "ro": "ultra-rapid",
+        "en": "ultra-high-speed"
       }
     ]
   },
@@ -7182,6 +8406,30 @@
         "sentence_en": "My dream came true.",
         "ro": "realizare, împlinire",
         "en": "realization"
+      },
+      {
+        "ko": "현대",
+        "sentence": "현대 사회는 복잡해요.",
+        "sentence_ro": "Societatea modernă este complexă.",
+        "sentence_en": "Modern society is complex.",
+        "ro": "era modernă",
+        "en": "modern era, contemporary"
+      },
+      {
+        "ko": "현황",
+        "sentence": "사업 현황을 보고했어요.",
+        "sentence_ro": "Am raportat situația actuală a afacerii.",
+        "sentence_en": "I reported the current status of the business.",
+        "ro": "situația actuală",
+        "en": "current status"
+      },
+      {
+        "ko": "재현",
+        "sentence": "역사를 재현했어요.",
+        "sentence_ro": "Au recreat istoria.",
+        "sentence_en": "They recreated history.",
+        "ro": "recreare, reproducere",
+        "en": "reproduction, recreation"
       }
     ]
   },
@@ -7240,6 +8488,30 @@
         "sentence_en": "This bread is made with good raw ingredients.",
         "ro": "materie primă",
         "en": "raw material"
+      },
+      {
+        "ko": "초원",
+        "sentence": "몽골 초원을 여행했어요.",
+        "sentence_ro": "Am călătorit în pajiștile Mongoliei.",
+        "sentence_en": "I traveled the Mongolian grassland.",
+        "ro": "pajiște",
+        "en": "grassland, prairie"
+      },
+      {
+        "ko": "원자력",
+        "sentence": "원자력 발전소예요.",
+        "sentence_ro": "Este o centrală nucleară.",
+        "sentence_en": "It's a nuclear power plant.",
+        "ro": "energie nucleară",
+        "en": "nuclear power"
+      },
+      {
+        "ko": "고원",
+        "sentence": "티베트 고원은 높아요.",
+        "sentence_ro": "Platoul tibetan este înalt.",
+        "sentence_en": "The Tibetan plateau is high.",
+        "ro": "platou",
+        "en": "plateau"
       }
     ]
   },
@@ -7298,6 +8570,30 @@
         "sentence_en": "Washing your hands can prevent germs.",
         "ro": "microb",
         "en": "germ"
+      },
+      {
+        "ko": "문병",
+        "sentence": "친구를 문병했어요.",
+        "sentence_ro": "Mi-am vizitat prietenul bolnav.",
+        "sentence_en": "I visited my sick friend.",
+        "ro": "vizitarea unui bolnav",
+        "en": "visiting a sick person"
+      },
+      {
+        "ko": "병약",
+        "sentence": "그는 어릴 때 병약했어요.",
+        "sentence_ro": "El era firav în copilărie.",
+        "sentence_en": "He was sickly as a child.",
+        "ro": "firav, bolnăvicios",
+        "en": "sickly, frail"
+      },
+      {
+        "ko": "성인병",
+        "sentence": "성인병을 예방해요.",
+        "sentence_ro": "Prevenim bolile stilului de viață.",
+        "sentence_en": "We prevent lifestyle diseases.",
+        "ro": "boală de adult (stil de viață)",
+        "en": "adult, lifestyle disease"
       }
     ]
   },
@@ -7356,6 +8652,30 @@
         "sentence_en": "A new minister was appointed.",
         "ro": "numire",
         "en": "appointment"
+      },
+      {
+        "ko": "생명력",
+        "sentence": "식물의 생명력이 강해요.",
+        "sentence_ro": "Vitalitatea plantei este puternică.",
+        "sentence_en": "The plant's vitality is strong.",
+        "ro": "vitalitate",
+        "en": "vitality, life force"
+      },
+      {
+        "ko": "혁명",
+        "sentence": "산업 혁명이 일어났어요.",
+        "sentence_ro": "A avut loc Revoluția Industrială.",
+        "sentence_en": "The Industrial Revolution occurred.",
+        "ro": "revoluție",
+        "en": "revolution"
+      },
+      {
+        "ko": "인명",
+        "sentence": "인명 피해는 없었어요.",
+        "sentence_ro": "Nu au fost pierderi de vieți omenești.",
+        "sentence_en": "There were no casualties.",
+        "ro": "pierderi de vieți omenești",
+        "en": "human life, casualties"
       }
     ]
   },
@@ -7414,6 +8734,30 @@
         "sentence_en": "I climbed to the summit of the mountain.",
         "ro": "vârf (de munte)",
         "en": "summit, top"
+      },
+      {
+        "ko": "인상",
+        "sentence": "가격이 인상됐어요.",
+        "sentence_ro": "Prețul a fost majorat.",
+        "sentence_en": "The price was raised.",
+        "ro": "majorare (de preț)",
+        "en": "price increase"
+      },
+      {
+        "ko": "상경",
+        "sentence": "상경해서 취업했어요.",
+        "sentence_ro": "Am plecat la capitală și m-am angajat.",
+        "sentence_en": "I went up to Seoul and got a job.",
+        "ro": "a merge la capitală",
+        "en": "going up to the capital"
+      },
+      {
+        "ko": "상류",
+        "sentence": "상류층 사람들이에요.",
+        "sentence_ro": "Sunt oameni din pătura de sus.",
+        "sentence_en": "They are upper-class people.",
+        "ro": "pătura de sus",
+        "en": "upper class"
       }
     ]
   },
@@ -7472,6 +8816,30 @@
         "sentence_en": "Please get off at the next station.",
         "ro": "a coborî (din vehicul)",
         "en": "to get off (a vehicle)"
+      },
+      {
+        "ko": "하인",
+        "sentence": "옛날에는 하인이 있었어요.",
+        "sentence_ro": "Pe vremuri existau servitori.",
+        "sentence_en": "In the old days, there were servants.",
+        "ro": "servitor",
+        "en": "servant"
+      },
+      {
+        "ko": "낙하산",
+        "sentence": "낙하산을 타고 뛰어내렸어요.",
+        "sentence_ro": "Am sărit cu parașuta.",
+        "sentence_en": "I jumped with a parachute.",
+        "ro": "parașută",
+        "en": "parachute"
+      },
+      {
+        "ko": "산하",
+        "sentence": "이 회사는 대기업 산하예요.",
+        "sentence_ro": "Această companie este sub egida unui mare conglomerat.",
+        "sentence_en": "This company is under a large conglomerate.",
+        "ro": "sub egida",
+        "en": "under the umbrella of, subsidiary"
       }
     ]
   },
@@ -7530,6 +8898,30 @@
         "sentence_en": "I joined a club.",
         "ro": "înscriere",
         "en": "joining, enrollment"
+      },
+      {
+        "ko": "도입",
+        "sentence": "새 제도를 도입했어요.",
+        "sentence_ro": "A fost introdus un sistem nou.",
+        "sentence_en": "A new system was introduced.",
+        "ro": "introducere",
+        "en": "introduction, adoption"
+      },
+      {
+        "ko": "편입",
+        "sentence": "편입 시험을 봤어요.",
+        "sentence_ro": "Am dat examenul de transfer.",
+        "sentence_en": "I took the transfer admission exam.",
+        "ro": "transfer (admitere)",
+        "en": "transfer admission"
+      },
+      {
+        "ko": "침입",
+        "sentence": "도둑이 침입했어요.",
+        "sentence_ro": "Un hoț a pătruns prin efracție.",
+        "sentence_en": "A thief broke in.",
+        "ro": "intruziune",
+        "en": "intrusion, invasion"
       }
     ]
   },
@@ -7588,6 +8980,30 @@
         "sentence_en": "I submitted my homework.",
         "ro": "predare",
         "en": "submission"
+      },
+      {
+        "ko": "출신",
+        "sentence": "서울 출신이에요.",
+        "sentence_ro": "Sunt originar din Seul.",
+        "sentence_en": "I'm from Seoul.",
+        "ro": "originar din",
+        "en": "from, background"
+      },
+      {
+        "ko": "지출",
+        "sentence": "지출을 줄였어요.",
+        "sentence_ro": "Mi-am redus cheltuielile.",
+        "sentence_en": "I reduced my expenses.",
+        "ro": "cheltuială",
+        "en": "expenditure"
+      },
+      {
+        "ko": "진출",
+        "sentence": "해외 시장에 진출했어요.",
+        "sentence_ro": "Am pătruns pe piața externă.",
+        "sentence_en": "We entered the overseas market.",
+        "ro": "pătrundere pe o piață",
+        "en": "advancing into, entering"
       }
     ]
   },
@@ -7646,6 +9062,30 @@
         "sentence_en": "I have a good feeling.",
         "ro": "presimțire",
         "en": "premonition, hunch"
+      },
+      {
+        "ko": "호감",
+        "sentence": "그에게 호감이 있어요.",
+        "sentence_ro": "Am o simpatie pentru el.",
+        "sentence_en": "I have a favorable impression of him.",
+        "ro": "simpatie",
+        "en": "favorable impression, liking"
+      },
+      {
+        "ko": "민감",
+        "sentence": "피부가 민감해요.",
+        "sentence_ro": "Am pielea sensibilă.",
+        "sentence_en": "My skin is sensitive.",
+        "ro": "sensibil",
+        "en": "sensitive"
+      },
+      {
+        "ko": "실감",
+        "sentence": "아직 실감이 안 나요.",
+        "sentence_ro": "Încă nu mi se pare real.",
+        "sentence_en": "It still doesn't feel real.",
+        "ro": "a-și da seama realmente",
+        "en": "real feeling, realization"
       }
     ]
   },
@@ -7704,6 +9144,30 @@
         "sentence_en": "Please ask at the information desk.",
         "ro": "informare",
         "en": "guidance, information"
+      },
+      {
+        "ko": "치안",
+        "sentence": "치안이 좋아요.",
+        "sentence_ro": "Siguranța publică este bună.",
+        "sentence_en": "Public safety is good.",
+        "ro": "siguranță publică",
+        "en": "public safety, security"
+      },
+      {
+        "ko": "안락",
+        "sentence": "안락한 의자예요.",
+        "sentence_ro": "Este un scaun confortabil.",
+        "sentence_en": "It's a comfortable chair.",
+        "ro": "confort",
+        "en": "comfort, ease"
+      },
+      {
+        "ko": "안보",
+        "sentence": "국가 안보가 중요해요.",
+        "sentence_ro": "Securitatea națională este importantă.",
+        "sentence_en": "National security is important.",
+        "ro": "securitate națională",
+        "en": "national security"
       }
     ]
   },
@@ -7762,6 +9226,30 @@
         "sentence_en": "I am an ordinary student.",
         "ro": "obișnuit",
         "en": "ordinary"
+      },
+      {
+        "ko": "평등",
+        "sentence": "성 평등이 중요해요.",
+        "sentence_ro": "Egalitatea de gen este importantă.",
+        "sentence_en": "Gender equality is important.",
+        "ro": "egalitate",
+        "en": "equality"
+      },
+      {
+        "ko": "평면",
+        "sentence": "평면 지도예요.",
+        "sentence_ro": "Este o hartă plană.",
+        "sentence_en": "It's a flat map.",
+        "ro": "suprafață plană",
+        "en": "flat surface, plane"
+      },
+      {
+        "ko": "태평양",
+        "sentence": "태평양을 건넜어요.",
+        "sentence_ro": "Am traversat Oceanul Pacific.",
+        "sentence_en": "I crossed the Pacific.",
+        "ro": "Oceanul Pacific",
+        "en": "Pacific Ocean"
       }
     ]
   },
@@ -7820,6 +9308,30 @@
         "sentence_en": "I agree with that opinion.",
         "ro": "aprobare",
         "en": "agreement, approval"
+      },
+      {
+        "ko": "달성",
+        "sentence": "목표를 달성했어요.",
+        "sentence_ro": "Am atins obiectivul.",
+        "sentence_en": "I achieved the goal.",
+        "ro": "realizare",
+        "en": "achievement"
+      },
+      {
+        "ko": "구성",
+        "sentence": "팀 구성이 좋아요.",
+        "sentence_ro": "Componența echipei este bună.",
+        "sentence_en": "The team composition is good.",
+        "ro": "componență",
+        "en": "composition, configuration"
+      },
+      {
+        "ko": "성숙",
+        "sentence": "생각이 성숙해졌어요.",
+        "sentence_ro": "Gândirea mea a devenit matură.",
+        "sentence_en": "My thinking has matured.",
+        "ro": "maturitate",
+        "en": "maturity"
       }
     ]
   },
@@ -7878,6 +9390,30 @@
         "sentence_en": "This style is trendy these days.",
         "ro": "modă",
         "en": "trend, fashion"
+      },
+      {
+        "ko": "진행",
+        "sentence": "회의가 진행 중이에요.",
+        "sentence_ro": "Ședința este în desfășurare.",
+        "sentence_en": "The meeting is in progress.",
+        "ro": "desfășurare",
+        "en": "progress, proceeding"
+      },
+      {
+        "ko": "행렬",
+        "sentence": "축제 행렬을 봤어요.",
+        "sentence_ro": "Am privit procesiunea festivalului.",
+        "sentence_en": "I watched the festival procession.",
+        "ro": "procesiune",
+        "en": "procession, parade"
+      },
+      {
+        "ko": "보행자",
+        "sentence": "보행자 신호를 지키세요.",
+        "sentence_ro": "Vă rog respectați semnalul pentru pietoni.",
+        "sentence_en": "Please follow the pedestrian signal.",
+        "ro": "pieton",
+        "en": "pedestrian"
       }
     ]
   },
@@ -7936,6 +9472,30 @@
         "sentence_en": "International law must be respected.",
         "ro": "drept internațional",
         "en": "international law"
+      },
+      {
+        "ko": "불법",
+        "sentence": "불법 주차예요.",
+        "sentence_ro": "Este parcare ilegală.",
+        "sentence_en": "It's illegal parking.",
+        "ro": "ilegal",
+        "en": "illegal"
+      },
+      {
+        "ko": "법원",
+        "sentence": "법원에 출석했어요.",
+        "sentence_ro": "M-am prezentat la tribunal.",
+        "sentence_en": "I appeared in court.",
+        "ro": "tribunal",
+        "en": "court of law"
+      },
+      {
+        "ko": "헌법",
+        "sentence": "헌법을 개정했어요.",
+        "sentence_ro": "Constituția a fost modificată.",
+        "sentence_en": "The constitution was amended.",
+        "ro": "constituție",
+        "en": "constitution"
       }
     ]
   },
@@ -7994,6 +9554,30 @@
         "sentence_en": "The population is decreasing.",
         "ro": "scădere",
         "en": "decrease"
+      },
+      {
+        "ko": "다소",
+        "sentence": "다소 비싸요.",
+        "sentence_ro": "Este oarecum scump.",
+        "sentence_en": "It's somewhat expensive.",
+        "ro": "oarecum",
+        "en": "somewhat"
+      },
+      {
+        "ko": "소량",
+        "sentence": "소량만 필요해요.",
+        "sentence_ro": "Am nevoie doar de o cantitate mică.",
+        "sentence_en": "I only need a small amount.",
+        "ro": "cantitate mică",
+        "en": "small amount"
+      },
+      {
+        "ko": "희소",
+        "sentence": "희소 자원이에요.",
+        "sentence_ro": "Este o resursă rară.",
+        "sentence_en": "It's a scarce resource.",
+        "ro": "raritate",
+        "en": "rarity, scarcity"
       }
     ]
   },
@@ -8052,6 +9636,30 @@
         "sentence_en": "This house is my property.",
         "ro": "proprietate",
         "en": "possession, ownership"
+      },
+      {
+        "ko": "유익",
+        "sentence": "유익한 정보예요.",
+        "sentence_ro": "Este o informație benefică.",
+        "sentence_en": "It's useful, beneficial information.",
+        "ro": "benefic",
+        "en": "beneficial"
+      },
+      {
+        "ko": "유효",
+        "sentence": "이 표는 유효해요.",
+        "sentence_ro": "Acest bilet este valabil.",
+        "sentence_en": "This ticket is valid.",
+        "ro": "valabil",
+        "en": "valid"
+      },
+      {
+        "ko": "유능",
+        "sentence": "그는 유능한 직원이에요.",
+        "sentence_ro": "El este un angajat competent.",
+        "sentence_en": "He is a competent employee.",
+        "ro": "competent",
+        "en": "competent, capable"
       }
     ]
   },
@@ -8110,6 +9718,30 @@
         "sentence_en": "I'll help you unconditionally.",
         "ro": "necondiționat",
         "en": "unconditionally"
+      },
+      {
+        "ko": "무사",
+        "sentence": "무사히 도착했어요.",
+        "sentence_ro": "Am ajuns în siguranță.",
+        "sentence_en": "I arrived safely.",
+        "ro": "în siguranță",
+        "en": "safely"
+      },
+      {
+        "ko": "무능",
+        "sentence": "그는 무능해요.",
+        "sentence_ro": "El este incompetent.",
+        "sentence_en": "He is incompetent.",
+        "ro": "incompetent",
+        "en": "incompetent"
+      },
+      {
+        "ko": "무리",
+        "sentence": "무리한 요구예요.",
+        "sentence_ro": "Este o cerere nerezonabilă.",
+        "sentence_en": "It's an unreasonable demand.",
+        "ro": "nerezonabil",
+        "en": "unreasonable, excessive"
       }
     ]
   },
@@ -8168,6 +9800,30 @@
         "sentence_en": "The universe is an unknown world.",
         "ro": "necunoscut",
         "en": "unknown"
+      },
+      {
+        "ko": "지능",
+        "sentence": "인공지능이 발전했어요.",
+        "sentence_ro": "Inteligența artificială a avansat.",
+        "sentence_en": "Artificial intelligence has advanced.",
+        "ro": "inteligență",
+        "en": "intelligence"
+      },
+      {
+        "ko": "지인",
+        "sentence": "지인의 소개로 만났어요.",
+        "sentence_ro": "Ne-am cunoscut prin recomandarea unui cunoscut.",
+        "sentence_en": "We met through an acquaintance's introduction.",
+        "ro": "cunoscut",
+        "en": "acquaintance"
+      },
+      {
+        "ko": "감지",
+        "sentence": "동작을 감지해요.",
+        "sentence_ro": "Detectează mișcarea.",
+        "sentence_en": "It detects motion.",
+        "ro": "detectare",
+        "en": "detection, sensing"
       }
     ]
   },
@@ -8226,6 +9882,30 @@
         "sentence_en": "A glow-in-the-dark watch can be seen at night too.",
         "ro": "fosforescent",
         "en": "glow-in-the-dark, luminous"
+      },
+      {
+        "ko": "형광등",
+        "sentence": "형광등이 깜빡거려요.",
+        "sentence_ro": "Lampa fluorescentă pâlpâie.",
+        "sentence_en": "The fluorescent light is flickering.",
+        "ro": "lampă fluorescentă",
+        "en": "fluorescent light"
+      },
+      {
+        "ko": "채광",
+        "sentence": "채광이 좋아요.",
+        "sentence_ro": "Are lumină naturală bună.",
+        "sentence_en": "There's good natural light.",
+        "ro": "lumină naturală",
+        "en": "natural lighting"
+      },
+      {
+        "ko": "광경",
+        "sentence": "아름다운 광경이에요.",
+        "sentence_ro": "Este o priveliște frumoasă.",
+        "sentence_en": "It's a beautiful sight.",
+        "ro": "priveliște",
+        "en": "scene, sight"
       }
     ]
   },
@@ -8284,6 +9964,30 @@
         "sentence_en": "We strengthened security.",
         "ro": "întărire",
         "en": "strengthening, reinforcement"
+      },
+      {
+        "ko": "악화",
+        "sentence": "상황이 악화됐어요.",
+        "sentence_ro": "Situația s-a agravat.",
+        "sentence_en": "The situation worsened.",
+        "ro": "agravare",
+        "en": "worsening, deterioration"
+      },
+      {
+        "ko": "문화재",
+        "sentence": "문화재를 보호해요.",
+        "sentence_ro": "Protejăm patrimoniul cultural.",
+        "sentence_en": "We protect cultural heritage.",
+        "ro": "patrimoniu cultural",
+        "en": "cultural heritage, property"
+      },
+      {
+        "ko": "자동화",
+        "sentence": "공장이 자동화됐어요.",
+        "sentence_ro": "Fabrica a fost automatizată.",
+        "sentence_en": "The factory was automated.",
+        "ro": "automatizare",
+        "en": "automation"
       }
     ]
   },
@@ -8342,6 +10046,30 @@
         "sentence_en": "I reconciled with my friend.",
         "ro": "împăcare",
         "en": "reconciliation"
+      },
+      {
+        "ko": "화기애애",
+        "sentence": "화기애애한 분위기였어요.",
+        "sentence_ro": "A fost o atmosferă caldă și armonioasă.",
+        "sentence_en": "It was a warm, harmonious atmosphere.",
+        "ro": "atmosferă caldă și armonioasă",
+        "en": "warm, harmonious atmosphere (idiom)"
+      },
+      {
+        "ko": "공화국",
+        "sentence": "대한민국은 공화국이에요.",
+        "sentence_ro": "Republica Coreea este o republică.",
+        "sentence_en": "South Korea is a republic.",
+        "ro": "republică",
+        "en": "republic"
+      },
+      {
+        "ko": "유화",
+        "sentence": "유화 정책을 폈어요.",
+        "sentence_ro": "Au dus o politică de conciliere.",
+        "sentence_en": "They pursued a policy of appeasement.",
+        "ro": "politică de conciliere",
+        "en": "conciliation, appeasement policy"
       }
     ]
   },
@@ -8400,6 +10128,30 @@
         "sentence_en": "His expression is gloomy.",
         "ro": "expresie facială",
         "en": "facial expression"
+      },
+      {
+        "ko": "정보",
+        "sentence": "정보를 검색했어요.",
+        "sentence_ro": "Am căutat informații.",
+        "sentence_en": "I searched for information.",
+        "ro": "informație",
+        "en": "information"
+      },
+      {
+        "ko": "정서",
+        "sentence": "정서 발달에 좋아요.",
+        "sentence_ro": "E bine pentru dezvoltarea emoțională.",
+        "sentence_en": "It's good for emotional development.",
+        "ro": "stare emoțională",
+        "en": "emotion, sentiment"
+      },
+      {
+        "ko": "무정",
+        "sentence": "무정한 사람이에요.",
+        "sentence_ro": "Este o persoană fără inimă.",
+        "sentence_en": "He is a heartless person.",
+        "ro": "fără inimă",
+        "en": "heartless, unfeeling"
       }
     ]
   },
@@ -8458,6 +10210,30 @@
         "sentence_en": "The spring tournament is being held.",
         "ro": "sezonul de primăvară",
         "en": "spring season"
+      },
+      {
+        "ko": "춘풍",
+        "sentence": "춘풍이 불어요.",
+        "sentence_ro": "Bate briza de primăvară.",
+        "sentence_en": "The spring breeze blows.",
+        "ro": "briza de primăvară",
+        "en": "spring breeze"
+      },
+      {
+        "ko": "회춘",
+        "sentence": "회춘한 것 같아요.",
+        "sentence_ro": "Parcă m-am întinerit.",
+        "sentence_en": "I feel rejuvenated.",
+        "ro": "întinerire",
+        "en": "rejuvenation"
+      },
+      {
+        "ko": "사춘기",
+        "sentence": "사춘기를 겪고 있어요.",
+        "sentence_ro": "Trec prin pubertate.",
+        "sentence_en": "I'm going through puberty.",
+        "ro": "pubertate",
+        "en": "puberty, adolescence"
       }
     ]
   },
@@ -8516,6 +10292,30 @@
         "sentence_en": "We advanced to the final.",
         "ro": "finală",
         "en": "final (match)"
+      },
+      {
+        "ko": "승부",
+        "sentence": "승부가 났어요.",
+        "sentence_ro": "S-a decis rezultatul meciului.",
+        "sentence_en": "The outcome has been decided.",
+        "ro": "rezultatul unui meci",
+        "en": "contest outcome (win, lose)"
+      },
+      {
+        "ko": "압승",
+        "sentence": "선거에서 압승했어요.",
+        "sentence_ro": "Au câștigat alegerile într-o victorie zdrobitoare.",
+        "sentence_en": "They won the election by a landslide.",
+        "ro": "victorie zdrobitoare",
+        "en": "landslide victory"
+      },
+      {
+        "ko": "명승지",
+        "sentence": "명승지를 방문했어요.",
+        "sentence_ro": "Am vizitat un loc pitoresc.",
+        "sentence_en": "I visited a scenic spot.",
+        "ro": "loc pitoresc",
+        "en": "scenic spot"
       }
     ]
   },
