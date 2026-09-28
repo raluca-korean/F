@@ -13,7 +13,7 @@ Fără build tools, fără server, fără cont — vanilla HTML/CSS/JS. Progresu
 
 ## Cum funcționează
 
-Două moduri, ca niște tab-uri:
+Trei moduri, ca niște tab-uri:
 
 **Învață** — parcurgi cele 214 rădăcini secvențial, una câte una: citirea în Hangul, sensul, apoi cuvintele coreene reale care o folosesc (cu silaba evidențiată în fiecare cuvânt și propoziție), fiecare cu propoziție de exemplu și traducere, și la final etimologia caracterului — context cultural/istoric, marcat clar ca informativ, niciodată testat. Fără test, doar studiu, în ritmul tău, cu navigare prev/next.
 
@@ -23,6 +23,8 @@ Două moduri, ca niște tab-uri:
 - **Sens → silabă**: care silabă coreeană are acest sens
 - **Cuvânt → sens**: ce înseamnă silaba evidențiată dintr-un cuvânt coreean real
 - **Sens → cuvânt**: care e cuvântul coreean corect pentru un anumit sens
+
+**Puzzle** — formează cuvântul: pornind de la sensul unui cuvânt real, atingi silabele (amestecate) în ordinea corectă ca să-l reconstitui. Rădăcina hanja din care pornește cuvântul apare doar ca indiciu mic (silabă + etichetă hanja) — nu e niciodată dată de-a gata, doar ordinea contează. Fără piese-capcană: doar silabele reale ale cuvântului, amestecate.
 
 ## Deploy
 

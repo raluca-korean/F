@@ -147,8 +147,12 @@ var locked = false;
 
 var session = { correct: 0, total: 0, streak: 0 };
 
-var mode = 'learn';   // 'learn' | 'practice'
+var mode = 'learn';   // 'learn' | 'practice' | 'puzzle'
 var learnPos = Store.get('KBH_LEARN_POS', 0);
+
+var puzzleQueue = [];      // array of DATA indices, prioritized by SRS due date (own queue, independent of Practice's)
+var puzzleCurrent = null;  // { di, item, word, tiles: [{id,ch}], placed: [id,...] }
+var puzzleLocked = false;
 
 var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word'];
 
@@ -166,9 +170,12 @@ var UI = {
     correctMsg: 'Corect!', wrongMsg: 'Greșit',
     next: 'Următorul →',
     hlHint: 'Silaba evidențiată e cea din întrebare',
-    tabLearn: 'Învață', tabPractice: 'Exersează',
+    tabLearn: 'Învață', tabPractice: 'Exersează', tabPuzzle: 'Puzzle',
     learnWords: 'Cuvinte care folosesc această silabă',
     learnEtym: 'Etimologie (context, nu se testează)',
+    puzzleType: 'Formează cuvântul',
+    puzzleRoot: 'rădăcină',
+    puzzleWrongMsg: 'Cuvântul corect era',
     footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser'
   },
   en: {
@@ -184,9 +191,12 @@ var UI = {
     correctMsg: 'Correct!', wrongMsg: 'Wrong',
     next: 'Next →',
     hlHint: 'The highlighted syllable is the one being asked about',
-    tabLearn: 'Learn', tabPractice: 'Practice',
+    tabLearn: 'Learn', tabPractice: 'Practice', tabPuzzle: 'Puzzle',
     learnWords: 'Words that use this syllable',
     learnEtym: 'Etymology (background, not tested)',
+    puzzleType: 'Build the word',
+    puzzleRoot: 'root',
+    puzzleWrongMsg: 'The correct word was',
     footer: 'Standalone app · no account, no server · progress is saved locally in this browser'
   }
 };
@@ -215,8 +225,10 @@ var elFooter   = document.getElementById('footerNote');
 
 var elTabLearn    = document.getElementById('tabLearn');
 var elTabPractice = document.getElementById('tabPractice');
+var elTabPuzzle   = document.getElementById('tabPuzzle');
 var elLearnView   = document.getElementById('learnView');
 var elPracticeView= document.getElementById('practiceView');
+var elPuzzleView  = document.getElementById('puzzleView');
 var elLearnPrev   = document.getElementById('learnPrev');
 var elLearnNext   = document.getElementById('learnNext');
 var elLearnPos    = document.getElementById('learnPos');
@@ -227,6 +239,15 @@ var elLearnWordsLabel = document.getElementById('learnWordsLabel');
 var elLearnWords  = document.getElementById('learnWords');
 var elLearnEtymLabel = document.getElementById('learnEtymLabel');
 var elLearnEtym   = document.getElementById('learnEtym');
+
+var elPuzzleTypeLabel = document.getElementById('puzzleTypeLabel');
+var elPuzzleHintChip  = document.getElementById('puzzleHintChip');
+var elPuzzlePrompt    = document.getElementById('puzzlePrompt');
+var elPuzzleSpeak     = document.getElementById('puzzleSpeak');
+var elAnswerSlots     = document.getElementById('answerSlots');
+var elTileBank        = document.getElementById('tileBank');
+var elPuzzleFeedback  = document.getElementById('puzzleFeedback');
+var elPuzzleNextBtn   = document.getElementById('puzzleNextBtn');
 
 /* ── boot ─────────────────────────────────────────────────── */
 fetch('./data/hanja.json')
@@ -240,6 +261,8 @@ function boot() {
   updateBadges();
   buildQueue();
   nextQuestion();
+  buildPuzzleQueue();
+  nextPuzzle();
   setMode('learn');
   renderLearn();
 
@@ -250,6 +273,7 @@ function boot() {
     updateBadges();
     if (current) renderQuestion();
     renderLearn();
+    if (puzzleCurrent) renderPuzzle();
   });
   elDarkBtn.addEventListener('click', function() {
     var isDark = !document.body.classList.contains('dark-mode');
@@ -266,6 +290,7 @@ function boot() {
 
   elTabLearn.addEventListener('click', function() { setMode('learn'); });
   elTabPractice.addEventListener('click', function() { setMode('practice'); });
+  elTabPuzzle.addEventListener('click', function() { setMode('puzzle'); });
   elLearnPrev.addEventListener('click', function() { goLearn(-1); });
   elLearnNext.addEventListener('click', function() { goLearn(1); });
   elLearnSpeak.addEventListener('click', function() {
@@ -275,14 +300,31 @@ function boot() {
     var btn = e.target.closest('.lwSpeak');
     if (btn) speak(btn.dataset.say);
   });
+
+  elPuzzleSpeak.addEventListener('click', function() {
+    if (puzzleCurrent) speak(puzzleCurrent.word.ko);
+  });
+  elPuzzleNextBtn.addEventListener('click', function() {
+    if (puzzleLocked) nextPuzzle();
+  });
+  elTileBank.addEventListener('click', function(e) {
+    var btn = e.target.closest('.tile');
+    if (btn && !btn.classList.contains('used')) placeTile(Number(btn.dataset.id));
+  });
+  elAnswerSlots.addEventListener('click', function(e) {
+    var slot = e.target.closest('.slot.filled');
+    if (slot && !puzzleLocked) removeTile(Number(slot.dataset.id));
+  });
 }
 
 function setMode(m) {
   mode = m;
   elTabLearn.classList.toggle('active', m === 'learn');
   elTabPractice.classList.toggle('active', m === 'practice');
+  elTabPuzzle.classList.toggle('active', m === 'puzzle');
   elLearnView.classList.toggle('hidden', m !== 'learn');
   elPracticeView.classList.toggle('hidden', m !== 'practice');
+  elPuzzleView.classList.toggle('hidden', m !== 'puzzle');
 }
 
 function applyTheme() {
@@ -301,8 +343,11 @@ function renderStatic() {
   elFooter.textContent = l.footer;
   elTabLearn.textContent = l.tabLearn;
   elTabPractice.textContent = l.tabPractice;
+  elTabPuzzle.textContent = l.tabPuzzle;
   elLearnWordsLabel.textContent = l.learnWords;
   elLearnEtymLabel.textContent = l.learnEtym;
+  elPuzzleTypeLabel.textContent = l.puzzleType;
+  elPuzzleNextBtn.textContent = l.next;
 }
 
 /* ── mastery / progress ──────────────────────────────────── */
@@ -381,6 +426,25 @@ function buildQueue() {
 function pickItem() {
   if (!queue.length) buildQueue();
   return queue.pop(); // DATA index
+}
+
+/* Own queue for Puzzle mode — same SRS-due priority as Practice,
+   but tracked separately so switching tabs mid-question doesn't
+   consume or reshuffle the other mode's queue. */
+function buildPuzzleQueue() {
+  var now = Date.now();
+  var due = [];
+  for (var i = 0; i < DATA.length; i++) {
+    var s = srsData[i];
+    if (!s || !s.due || s.due <= now) due.push(i);
+  }
+  if (!due.length) for (var j = 0; j < DATA.length; j++) due.push(j);
+  puzzleQueue = shuffle(due);
+}
+
+function pickPuzzleItem() {
+  if (!puzzleQueue.length) buildPuzzleQueue();
+  return puzzleQueue.pop();
 }
 
 /* ── question builders ───────────────────────────────────────
@@ -548,6 +612,102 @@ function submitAnswer(key, btn) {
   }
 
   setTimeout(function() { if (locked) nextQuestion(); }, 1600);
+}
+
+/* ── puzzle mode — word builder ────────────────────────────────
+   Pick a real example word for a (SRS-prioritized) hanja root,
+   break it into its Hangul syllable tiles, shuffle them, and have
+   the learner tap them back into the correct order. The root is
+   shown only as a small hint chip (syllable + hanja tag) — same
+   rule as everywhere else in the app: never a recognition target,
+   just disambiguation. No decoy tiles: with only the real
+   syllables in play, getting the *order* right is still the real
+   task (e.g. 수영 vs the meaningless 영수), so it stays a genuine
+   puzzle without risking a fabricated wrong word among the tiles. */
+function buildPuzzleQuestion() {
+  var di = pickPuzzleItem();
+  var item = DATA[di];
+  var word = item.words[Math.floor(Math.random() * item.words.length)];
+  var chars = word.ko.split('');
+  var tiles = chars.map(function(ch, i) { return { id: i, ch: ch }; });
+  return { di: di, item: item, word: word, tiles: shuffle(tiles), placed: [] };
+}
+
+function nextPuzzle() {
+  puzzleLocked = false;
+  puzzleCurrent = buildPuzzleQuestion();
+  elPuzzleFeedback.textContent = '';
+  elPuzzleFeedback.className = 'feedback';
+  elPuzzleNextBtn.classList.remove('show');
+  elPuzzleSpeak.classList.add('hidden');
+  renderPuzzle();
+}
+
+function renderPuzzle() {
+  var c = puzzleCurrent;
+  var item = c.item;
+
+  elPuzzleHintChip.innerHTML =
+    '<span class="hcRoot">' + escapeHtml(primaryReading(item)) + '</span>' +
+    '<span class="hcTag">' + escapeHtml(item.hanja) + '</span>';
+  elPuzzlePrompt.textContent = c.word[lang] || c.word.ro;
+
+  elAnswerSlots.innerHTML = c.tiles.map(function(_, i) {
+    if (i >= c.placed.length) return '<div class="slot"></div>';
+    var id = c.placed[i];
+    var t = c.tiles.filter(function(x) { return x.id === id; })[0];
+    return '<div class="slot filled" data-id="' + t.id + '">' + escapeHtml(t.ch) + '</div>';
+  }).join('');
+
+  elTileBank.innerHTML = c.tiles.map(function(tile) {
+    var used = c.placed.indexOf(tile.id) >= 0;
+    return '<button type="button" class="tile' + (used ? ' used' : '') + '" data-id="' + tile.id + '">' +
+      escapeHtml(tile.ch) + '</button>';
+  }).join('');
+}
+
+function placeTile(id) {
+  if (puzzleLocked) return;
+  var c = puzzleCurrent;
+  if (c.placed.indexOf(id) >= 0 || c.placed.length >= c.tiles.length) return;
+  c.placed.push(id);
+  renderPuzzle();
+  if (c.placed.length === c.tiles.length) checkPuzzle();
+}
+
+function removeTile(id) {
+  var c = puzzleCurrent;
+  var i = c.placed.indexOf(id);
+  if (i >= 0) { c.placed.splice(i, 1); renderPuzzle(); }
+}
+
+function checkPuzzle() {
+  puzzleLocked = true;
+  var c = puzzleCurrent;
+  var attempt = c.placed.map(function(id) {
+    return c.tiles.filter(function(t) { return t.id === id; })[0].ch;
+  }).join('');
+  var isCorrect = attempt === c.word.ko;
+
+  Array.prototype.forEach.call(elAnswerSlots.children, function(slotEl) {
+    slotEl.classList.add(isCorrect ? 'correct' : 'wrong');
+  });
+
+  srsData[c.di] = srsStep(srsData[c.di], isCorrect);
+  Store.set('KBH_SRS', srsData);
+
+  updateSession(isCorrect);
+  updateBadges();
+
+  var l = t();
+  elPuzzleFeedback.textContent = isCorrect ? '✓ ' + l.correctMsg : '✕ ' + l.wrongMsg + ' — ' + c.word.ko;
+  elPuzzleFeedback.className = 'feedback show ' + (isCorrect ? 'ok' : 'bad');
+  elPuzzleNextBtn.classList.add('show');
+  elPuzzleSpeak.classList.remove('hidden');
+
+  speak(c.word.ko);
+
+  setTimeout(function() { if (puzzleLocked) nextPuzzle(); }, 2200);
 }
 
 function updateSession(isCorrect) {

@@ -38,6 +38,7 @@
 <div class="kbh-tabs">
   <button type="button" class="tabBtn" id="tabLearn"></button>
   <button type="button" class="tabBtn" id="tabPractice"></button>
+  <button type="button" class="tabBtn" id="tabPuzzle"></button>
 </div>
 
 <section id="learnView">
@@ -71,6 +72,21 @@
     <div class="answers" id="answers"></div>
     <div class="feedback" id="feedback"></div>
     <button type="button" id="nextBtn"></button>
+  </div>
+</main>
+
+<main class="kbh-main hidden" id="puzzleView">
+  <div class="kbh-card">
+    <div class="typeLabel" id="puzzleTypeLabel"></div>
+    <div class="promptWrap">
+      <div id="puzzleHintChip" class="hintChip"></div>
+      <div id="puzzlePrompt"></div>
+      <button type="button" id="puzzleSpeak" class="hidden" title="Ascultă">▶</button>
+    </div>
+    <div class="answerSlots" id="answerSlots"></div>
+    <div class="tileBank" id="tileBank"></div>
+    <div class="feedback" id="puzzleFeedback"></div>
+    <button type="button" id="puzzleNextBtn"></button>
   </div>
 </main>
 

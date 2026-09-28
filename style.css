@@ -246,6 +246,89 @@ html, body {
   padding-left: 12px;
 }
 
+/* ── puzzle mode (word builder) ────────────────────────────
+   Tap syllable tiles in order to spell the target word. The
+   hanja root is shown only as a small hint chip — same rule as
+   everywhere else: the character is never the thing you pick,
+   only a disambiguation label. */
+.hintChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--bg2);
+  border: 1px solid var(--bd);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink2);
+  margin-bottom: 14px;
+}
+.hintChip .hcRoot { font-size: 14px; font-weight: 900; color: var(--ink); }
+.hintChip .hcTag { font-family: 'Noto Serif KR', serif; color: var(--ink3); }
+
+#puzzlePrompt {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 22px;
+  line-height: 1.35;
+}
+
+.answerSlots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  min-height: 56px;
+}
+.slot {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 2px dashed var(--bd);
+  background: var(--bg2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--ink);
+  cursor: default;
+}
+.slot.filled {
+  border-style: solid;
+  border-color: var(--gold);
+  cursor: pointer;
+}
+.slot.correct { border-color: var(--ok); background: rgba(76,175,110,.18); color: var(--ok); }
+.slot.wrong   { border-color: var(--bad); background: rgba(201,80,63,.18); color: var(--bad); }
+
+.tileBank {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tile {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid var(--bd);
+  background: var(--bg2);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform .12s var(--ease), border-color .12s;
+}
+.tile:hover { border-color: var(--gold); transform: translateY(-2px); }
+.tile.used { visibility: hidden; }
+
 /* ── main quiz card ─────────────────────────────────────── */
 .kbh-main {
   max-width: 560px;
@@ -330,7 +413,7 @@ html, body {
   font-weight: 700;
 }
 
-#speakBtn, #learnSpeak {
+#speakBtn, #learnSpeak, #puzzleSpeak {
   margin-top: 4px;
   width: 38px; height: 38px;
   border-radius: 50%;
@@ -341,7 +424,7 @@ html, body {
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
-#speakBtn:hover, #learnSpeak:hover { border-color: var(--gold); }
+#speakBtn:hover, #learnSpeak:hover, #puzzleSpeak:hover { border-color: var(--gold); }
 
 .answers {
   display: grid;
@@ -399,7 +482,7 @@ html, body {
 .feedback.ok  { color: var(--ok); }
 .feedback.bad { color: var(--bad); }
 
-#nextBtn {
+#nextBtn, #puzzleNextBtn {
   display: block;
   margin: 18px auto 0;
   padding: 11px 26px;
@@ -416,7 +499,7 @@ html, body {
   transition: opacity .25s var(--ease), transform .25s var(--ease);
   box-shadow: 0 10px 24px var(--seal-glow);
 }
-#nextBtn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+#nextBtn.show, #puzzleNextBtn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
 /* ── footer ─────────────────────────────────────────────── */
 .kbh-footer {
