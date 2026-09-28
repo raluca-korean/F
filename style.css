@@ -233,6 +233,21 @@ html, body {
 }
 .lwSpeak:hover { border-color: var(--gold); }
 .lwTr { font-size: 13px; color: var(--ink2); margin-top: 3px; }
+
+.lwBreak { min-width: 0; }
+.lwBreakKo {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.lwBreakMeaning {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: 2px;
+}
 .lwSentence { font-size: 14px; color: var(--ink); margin-top: 10px; line-height: 1.5; }
 .lwSentenceTr { font-size: 12.5px; color: var(--ink3); margin-top: 3px; font-style: italic; }
 

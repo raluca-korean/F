@@ -70,6 +70,42 @@ function rootDisplay(item) {
          '<span class="rootTag">' + escapeHtml(item.hanja) + '</span>';
 }
 
+/* Index every syllable reading across all 214 hanja, so we can look
+   up "which entry has this exact reading" for word-breakdown display. */
+function buildReadingIndex() {
+  readingIndex = {};
+  DATA.forEach(function(item, i) {
+    readingList(item).forEach(function(r) {
+      if (!readingIndex[r]) readingIndex[r] = [];
+      readingIndex[r].push(i);
+    });
+  });
+}
+
+/* Silabă → hanja + sens, DOAR când acea silabă corespunde unui singur
+   hanja din set (fără ambiguitate). Multe silabe coreene sunt omofone
+   pentru 2-5 hanja diferite — dacă am ghici oricare, am risca să
+   predăm o asociere greșită, exact ce evităm peste tot în aplicație.
+   Întoarce null când nu putem ști sigur. */
+function syllableEntry(ch) {
+  var matches = readingIndex[ch];
+  if (!matches || matches.length !== 1) return null;
+  return DATA[matches[0]];
+}
+
+/* Descompunerea sigură a unui cuvânt: doar dacă TOATE silabele lui
+   se rezolvă fiecare la exact un hanja cunoscut. Altfel null — cuvântul
+   rămâne afișat în formatul obișnuit (silabă evidențiată + traducere). */
+function wordBreakdown(word) {
+  var chars = word.ko.split('');
+  var entries = chars.map(syllableEntry);
+  if (entries.some(function(e) { return !e; })) return null;
+  return {
+    chars: chars,
+    meanings: entries.map(function(e) { return e.meaning[lang] || e.meaning.ro; })
+  };
+}
+
 function shuffle(arr) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {
@@ -137,6 +173,7 @@ function xpGain(streak) {
 
 /* ── app state ────────────────────────────────────────────── */
 var DATA = [];
+var readingIndex = {}; // ko syllable -> array of DATA indices whose reading includes it
 var lang = Store.get('KBH_LANG', 'ro');
 var srsData = Store.get('KBH_SRS', {});
 var xpData = Store.get('KBH_XP', { total: 0 });
@@ -257,6 +294,7 @@ fetch('./data/hanja.json')
 
 function boot() {
   applyTheme();
+  buildReadingIndex();
   renderStatic();
   updateBadges();
   buildQueue();
@@ -392,15 +430,31 @@ function renderLearn() {
   elLearnMeaning.textContent = item.meaning[lang] || item.meaning.ro;
 
   elLearnWords.innerHTML = item.words.map(function(w) {
-    var ko = highlightSyllable(w.ko, item);
     var sentence = highlightSyllable(w.sentence, item);
-    return '' +
-      '<div class="learnWord">' +
+    var breakdown = wordBreakdown(w);
+
+    var head;
+    if (breakdown) {
+      head =
         '<div class="lwHead">' +
-          '<span class="lwKo">' + ko + '</span>' +
+          '<div class="lwBreak">' +
+            '<div class="lwBreakKo">' + breakdown.chars.map(escapeHtml).join(' + ') + ' = ' + escapeHtml(w.ko) + '</div>' +
+            '<div class="lwBreakMeaning">' + breakdown.meanings.map(escapeHtml).join(' + ') + ' = ' + escapeHtml(w[lang] || w.ro) + '</div>' +
+          '</div>' +
+          '<button type="button" class="lwSpeak" data-say="' + escapeHtml(w.ko) + '">▶</button>' +
+        '</div>';
+    } else {
+      head =
+        '<div class="lwHead">' +
+          '<span class="lwKo">' + highlightSyllable(w.ko, item) + '</span>' +
           '<button type="button" class="lwSpeak" data-say="' + escapeHtml(w.ko) + '">▶</button>' +
         '</div>' +
-        '<div class="lwTr">' + escapeHtml(w[lang] || w.ro) + '</div>' +
+        '<div class="lwTr">' + escapeHtml(w[lang] || w.ro) + '</div>';
+    }
+
+    return '' +
+      '<div class="learnWord">' +
+        head +
         '<div class="lwSentence">' + sentence + '</div>' +
         '<div class="lwSentenceTr">' + escapeHtml(w['sentence_' + lang] || w.sentence_ro) + '</div>' +
       '</div>';

@@ -15,7 +15,9 @@ Fără build tools, fără server, fără cont — vanilla HTML/CSS/JS. Progresu
 
 Trei moduri, ca niște tab-uri:
 
-**Învață** — parcurgi cele 214 rădăcini secvențial, una câte una: citirea în Hangul, sensul, apoi cuvintele coreene reale care o folosesc (cu silaba evidențiată în fiecare cuvânt și propoziție), fiecare cu propoziție de exemplu și traducere, și la final etimologia caracterului — context cultural/istoric, marcat clar ca informativ, niciodată testat. Fără test, doar studiu, în ritmul tău, cu navigare prev/next.
+**Învață** — parcurgi cele 214 rădăcini secvențial, una câte una: citirea în Hangul, sensul, apoi cuvintele coreene reale care o folosesc, fiecare cu propoziție de exemplu și traducere, și la final etimologia caracterului — context cultural/istoric, marcat clar ca informativ, niciodată testat. Fără test, doar studiu, în ritmul tău, cu navigare prev/next.
+
+Pentru cuvintele unde fiecare silabă corespunde clar unui singur hanja din cele 214 (fără ambiguitate), cuvântul e arătat descompus — ex. `대 + 학 = 대학` și `mare + învățare = universitate` — ca să se vadă exact cum se combină rădăcinile. Pentru restul (silabă în afara celor 214, sau omofonă cu mai multe hanja), rămâne formatul obișnuit: cuvântul întreg, cu silaba rădăcinii evidențiată. Nu se ghicește niciodată sensul unei silabe nesigure.
 
 **Exersează** — 4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
 
