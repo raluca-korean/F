@@ -2,7 +2,13 @@
 
 /* ═══════════════════════════════════════════════════════════
    KOREAN BY HANJA — standalone quiz app
-   Practică pură pe cele 214 hanja de bază: citire, sens, cuvinte.
+   Învață coreeana prin 214 rădăcini sino-coreene: citirea în
+   Hangul a fiecărei rădăcini, sensul ei, și cuvintele coreene
+   reale formate combinând-o cu alte silabe. Caracterul chinezesc
+   (hanja) NU e niciodată subiectul unei întrebări — apare doar ca
+   etichetă mică, pentru a distinge rădăcini omofone (ex. 수 = apă/
+   mână/cine/trebuie, după hanja de origine). Nu învățăm caracterele
+   ca scriere chinezească, doar coreeana pe care o construiesc.
    Complet independentă — nu are legătură cu alte proiecte,
    propriile chei localStorage, propriul motor de scor și SRS.
    ═══════════════════════════════════════════════════════════ */
@@ -47,6 +53,21 @@ function highlightSyllable(word, item) {
     }
   }
   return word;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* Silaba coreeană mare, cu hanja-ul de origine ca etichetă mică, gri —
+   NICIODATĂ ca subiect de recunoscut/ales, doar ca dezambiguare vizuală
+   pentru omofone (ex. 수 = 水/apă, 手/mână, 誰/cine, 須/trebuie — fără
+   etichetă, cele 4 ar arăta identic într-un quiz). */
+function rootDisplay(item) {
+  return '<span class="rootMain">' + escapeHtml(primaryReading(item)) + '</span>' +
+         '<span class="rootTag">' + escapeHtml(item.hanja) + '</span>';
 }
 
 function shuffle(arr) {
@@ -126,37 +147,37 @@ var locked = false;
 
 var session = { correct: 0, total: 0, streak: 0 };
 
-var TYPES = ['hanja-meaning', 'hanja-reading', 'word-hanja', 'meaning-hanja'];
+var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word'];
 
 var UI = {
   ro: {
     title: 'Korean by Hanja',
-    sub: 'Învață coreeana prin cele 214 hanja de bază',
+    sub: 'Învață coreeana prin 214 rădăcini sino-coreene',
     correct: 'Corecte', total: 'Total', streak: 'Streak', mastered: 'Stăpânite',
     prompts: {
-      'hanja-meaning': 'Ce înseamnă acest hanja?',
-      'hanja-reading': 'Care este citirea acestui hanja?',
-      'word-hanja':    'Ce hanja apare în acest cuvânt?',
-      'meaning-hanja': 'Care hanja are acest sens?'
+      'root-meaning': 'Ce înseamnă această silabă coreeană?',
+      'meaning-root': 'Care silabă coreeană are acest sens?',
+      'word-meaning': 'Ce înseamnă silaba evidențiată din acest cuvânt?',
+      'meaning-word': 'Care e cuvântul coreean corect?'
     },
     correctMsg: 'Corect!', wrongMsg: 'Greșit',
     next: 'Următorul →',
-    hlHint: 'Silaba evidențiată = citirea acestui hanja în cuvânt',
+    hlHint: 'Silaba evidențiată e cea din întrebare',
     footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser'
   },
   en: {
     title: 'Korean by Hanja',
-    sub: 'Learn Korean through the 214 core hanja',
+    sub: 'Learn Korean through 214 Sino-Korean roots',
     correct: 'Correct', total: 'Total', streak: 'Streak', mastered: 'Mastered',
     prompts: {
-      'hanja-meaning': 'What does this hanja mean?',
-      'hanja-reading': 'What is the reading of this hanja?',
-      'word-hanja':    'Which hanja appears in this word?',
-      'meaning-hanja': 'Which hanja has this meaning?'
+      'root-meaning': 'What does this Korean syllable mean?',
+      'meaning-root': 'Which Korean syllable has this meaning?',
+      'word-meaning': 'What does the highlighted syllable mean in this word?',
+      'meaning-word': 'Which is the correct Korean word?'
     },
     correctMsg: 'Correct!', wrongMsg: 'Wrong',
     next: 'Next →',
-    hlHint: 'Highlighted syllable = this hanja’s reading in the word',
+    hlHint: 'The highlighted syllable is the one being asked about',
     footer: 'Standalone app · no account, no server · progress is saved locally in this browser'
   }
 };
@@ -271,15 +292,46 @@ function pickItem() {
   return queue.pop(); // DATA index
 }
 
-/* ── question builders ───────────────────────────────────── */
-function distractorValues(di, valueFn, n) {
+/* ── question builders ───────────────────────────────────────
+   Fiecare opțiune e {key, label, tag?}. `key` identifică unic
+   opțiunea (index/hanja pentru rădăcini, text pentru sensuri/cuvinte)
+   — esențial la 'meaning-root', unde omofone diferite (ex. 수/水 vs
+   수/手) ar arăta identic ca text și s-ar dedupe greșit dacă am
+   compara după label. */
+function distractMeanings(di, n) {
+  var correct = DATA[di].meaning[lang] || DATA[di].meaning.ro;
   var indices = shuffle(DATA.map(function(_, i) { return i; }).filter(function(i) { return i !== di; }));
-  var correctVal = valueFn(DATA[di]);
-  var seen = {}; seen[correctVal] = true;
+  var seen = {}; seen[correct] = true;
   var out = [];
   for (var i = 0; i < indices.length && out.length < n; i++) {
-    var v = valueFn(DATA[indices[i]]);
-    if (v && !seen[v]) { seen[v] = true; out.push(v); }
+    var m = DATA[indices[i]].meaning[lang] || DATA[indices[i]].meaning.ro;
+    if (m && !seen[m]) { seen[m] = true; out.push({ key: m, label: m }); }
+  }
+  return out;
+}
+
+function distractRoots(di, n) {
+  var indices = shuffle(DATA.map(function(_, i) { return i; }).filter(function(i) { return i !== di; }));
+  var out = [];
+  for (var i = 0; i < indices.length && out.length < n; i++) {
+    var idx = indices[i];
+    out.push({ key: idx, label: primaryReading(DATA[idx]), tag: DATA[idx].hanja });
+  }
+  return out;
+}
+
+function distractWords(correctKey, n) {
+  var flat = [];
+  DATA.forEach(function(e, idx) {
+    e.words.forEach(function(w) {
+      var key = idx + '_' + w.ko;
+      if (key !== correctKey) flat.push({ key: key, label: w.ko });
+    });
+  });
+  var pool = shuffle(flat);
+  var seen = {}; var out = [];
+  for (var i = 0; i < pool.length && out.length < n; i++) {
+    if (!seen[pool[i].label]) { seen[pool[i].label] = true; out.push(pool[i]); }
   }
   return out;
 }
@@ -287,27 +339,28 @@ function distractorValues(di, valueFn, n) {
 function buildQuestion() {
   var di = pickItem();
   var item = DATA[di];
-  var possibleTypes = TYPES.filter(function(ty) {
-    return ty !== 'word-hanja' || (item.words && item.words.length);
-  });
-  var type = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
+  var type = TYPES[Math.floor(Math.random() * TYPES.length)];
 
-  var correctVal, options, wordUsed = null;
+  var correctKey, correctLabel, options, wordUsed = null;
 
-  if (type === 'hanja-meaning') {
-    var meaningOf = function(h) { return h.meaning[lang] || h.meaning.ro; };
-    correctVal = meaningOf(item);
-    options = distractorValues(di, meaningOf, 3).concat([correctVal]);
-  } else if (type === 'hanja-reading') {
-    correctVal = primaryReading(item);
-    options = distractorValues(di, primaryReading, 3).concat([correctVal]);
-  } else if (type === 'word-hanja') {
+  if (type === 'root-meaning') {
+    correctLabel = item.meaning[lang] || item.meaning.ro;
+    correctKey = correctLabel;
+    options = distractMeanings(di, 3).concat([{ key: correctKey, label: correctLabel }]);
+  } else if (type === 'meaning-root') {
+    correctLabel = primaryReading(item);
+    correctKey = di;
+    options = distractRoots(di, 3).concat([{ key: di, label: correctLabel, tag: item.hanja }]);
+  } else if (type === 'word-meaning') {
     wordUsed = item.words[Math.floor(Math.random() * item.words.length)];
-    correctVal = item.hanja;
-    options = distractorValues(di, function(h) { return h.hanja; }, 3).concat([correctVal]);
-  } else { // meaning-hanja
-    correctVal = item.hanja;
-    options = distractorValues(di, function(h) { return h.hanja; }, 3).concat([correctVal]);
+    correctLabel = item.meaning[lang] || item.meaning.ro;
+    correctKey = correctLabel;
+    options = distractMeanings(di, 3).concat([{ key: correctKey, label: correctLabel }]);
+  } else { // meaning-word
+    wordUsed = item.words[Math.floor(Math.random() * item.words.length)];
+    correctKey = di + '_' + wordUsed.ko;
+    correctLabel = wordUsed.ko;
+    options = distractWords(correctKey, 3).concat([{ key: correctKey, label: correctLabel }]);
   }
 
   return {
@@ -315,7 +368,8 @@ function buildQuestion() {
     item: item,
     di: di,
     wordUsed: wordUsed,
-    correctVal: correctVal,
+    correctKey: correctKey,
+    correctLabel: correctLabel,
     options: shuffle(options)
   };
 }
@@ -334,49 +388,55 @@ function renderQuestion() {
   var c = current;
   elTypeLbl.textContent = l.prompts[c.type];
 
-  var isGlyphOption = (c.type === 'word-hanja' || c.type === 'meaning-hanja');
-
   elPromptHint.classList.add('hidden');
+  elSpeakBtn.classList.add('hidden');
+  elPrompt.classList.remove('root');
 
-  if (c.type === 'hanja-meaning' || c.type === 'hanja-reading') {
-    elPrompt.textContent = c.item.hanja;
-    elPrompt.classList.add('glyph');
+  if (c.type === 'root-meaning') {
+    elPrompt.innerHTML = rootDisplay(c.item);
+    elPrompt.classList.add('root');
     elPromptSub.textContent = '';
-    elSpeakBtn.classList.toggle('hidden', c.type !== 'hanja-reading');
-  } else if (c.type === 'word-hanja') {
+    elSpeakBtn.classList.remove('hidden');
+  } else if (c.type === 'meaning-root') {
+    elPrompt.textContent = c.item.meaning[lang] || c.item.meaning.ro;
+    elPromptSub.textContent = '';
+  } else if (c.type === 'word-meaning') {
     elPrompt.innerHTML = highlightSyllable(c.wordUsed.ko, c.item);
-    elPrompt.classList.remove('glyph');
     elPromptSub.textContent = c.wordUsed[lang] || c.wordUsed.ro;
     elPromptHint.textContent = l.hlHint;
     elPromptHint.classList.remove('hidden');
     elSpeakBtn.classList.remove('hidden');
-  } else { // meaning-hanja
-    elPrompt.textContent = c.item.meaning[lang] || c.item.meaning.ro;
-    elPrompt.classList.remove('glyph');
+  } else { // meaning-word
+    elPrompt.textContent = c.wordUsed[lang] || c.wordUsed.ro;
     elPromptSub.textContent = '';
-    elSpeakBtn.classList.add('hidden');
   }
 
   elAnswers.innerHTML = '';
   c.options.forEach(function(opt) {
     var btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'answerBtn' + (isGlyphOption ? ' glyphOpt' : '');
-    btn.textContent = opt;
-    btn.addEventListener('click', function() { submitAnswer(opt, btn); });
+    btn.className = 'answerBtn' + (opt.tag ? ' rootOpt' : '');
+    if (opt.tag) {
+      btn.innerHTML = '<span class="optMain">' + escapeHtml(opt.label) + '</span>' +
+                       '<span class="optTag">' + escapeHtml(opt.tag) + '</span>';
+    } else {
+      btn.textContent = opt.label;
+    }
+    btn.dataset.key = opt.key;
+    btn.addEventListener('click', function() { submitAnswer(opt.key, btn); });
     elAnswers.appendChild(btn);
   });
 }
 
-function submitAnswer(chosen, btn) {
+function submitAnswer(key, btn) {
   if (locked) return;
   locked = true;
   var c = current;
-  var isCorrect = chosen === c.correctVal;
+  var isCorrect = String(key) === String(c.correctKey);
 
   Array.prototype.forEach.call(elAnswers.children, function(b) {
     b.disabled = true;
-    if (b.textContent === c.correctVal) b.classList.add('correct');
+    if (String(b.dataset.key) === String(c.correctKey)) b.classList.add('correct');
     else if (b === btn) b.classList.add('wrong');
   });
 
@@ -387,12 +447,12 @@ function submitAnswer(chosen, btn) {
   updateBadges();
 
   var l = t();
-  elFeedback.textContent = isCorrect ? '✓ ' + l.correctMsg : '✕ ' + l.wrongMsg + ' — ' + c.correctVal;
+  elFeedback.textContent = isCorrect ? '✓ ' + l.correctMsg : '✕ ' + l.wrongMsg + ' — ' + c.correctLabel;
   elFeedback.className = 'feedback show ' + (isCorrect ? 'ok' : 'bad');
   elNextBtn.classList.add('show');
 
   if (isCorrect) {
-    var say = c.type === 'word-hanja' ? c.wordUsed.ko : primaryReading(c.item);
+    var say = (c.type === 'word-meaning' || c.type === 'meaning-word') ? c.wordUsed.ko : primaryReading(c.item);
     speak(say);
   }
 

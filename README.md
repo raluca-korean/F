@@ -1,6 +1,8 @@
 # Korean by Hanja
 
-Aplicație web independentă de învățat coreeana prin cele 214 caractere hanja de bază — citire, sens și cuvinte coreene reale care le conțin.
+Aplicație web independentă de învățat coreeana prin 214 rădăcini sino-coreene (hanja) — citirea lor în Hangul, sensul lor, și cuvintele coreene reale formate combinându-le cu alte silabe.
+
+**Nu e o aplicație de învățat caracterele chinezești ca scriere.** Caracterul hanja (ex. 水) nu e niciodată subiectul unei întrebări — apare doar ca etichetă mică, gri, lângă silaba coreeană, doar ca să distingă rădăcini omofone (ex. 수 = apă/水, mână/手, cine/誰, trebuie/須 — fără etichetă, cele 4 ar arăta identic). Tot ce se testează e coreeana: citirea, sensul, cuvântul.
 
 Fără build tools, fără server, fără cont — vanilla HTML/CSS/JS. Progresul (scor, XP, repetiție spațiată) se salvează local, în browser-ul fiecărui utilizator.
 
@@ -11,12 +13,12 @@ Fără build tools, fără server, fără cont — vanilla HTML/CSS/JS. Progresu
 
 ## Cum funcționează
 
-4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru caracterele noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
+4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
 
-- **Hanja → sens**: ce înseamnă acest caracter
-- **Hanja → citire**: cum se citește în coreeană
-- **Cuvânt → hanja**: ce hanja apare într-un cuvânt coreean real
-- **Sens → hanja**: care hanja are un anumit sens
+- **Silabă → sens**: ce înseamnă această silabă coreeană
+- **Sens → silabă**: care silabă coreeană are acest sens
+- **Cuvânt → sens**: ce înseamnă silaba evidențiată dintr-un cuvânt coreean real
+- **Sens → cuvânt**: care e cuvântul coreean corect pentru un anumit sens
 
 ## Deploy
 
