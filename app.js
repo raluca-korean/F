@@ -147,6 +147,9 @@ var locked = false;
 
 var session = { correct: 0, total: 0, streak: 0 };
 
+var mode = 'learn';   // 'learn' | 'practice'
+var learnPos = Store.get('KBH_LEARN_POS', 0);
+
 var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word'];
 
 var UI = {
@@ -163,6 +166,8 @@ var UI = {
     correctMsg: 'Corect!', wrongMsg: 'Greșit',
     next: 'Următorul →',
     hlHint: 'Silaba evidențiată e cea din întrebare',
+    tabLearn: 'Învață', tabPractice: 'Exersează',
+    learnWords: 'Cuvinte care folosesc această silabă',
     footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser'
   },
   en: {
@@ -178,6 +183,8 @@ var UI = {
     correctMsg: 'Correct!', wrongMsg: 'Wrong',
     next: 'Next →',
     hlHint: 'The highlighted syllable is the one being asked about',
+    tabLearn: 'Learn', tabPractice: 'Practice',
+    learnWords: 'Words that use this syllable',
     footer: 'Standalone app · no account, no server · progress is saved locally in this browser'
   }
 };
@@ -204,6 +211,19 @@ var elLangBtn  = document.getElementById('langBtn');
 var elDarkBtn  = document.getElementById('darkBtn');
 var elFooter   = document.getElementById('footerNote');
 
+var elTabLearn    = document.getElementById('tabLearn');
+var elTabPractice = document.getElementById('tabPractice');
+var elLearnView   = document.getElementById('learnView');
+var elPracticeView= document.getElementById('practiceView');
+var elLearnPrev   = document.getElementById('learnPrev');
+var elLearnNext   = document.getElementById('learnNext');
+var elLearnPos    = document.getElementById('learnPos');
+var elLearnRoot   = document.getElementById('learnRoot');
+var elLearnSpeak  = document.getElementById('learnSpeak');
+var elLearnMeaning= document.getElementById('learnMeaning');
+var elLearnWordsLabel = document.getElementById('learnWordsLabel');
+var elLearnWords  = document.getElementById('learnWords');
+
 /* ── boot ─────────────────────────────────────────────────── */
 fetch('./data/hanja.json')
   .then(function(r) { return r.json(); })
@@ -216,6 +236,8 @@ function boot() {
   updateBadges();
   buildQueue();
   nextQuestion();
+  setMode('learn');
+  renderLearn();
 
   elLangBtn.addEventListener('click', function() {
     lang = lang === 'ro' ? 'en' : 'ro';
@@ -223,6 +245,7 @@ function boot() {
     renderStatic();
     updateBadges();
     if (current) renderQuestion();
+    renderLearn();
   });
   elDarkBtn.addEventListener('click', function() {
     var isDark = !document.body.classList.contains('dark-mode');
@@ -236,6 +259,26 @@ function boot() {
   elNextBtn.addEventListener('click', function() {
     if (locked) nextQuestion();
   });
+
+  elTabLearn.addEventListener('click', function() { setMode('learn'); });
+  elTabPractice.addEventListener('click', function() { setMode('practice'); });
+  elLearnPrev.addEventListener('click', function() { goLearn(-1); });
+  elLearnNext.addEventListener('click', function() { goLearn(1); });
+  elLearnSpeak.addEventListener('click', function() {
+    speak(primaryReading(DATA[learnPos]));
+  });
+  elLearnWords.addEventListener('click', function(e) {
+    var btn = e.target.closest('.lwSpeak');
+    if (btn) speak(btn.dataset.say);
+  });
+}
+
+function setMode(m) {
+  mode = m;
+  elTabLearn.classList.toggle('active', m === 'learn');
+  elTabPractice.classList.toggle('active', m === 'practice');
+  elLearnView.classList.toggle('hidden', m !== 'learn');
+  elPracticeView.classList.toggle('hidden', m !== 'practice');
 }
 
 function applyTheme() {
@@ -252,6 +295,9 @@ function renderStatic() {
   elNextBtn.textContent = l.next;
   elLangBtn.textContent = lang;
   elFooter.textContent = l.footer;
+  elTabLearn.textContent = l.tabLearn;
+  elTabPractice.textContent = l.tabPractice;
+  elLearnWordsLabel.textContent = l.learnWords;
 }
 
 /* ── mastery / progress ──────────────────────────────────── */
@@ -271,6 +317,44 @@ function updateBadges() {
   var m = masteredCount();
   elMastered.querySelector('span:last-child').textContent = l.mastered + ': ' + m + '/' + DATA.length;
   elBarFill.style.width = (DATA.length ? Math.round(m / DATA.length * 100) : 0) + '%';
+}
+
+/* ── learn mode — sequential, one hanja at a time ──────────────
+   Reading + meaning first, then the real words that use it, each
+   with its example sentence — the same order the user asked to
+   study in, browsed at their own pace (not SRS-prioritized; that's
+   what Practice mode is for). */
+function goLearn(delta) {
+  learnPos = Math.max(0, Math.min(DATA.length - 1, learnPos + delta));
+  Store.set('KBH_LEARN_POS', learnPos);
+  renderLearn();
+}
+
+function renderLearn() {
+  if (!DATA.length) return;
+  var item = DATA[learnPos];
+
+  elLearnPos.textContent = (learnPos + 1) + ' / ' + DATA.length;
+  elLearnPrev.disabled = learnPos === 0;
+  elLearnNext.disabled = learnPos === DATA.length - 1;
+
+  elLearnRoot.innerHTML = rootDisplay(item);
+  elLearnMeaning.textContent = item.meaning[lang] || item.meaning.ro;
+
+  elLearnWords.innerHTML = item.words.map(function(w) {
+    var ko = highlightSyllable(w.ko, item);
+    var sentence = highlightSyllable(w.sentence, item);
+    return '' +
+      '<div class="learnWord">' +
+        '<div class="lwHead">' +
+          '<span class="lwKo">' + ko + '</span>' +
+          '<button type="button" class="lwSpeak" data-say="' + escapeHtml(w.ko) + '">▶</button>' +
+        '</div>' +
+        '<div class="lwTr">' + escapeHtml(w[lang] || w.ro) + '</div>' +
+        '<div class="lwSentence">' + sentence + '</div>' +
+        '<div class="lwSentenceTr">' + escapeHtml(w['sentence_' + lang] || w.sentence_ro) + '</div>' +
+      '</div>';
+  }).join('');
 }
 
 /* ── question queue — SRS-aware ──────────────────────────────

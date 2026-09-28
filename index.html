@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Korean by Hanja</title>
-<meta name="description" content="Învață coreeana prin cele 214 hanja de bază — citire, sens și cuvinte reale.">
+<meta name="description" content="Învață coreeana prin 214 rădăcini sino-coreene — studiu pas cu pas, apoi exerciții.">
 <meta name="theme-color" content="#b3402c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800;900&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
@@ -35,7 +35,29 @@
   <div class="kbh-barBg"><div class="kbh-barFill" id="barFill"></div></div>
 </div>
 
-<main class="kbh-main">
+<div class="kbh-tabs">
+  <button type="button" class="tabBtn" id="tabLearn"></button>
+  <button type="button" class="tabBtn" id="tabPractice"></button>
+</div>
+
+<section id="learnView">
+  <div class="learnNav">
+    <button type="button" class="navBtn" id="learnPrev">‹</button>
+    <div class="learnPos" id="learnPos"></div>
+    <button type="button" class="navBtn" id="learnNext">›</button>
+  </div>
+  <div class="kbh-card learnCard">
+    <div class="promptWrap">
+      <div id="learnRoot"></div>
+      <button type="button" id="learnSpeak" title="Ascultă">▶</button>
+    </div>
+    <div id="learnMeaning"></div>
+    <div class="learnSectionLabel" id="learnWordsLabel"></div>
+    <div id="learnWords"></div>
+  </div>
+</section>
+
+<main class="kbh-main hidden" id="practiceView">
   <div class="kbh-card">
     <div class="typeLabel" id="typeLabel"></div>
     <div class="promptWrap">

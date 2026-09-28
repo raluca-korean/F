@@ -13,7 +13,11 @@ Fără build tools, fără server, fără cont — vanilla HTML/CSS/JS. Progresu
 
 ## Cum funcționează
 
-4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
+Două moduri, ca niște tab-uri:
+
+**Învață** — parcurgi cele 214 rădăcini secvențial, una câte una: citirea în Hangul, sensul, apoi cuvintele coreene reale care o folosesc (cu silaba evidențiată în fiecare cuvânt și propoziție), fiecare cu propoziție de exemplu și traducere. Fără test, doar studiu, în ritmul tău, cu navigare prev/next.
+
+**Exersează** — 4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
 
 - **Silabă → sens**: ce înseamnă această silabă coreeană
 - **Sens → silabă**: care silabă coreeană are acest sens
