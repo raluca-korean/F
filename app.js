@@ -70,35 +70,32 @@ function rootDisplay(item) {
          '<span class="rootTag">' + escapeHtml(item.hanja) + '</span>';
 }
 
-/* Index every syllable reading across all 214 hanja, so we can look
-   up "which entry has this exact reading" for word-breakdown display. */
-function buildReadingIndex() {
-  readingIndex = {};
-  DATA.forEach(function(item, i) {
-    readingList(item).forEach(function(r) {
-      if (!readingIndex[r]) readingIndex[r] = [];
-      readingIndex[r].push(i);
-    });
-  });
+/* Index every hanja character across the 214 entries, keyed by the
+   character itself (not by reading — a Korean syllable is very often a
+   homophone for 3-5 different hanja, so "this syllable has only one
+   match in our 214-entry set" does NOT prove that match is the word's
+   true source hanja; it only proves no collision inside our small
+   reference set, while the real character is often a different one we
+   don't even have). We learned this the hard way: an earlier version of
+   this feature resolved 학교 as 學+交 (school as "learn"+"exchange")
+   instead of the true 學+校, because 校 simply isn't in our 214 set —
+   the auto-heuristic couldn't tell "unique here" apart from "correct". */
+function buildHanjaIndex() {
+  hanjaIndex = {};
+  DATA.forEach(function(item) { hanjaIndex[item.hanja] = item; });
 }
 
-/* Silabă → hanja + sens, DOAR când acea silabă corespunde unui singur
-   hanja din set (fără ambiguitate). Multe silabe coreene sunt omofone
-   pentru 2-5 hanja diferite — dacă am ghici oricare, am risca să
-   predăm o asociere greșită, exact ce evităm peste tot în aplicație.
-   Întoarce null când nu putem ști sigur. */
-function syllableEntry(ch) {
-  var matches = readingIndex[ch];
-  if (!matches || matches.length !== 1) return null;
-  return DATA[matches[0]];
-}
-
-/* Descompunerea sigură a unui cuvânt: doar dacă TOATE silabele lui
-   se rezolvă fiecare la exact un hanja cunoscut. Altfel null — cuvântul
-   rămâne afișat în formatul obișnuit (silabă evidențiată + traducere). */
+/* Descompunerea unui cuvânt: DOAR pentru cuvintele din VERIFIED_BREAKDOWNS
+   (data/verified-breakdowns.js) — o listă verificată manual, silabă cu
+   silabă, hanja cu hanja, nu dedusă automat din unicitatea în set.
+   Pentru orice alt cuvânt întoarcem null și rămâne formatul obișnuit
+   (silabă evidențiată + traducere) — nu ghicim niciodată. */
 function wordBreakdown(word) {
+  var hanjaChars = VERIFIED_BREAKDOWNS[word.ko];
+  if (!hanjaChars) return null;
   var chars = word.ko.split('');
-  var entries = chars.map(syllableEntry);
+  if (chars.length !== hanjaChars.length) return null;
+  var entries = hanjaChars.map(function(h) { return hanjaIndex[h]; });
   if (entries.some(function(e) { return !e; })) return null;
   return {
     chars: chars,
@@ -173,7 +170,7 @@ function xpGain(streak) {
 
 /* ── app state ────────────────────────────────────────────── */
 var DATA = [];
-var readingIndex = {}; // ko syllable -> array of DATA indices whose reading includes it
+var hanjaIndex = {}; // hanja character -> DATA entry
 var lang = Store.get('KBH_LANG', 'ro');
 var srsData = Store.get('KBH_SRS', {});
 var xpData = Store.get('KBH_XP', { total: 0 });
@@ -294,7 +291,7 @@ fetch('./data/hanja.json')
 
 function boot() {
   applyTheme();
-  buildReadingIndex();
+  buildHanjaIndex();
   renderStatic();
   updateBadges();
   buildQueue();
