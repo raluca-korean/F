@@ -768,4 +768,19 @@ var VERIFIED_BREAKDOWNS = {
   '산발':   ['散', '髮'],
   '세배':   ['歲', '拜'],
   '은유':   ['隱', '喩'],
+
+  /* Al șaptelea val — mai mic: majoritatea candidaților rămași au nevoie
+     de hanja rare, folosite într-un singur cuvânt (randament tot mai mic
+     pentru riscul asumat). Doar 境/廳/優/畵, plus 2 cuvinte deja
+     rezolvabile din valul anterior (수습 cu 收, ratat atunci). */
+  '국경':   ['國', '境'],
+  '심경':   ['心', '境'],
+  '구청':   ['區', '廳'],
+  '시청':   ['市', '廳'],
+  '우승':   ['優', '勝'],
+  '우아':   ['優', '雅'],
+  '화가':   ['畵', '家'],
+  '방화':   ['放', '火'],
+  '수습':   ['收', '拾'],
+  '수습생': ['收', '拾', '生'],
 };

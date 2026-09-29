@@ -221,5 +221,10 @@ var EXTRA_HANJA = {
   '酸': { reading: '산', meaning: { ro: 'acid', en: 'acid' } },
   '散': { reading: '산', meaning: { ro: 'a împrăștia', en: 'to scatter' } },
   '拜': { reading: '배', meaning: { ro: 'a se închina', en: 'to bow' } },
-  '喩': { reading: '유', meaning: { ro: 'metaforă', en: 'metaphor' } }
+  '喩': { reading: '유', meaning: { ro: 'metaforă', en: 'metaphor' } },
+
+  '境': { reading: '경', meaning: { ro: 'graniță, teritoriu', en: 'border, boundary' } },
+  '廳': { reading: '청', meaning: { ro: 'clădire administrativă, oficiu', en: 'government office, hall' } },
+  '優': { reading: '우', meaning: { ro: 'excelent, superior', en: 'excellent, superior' } },
+  '畵': { reading: '화', meaning: { ro: 'pictură, desen', en: 'painting, drawing' } }
 };
