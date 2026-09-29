@@ -95,7 +95,7 @@ function resolveHanja(h) {
   var core = hanjaIndex[h];
   if (core) return { hanja: h, reading: primaryReading(core), meaning: core.meaning };
   var extra = (typeof EXTRA_HANJA !== 'undefined') ? EXTRA_HANJA[h] : null;
-  if (extra) return { hanja: h, reading: extra.reading, meaning: extra.meaning };
+  if (extra) return { hanja: h, reading: extra.reading.split(' ')[0], meaning: extra.meaning };
   return null;
 }
 
