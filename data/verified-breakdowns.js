@@ -804,4 +804,15 @@ var VERIFIED_BREAKDOWNS = {
   '분재':   ['盆', '栽'],
   '화백':   ['畵', '伯'],
   '시화전': ['詩', '畵', '展'],
+
+  /* Al nouălea val — randament tot mai mic (majoritatea candidaților
+     rămași au nevoie de hanja rare sau sunt ambigue). 不/傷/童/修/假/講. */
+  '불법':   ['不', '法'],
+  '불안':   ['不', '安'],
+  '화상':   ['火', '傷'],
+  '동상':   ['凍', '傷'],
+  '동화':   ['童', '話'],
+  '수정':   ['修', '正'],
+  '가설':   ['假', '設'],
+  '강당':   ['講', '堂'],
 };

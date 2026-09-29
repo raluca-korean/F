@@ -241,5 +241,11 @@ var EXTRA_HANJA = {
   '征': { reading: '정', meaning: { ro: 'a cuceri', en: 'to conquer' } },
   '障': { reading: '장', meaning: { ro: 'barieră', en: 'barrier' } },
   '寫': { reading: '사', meaning: { ro: 'a copia, a fotografia', en: 'to copy, to photograph' } },
-  '盆': { reading: '분', meaning: { ro: 'vas, ghiveci', en: 'pot, basin' } }
+  '盆': { reading: '분', meaning: { ro: 'vas, ghiveci', en: 'pot, basin' } },
+
+  '傷': { reading: '상', meaning: { ro: 'rană', en: 'injury, wound' } },
+  '童': { reading: '동', meaning: { ro: 'copil', en: 'child' } },
+  '修': { reading: '수', meaning: { ro: 'a corecta, a repara', en: 'to correct, to fix' } },
+  '假': { reading: '가', meaning: { ro: 'fals, temporar', en: 'false, temporary' } },
+  '講': { reading: '강', meaning: { ro: 'prelegere', en: 'lecture' } }
 };
