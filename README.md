@@ -10,6 +10,8 @@ Fără build tools, fără server, fără cont — vanilla HTML/CSS/JS. Progresu
 
 - `index.html` / `style.css` / `app.js` — aplicația (o singură pagină)
 - `data/hanja.json` — cele 214 hanja, cu citire, sens (ro/en), etimologie și cuvinte de exemplu
+- `data/verified-breakdowns.js` — lista verificată manual de descompuneri cuvânt→hanja (vezi mai jos)
+- `data/extra-hanja.js` — hanja suplimentare (în afara celor 214), doar pentru completarea descompunerilor
 
 ## Cum funcționează
 
@@ -17,7 +19,9 @@ Trei moduri, ca niște tab-uri:
 
 **Învață** — parcurgi cele 214 rădăcini secvențial, una câte una: citirea în Hangul, sensul, apoi cuvintele coreene reale care o folosesc, fiecare cu propoziție de exemplu și traducere, și la final etimologia caracterului — context cultural/istoric, marcat clar ca informativ, niciodată testat. Fără test, doar studiu, în ritmul tău, cu navigare prev/next.
 
-Pentru o parte din cuvinte, arătate descompus — ex. `대 + 학 = 대학` și `mare + învățare = universitate` — ca să se vadă exact cum se combină rădăcinile. Lista e în `data/verified-breakdowns.js` (`VERIFIED_BREAKDOWNS`), **verificată manual, cuvânt cu cuvânt**, nu dedusă automat: o silabă coreeană e omofonă pentru 3-5 hanja diferite de multe ori, iar „se potrivește cu un singur hanja din cele 214" NU dovedește că acela e hanja-ul adevărat al cuvântului — dovedește doar că nu se ciocnește cu alt hanja din setul nostru mic, în timp ce hanja-ul real e adesea altul, din afara celor 214 (ex. 학교 nu e 學+交, ci 學+校, iar 校 nici nu e în set). De asta orice cuvânt nou adăugat aici trebuie verificat contra etimologiei reale, nu doar contra unicității în set. Pentru restul cuvintelor (cele mai multe — nu toate pot intra sigur în acest format, unele omit hanja necunoscute nouă, altele sunt omofone reale), rămâne formatul obișnuit: cuvântul întreg, cu silaba rădăcinii evidențiată. Nu se ghicește niciodată sensul unei silabe nesigure.
+Pentru o parte din cuvinte, arătate descompus, pe silabe — un rând scurt (`대 + 학 = 대학`, `mare + învățare = universitate`) și, lângă el (sau dedesubt pe mobil), un tabel detaliat cu fiecare hanja, citirea lui în Hangul și sensul lui, ca să se vadă exact cum se combină rădăcinile, silabă cu silabă, „pe înțelesul tuturor". Lista e în `data/verified-breakdowns.js` (`VERIFIED_BREAKDOWNS`), **verificată manual, cuvânt cu cuvânt**, nu dedusă automat: o silabă coreeană e omofonă pentru 3-5 hanja diferite de multe ori, iar „se potrivește cu un singur hanja din cele 214" NU dovedește că acela e hanja-ul adevărat al cuvântului — dovedește doar că nu se ciocnește cu alt hanja din setul nostru mic, în timp ce hanja-ul real e adesea altul, din afara celor 214 (ex. 학교 nu e 學+交, ci 學+校, iar 校 nu era în set inițial). De asta orice cuvânt nou adăugat aici trebuie verificat contra etimologiei reale, nu doar contra unicității în set.
+
+Unele cuvinte au nevoie de un hanja care nu e printre cele 214 rădăcini pe care le înveți efectiv (ex. 校 pentru 학교, 都 pentru 도시). Acelea sunt în `data/extra-hanja.js` (`EXTRA_HANJA`) — un mic set suplimentar, **doar pentru afișarea descompunerii**, nu rădăcini noi de învățat/testat în Exersează sau Puzzle. Se extinde treptat, cuvânt cu cuvânt, cu aceeași verificare atentă. Pentru restul cuvintelor (încă majoritatea — extinderea e un proces continuu), rămâne formatul obișnuit: cuvântul întreg, cu silaba rădăcinii evidențiată. Nu se ghicește niciodată sensul unei silabe nesigure.
 
 **Exersează** — 4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
 

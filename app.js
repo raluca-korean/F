@@ -85,6 +85,20 @@ function buildHanjaIndex() {
   DATA.forEach(function(item) { hanjaIndex[item.hanja] = item; });
 }
 
+/* Un hanja poate veni fie din cele 214 rădăcini (hanjaIndex, cu etimologie
+   completă), fie din EXTRA_HANJA (data/extra-hanja.js) — un mic set
+   suplimentar, verificat la fel de atent, folosit DOAR ca să completăm
+   descompunerea unor cuvinte ale căror silabe nu se rezolvă toate în cele
+   214. Întoarce mereu aceeași formă {hanja, reading, meaning}, indiferent
+   de sursă, sau null dacă hanja-ul nu e cunoscut din niciuna. */
+function resolveHanja(h) {
+  var core = hanjaIndex[h];
+  if (core) return { hanja: h, reading: primaryReading(core), meaning: core.meaning };
+  var extra = (typeof EXTRA_HANJA !== 'undefined') ? EXTRA_HANJA[h] : null;
+  if (extra) return { hanja: h, reading: extra.reading, meaning: extra.meaning };
+  return null;
+}
+
 /* Descompunerea unui cuvânt: DOAR pentru cuvintele din VERIFIED_BREAKDOWNS
    (data/verified-breakdowns.js) — o listă verificată manual, silabă cu
    silabă, hanja cu hanja, nu dedusă automat din unicitatea în set.
@@ -95,11 +109,12 @@ function wordBreakdown(word) {
   if (!hanjaChars) return null;
   var chars = word.ko.split('');
   if (chars.length !== hanjaChars.length) return null;
-  var entries = hanjaChars.map(function(h) { return hanjaIndex[h]; });
-  if (entries.some(function(e) { return !e; })) return null;
+  var syllables = hanjaChars.map(resolveHanja);
+  if (syllables.some(function(s) { return !s; })) return null;
   return {
     chars: chars,
-    meanings: entries.map(function(e) { return e.meaning[lang] || e.meaning.ro; })
+    syllables: syllables,
+    meanings: syllables.map(function(s) { return s.meaning[lang] || s.meaning.ro; })
   };
 }
 
@@ -430,15 +445,35 @@ function renderLearn() {
     var sentence = highlightSyllable(w.sentence, item);
     var breakdown = wordBreakdown(w);
 
-    var head;
+    var head, panel = '';
     if (breakdown) {
+      var hanjaSpelling = breakdown.syllables.map(function(s) { return s.hanja; }).join('');
+      var wordTr = w[lang] || w.ro;
+
       head =
         '<div class="lwHead">' +
           '<div class="lwBreak">' +
             '<div class="lwBreakKo">' + breakdown.chars.map(escapeHtml).join(' + ') + ' = ' + escapeHtml(w.ko) + '</div>' +
-            '<div class="lwBreakMeaning">' + breakdown.meanings.map(escapeHtml).join(' + ') + ' = ' + escapeHtml(w[lang] || w.ro) + '</div>' +
+            '<div class="lwBreakMeaning">' + breakdown.meanings.map(escapeHtml).join(' + ') + ' = ' + escapeHtml(wordTr) + '</div>' +
           '</div>' +
           '<button type="button" class="lwSpeak" data-say="' + escapeHtml(w.ko) + '">▶</button>' +
+        '</div>';
+
+      var rows = breakdown.syllables.map(function(s, i) {
+        return '<tr>' +
+          '<td class="hj">' + escapeHtml(s.hanja) + '</td>' +
+          '<td class="syll">' + escapeHtml(breakdown.chars[i]) + '</td>' +
+          '<td>' + escapeHtml(breakdown.meanings[i]) + '</td>' +
+        '</tr>';
+      }).join('');
+
+      panel =
+        '<div class="lwBreakPanel">' +
+          '<div class="lwBreakPanelTitle">' + escapeHtml(w.ko) + ' (' + escapeHtml(hanjaSpelling) + ') = ' + escapeHtml(wordTr) + '</div>' +
+          '<table class="lwBreakTable">' +
+            '<thead><tr><th>Hanja</th><th>' + (lang === 'en' ? 'Korean' : 'Coreeană') + '</th><th>' + (lang === 'en' ? 'Meaning' : 'Sens') + '</th></tr></thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>' +
         '</div>';
     } else {
       head =
@@ -450,10 +485,13 @@ function renderLearn() {
     }
 
     return '' +
-      '<div class="learnWord">' +
-        head +
-        '<div class="lwSentence">' + sentence + '</div>' +
-        '<div class="lwSentenceTr">' + escapeHtml(w['sentence_' + lang] || w.sentence_ro) + '</div>' +
+      '<div class="learnWord' + (breakdown ? ' hasBreak' : '') + '">' +
+        '<div class="lwMain">' +
+          head +
+          '<div class="lwSentence">' + sentence + '</div>' +
+          '<div class="lwSentenceTr">' + escapeHtml(w['sentence_' + lang] || w.sentence_ro) + '</div>' +
+        '</div>' +
+        panel +
       '</div>';
   }).join('');
 

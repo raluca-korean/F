@@ -251,6 +251,82 @@ html, body {
 .lwSentence { font-size: 14px; color: var(--ink); margin-top: 10px; line-height: 1.5; }
 .lwSentenceTr { font-size: 12.5px; color: var(--ink3); margin-top: 3px; font-style: italic; }
 
+/* Panoul detaliat "hanja pe silabă" (tabel) — vezi VERIFIED_BREAKDOWNS.
+   Pe ecrane late, stă lângă conținutul principal (nu sub el), ca să
+   folosească spațiul altfel gol din dreapta cardului; pe mobil, cade
+   sub el ca orice bloc obișnuit. */
+.learnWord.hasBreak {
+  display: flex;
+  flex-direction: column;
+}
+.lwMain { min-width: 0; }
+.lwBreakPanel {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bd);
+}
+.lwBreakPanelTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.lwBreakTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.lwBreakTable th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--ink3);
+  padding: 0 8px 5px 0;
+  border-bottom: 1px solid var(--bd);
+  white-space: nowrap;
+}
+.lwBreakTable td {
+  padding: 6px 8px 6px 0;
+  border-bottom: 1px solid var(--bd);
+  color: var(--ink2);
+  vertical-align: middle;
+}
+.lwBreakTable tr:last-child td { border-bottom: none; }
+.lwBreakTable td.hj {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  width: 1%;
+  white-space: nowrap;
+}
+.lwBreakTable td.syll {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 800;
+  color: var(--seal);
+  width: 1%;
+  white-space: nowrap;
+}
+
+@media (min-width: 720px) {
+  .learnWord.hasBreak {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .lwMain { flex: 1 1 0; }
+  .lwBreakPanel {
+    flex: 1 1 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-left: 28px;
+    border-top: none;
+    border-left: 1px solid var(--bd);
+  }
+}
+
 #learnEtymLabel { margin-top: 22px; }
 #learnEtym {
   font-size: 13px;
