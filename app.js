@@ -471,7 +471,6 @@ function renderLearn() {
         '<div class="lwBreakPanel">' +
           '<div class="lwBreakPanelTitle">' + escapeHtml(w.ko) + ' (' + escapeHtml(hanjaSpelling) + ') = ' + escapeHtml(wordTr) + '</div>' +
           '<table class="lwBreakTable">' +
-            '<thead><tr><th>Hanja</th><th>' + (lang === 'en' ? 'Korean' : 'Coreeană') + '</th><th>' + (lang === 'en' ? 'Meaning' : 'Sens') + '</th></tr></thead>' +
             '<tbody>' + rows + '</tbody>' +
           '</table>' +
         '</div>';
