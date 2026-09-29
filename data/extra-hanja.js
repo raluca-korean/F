@@ -247,5 +247,13 @@ var EXTRA_HANJA = {
   '童': { reading: '동', meaning: { ro: 'copil', en: 'child' } },
   '修': { reading: '수', meaning: { ro: 'a corecta, a repara', en: 'to correct, to fix' } },
   '假': { reading: '가', meaning: { ro: 'fals, temporar', en: 'false, temporary' } },
-  '講': { reading: '강', meaning: { ro: 'prelegere', en: 'lecture' } }
+  '講': { reading: '강', meaning: { ro: 'prelegere', en: 'lecture' } },
+
+  '欄': { reading: '란', meaning: { ro: 'coloană, rubrică', en: 'column, section' } },
+  '一': { reading: '일', meaning: { ro: 'unu', en: 'one' } },
+  '乳': { reading: '유', meaning: { ro: 'lapte', en: 'milk' } },
+  '破': { reading: '파', meaning: { ro: 'a sparge', en: 'to break' } },
+  '立': { reading: '입', meaning: { ro: 'a sta în picioare', en: 'to stand' } },
+  '悲': { reading: '비', meaning: { ro: 'trist', en: 'sad' } },
+  '巡': { reading: '순', meaning: { ro: 'a face turul, patrulă', en: 'to patrol, tour' } }
 };
