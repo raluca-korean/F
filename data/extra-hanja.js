@@ -226,5 +226,20 @@ var EXTRA_HANJA = {
   '境': { reading: '경', meaning: { ro: 'graniță, teritoriu', en: 'border, boundary' } },
   '廳': { reading: '청', meaning: { ro: 'clădire administrativă, oficiu', en: 'government office, hall' } },
   '優': { reading: '우', meaning: { ro: 'excelent, superior', en: 'excellent, superior' } },
-  '畵': { reading: '화', meaning: { ro: 'pictură, desen', en: 'painting, drawing' } }
+  '畵': { reading: '화', meaning: { ro: 'pictură, desen', en: 'painting, drawing' } },
+
+  '筋': { reading: '근', meaning: { ro: 'mușchi, tendon', en: 'muscle, sinew' } },
+  '歐': { reading: '구', meaning: { ro: 'Europa', en: 'Europe' } },
+  '雨': { reading: '우', meaning: { ro: 'ploaie', en: 'rain' } },
+  '四': { reading: '사', meaning: { ro: 'patru', en: 'four' } },
+  '愼': { reading: '신', meaning: { ro: 'prudent, atent', en: 'careful, prudent' } },
+  '不': { reading: '불 부', meaning: { ro: 'nu, fără', en: 'not, without' } },
+  '譯': { reading: '역', meaning: { ro: 'a traduce', en: 'to translate' } },
+  '逆': { reading: '역', meaning: { ro: 'invers; a se opune', en: 'reverse; to oppose' } },
+  '福': { reading: '복', meaning: { ro: 'noroc, fericire', en: 'luck, fortune' } },
+  '精': { reading: '정', meaning: { ro: 'esență, precis', en: 'essence, precise' } },
+  '征': { reading: '정', meaning: { ro: 'a cuceri', en: 'to conquer' } },
+  '障': { reading: '장', meaning: { ro: 'barieră', en: 'barrier' } },
+  '寫': { reading: '사', meaning: { ro: 'a copia, a fotografia', en: 'to copy, to photograph' } },
+  '盆': { reading: '분', meaning: { ro: 'vas, ghiveci', en: 'pot, basin' } }
 };
