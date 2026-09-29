@@ -825,4 +825,17 @@ var VERIFIED_BREAKDOWNS = {
   '입춘':   ['立', '春'],
   '비명':   ['悲', '鳴'],
   '순회':   ['巡', '回'],
+
+  /* Al unsprezecelea val — 想/穀/購/構/替/屬/迅/元. Randament tot mai mic:
+     restul candidaților structural-posibili au nevoie de hanja
+     genuine rare sau sunt ambigui (verificat 원조 în context — chiar
+     înseamnă „ajutor" = 援助, are nevoie de 援, nu de 元; rămâne exclus). */
+  '공상':   ['空', '想'],
+  '곡물':   ['穀', '物'],
+  '구독':   ['購', '讀'],
+  '구성':   ['構', '成'],
+  '교체':   ['交', '替'],
+  '부속':   ['附', '屬'],
+  '신속':   ['迅', '速'],
+  '원로':   ['元', '老'],
 };

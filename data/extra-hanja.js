@@ -255,5 +255,14 @@ var EXTRA_HANJA = {
   '破': { reading: '파', meaning: { ro: 'a sparge', en: 'to break' } },
   '立': { reading: '입', meaning: { ro: 'a sta în picioare', en: 'to stand' } },
   '悲': { reading: '비', meaning: { ro: 'trist', en: 'sad' } },
-  '巡': { reading: '순', meaning: { ro: 'a face turul, patrulă', en: 'to patrol, tour' } }
+  '巡': { reading: '순', meaning: { ro: 'a face turul, patrulă', en: 'to patrol, tour' } },
+
+  '想': { reading: '상', meaning: { ro: 'a gândi, gând', en: 'to think, thought' } },
+  '穀': { reading: '곡', meaning: { ro: 'cereale', en: 'grain' } },
+  '購': { reading: '구', meaning: { ro: 'a cumpăra', en: 'to purchase' } },
+  '構': { reading: '구', meaning: { ro: 'a construi', en: 'to construct' } },
+  '替': { reading: '체', meaning: { ro: 'a înlocui', en: 'to replace' } },
+  '屬': { reading: '속', meaning: { ro: 'a aparține', en: 'to belong' } },
+  '迅': { reading: '신', meaning: { ro: 'rapid', en: 'swift' } },
+  '元': { reading: '원', meaning: { ro: 'șef, original', en: 'chief, original' } }
 };
