@@ -627,4 +627,16 @@ var EXTRA_HANJA = {
   '憲': { reading: '헌', meaning: { ro: 'constituție, lege', en: 'constitution, law' } },
   '遺': { reading: '유', meaning: { ro: 'a lăsa moștenire', en: 'to leave behind, bequeath' } },
   '症': { reading: '증', meaning: { ro: 'simptom, boală', en: 'symptom, condition' } },
+
+  /* Al cincisprezecelea val — 10 hanja (round 15). */
+  '權': { reading: '권', meaning: { ro: 'putere, drept', en: 'power, right' } },
+  '失': { reading: '실', meaning: { ro: 'a pierde', en: 'to lose' } },
+  '暗': { reading: '암', meaning: { ro: 'întunecat, secret', en: 'dark, secret' } },
+  '折': { reading: '절', meaning: { ro: 'a rupe, a îndoi', en: 'to break, fold' } },
+  '傘': { reading: '산', meaning: { ro: 'umbrelă', en: 'umbrella' } },
+  '屈': { reading: '굴', meaning: { ro: 'a se îndoi, a se supune', en: 'to bend, submit' } },
+  '軌': { reading: '궤', meaning: { ro: 'șină, cale', en: 'rail, track' } },
+  '玩': { reading: '완', meaning: { ro: 'a se juca', en: 'to play' } },
+  '曲': { reading: '곡', meaning: { ro: 'melodie, curbă', en: 'tune, curve' } },
+  '橫': { reading: '횡', meaning: { ro: 'orizontal, transversal', en: 'horizontal, transverse' } },
 };
