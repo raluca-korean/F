@@ -609,3 +609,168 @@ html, body {
   #promptText .rootMain, #learnRoot .rootMain { font-size: 58px; }
   .answerBtn .optMain { font-size: 22px; }
 }
+
+/* ── learn-root action row (speak + stroke order) ──────────── */
+.learnRootBtns { display: flex; gap: 8px; margin-top: 4px; }
+.learnRootBtns #learnSpeak { margin-top: 0; }
+#strokeBtn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--bd);
+  background: var(--bg2);
+  color: var(--ink);
+  font-size: 15px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+#strokeBtn:hover { border-color: var(--gold); }
+
+/* ── SEARCH OVERLAY ─────────────────────────────────────── */
+#searchOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  transition: opacity .25s var(--ease);
+}
+#searchOverlay.hidden { opacity: 0; pointer-events: none; }
+
+#searchBox { position: relative; width: min(480px, 92vw); }
+#searchInput {
+  width: 100%;
+  padding: 14px 44px 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--bd);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color .2s, box-shadow .2s;
+}
+#searchInput:focus { border-color: var(--seal); box-shadow: 0 0 20px var(--seal-glow); }
+#searchClear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--ink3);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+#searchResults {
+  width: min(480px, 92vw);
+  max-height: 55vh;
+  overflow-y: auto;
+  margin-top: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--bd);
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+.searchEmpty { padding: 16px 18px; font-size: 12px; color: var(--ink3); }
+.searchItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--bd);
+  transition: background .15s;
+}
+.searchItem:last-child { border-bottom: none; }
+.searchItem:hover { background: var(--bg2); }
+.searchItem .si-glyph {
+  font-size: 34px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--seal);
+  line-height: 1;
+  min-width: 40px;
+  text-align: center;
+}
+.searchItem .si-info { display: flex; flex-direction: column; gap: 2px; }
+.searchItem .si-reading { font-size: 15.5px; font-weight: 700; color: var(--ink); }
+.searchItem .si-pos { margin-left: auto; font-size: 13px; color: var(--ink3); }
+
+/* ── STROKE ORDER PANEL ──────────────────────────────────── */
+#strokePanel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: min(340px, 92vw);
+  background: var(--paper);
+  border: 1px solid var(--bd);
+  border-radius: 20px;
+  padding: 26px 24px 22px;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+#strokePanel.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.88);
+}
+#strokePanel::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: -1;
+  transition: opacity .25s;
+}
+#strokePanel.hidden::before { opacity: 0; }
+#strokeClose {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--bd);
+  background: none;
+  color: var(--ink3);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+#strokeClose:hover { border-color: var(--seal); color: var(--seal); }
+#strokeTitle {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--ink2);
+  margin-top: 4px;
+}
+#strokeWriter { width: 230px; height: 230px; }
+#strokeActions { display: flex; gap: 10px; }
+#strokeAnimate, #strokeQuiz {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--bd);
+  background: none;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+#strokeAnimate:hover { border-color: var(--seal); color: var(--seal); }
+#strokeQuiz:hover { border-color: var(--ok); color: var(--ok); }

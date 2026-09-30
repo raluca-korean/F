@@ -18,6 +18,7 @@
     <p class="kbh-sub" id="pgSub">Învață coreeana prin cele 214 hanja de bază</p>
   </div>
   <div class="kbh-controls">
+    <button type="button" id="searchBtn" class="ctrlBtn" title="Caută (/)">🔍</button>
     <button type="button" id="langBtn" class="ctrlBtn"></button>
     <button type="button" id="darkBtn" class="ctrlBtn" title="Temă">◐</button>
   </div>
@@ -50,7 +51,10 @@
   <div class="kbh-card learnCard">
     <div class="promptWrap">
       <div id="learnRoot"></div>
-      <button type="button" id="learnSpeak" title="Ascultă">▶</button>
+      <div class="learnRootBtns">
+        <button type="button" id="learnSpeak" title="Ascultă">▶</button>
+        <button type="button" id="strokeBtn" title="Ordinea trăsăturilor">✍</button>
+      </div>
     </div>
     <div id="learnMeaning"></div>
     <div class="learnSectionLabel" id="learnWordsLabel"></div>
@@ -94,6 +98,27 @@
   <p id="footerNote">Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser</p>
 </footer>
 
+<!-- SEARCH OVERLAY -->
+<div id="searchOverlay" class="hidden">
+  <div id="searchBox">
+    <input id="searchInput" type="text" placeholder="Caută hanja, citire, sens…" autocomplete="off" autocorrect="off" spellcheck="false">
+    <button type="button" id="searchClear">✕</button>
+  </div>
+  <div id="searchResults"></div>
+</div>
+
+<!-- STROKE ORDER PANEL -->
+<div id="strokePanel" class="hidden">
+  <button type="button" id="strokeClose">✕</button>
+  <div id="strokeTitle"></div>
+  <div id="strokeWriter"></div>
+  <div id="strokeActions">
+    <button type="button" id="strokeAnimate">▶ Animație</button>
+    <button type="button" id="strokeQuiz">✎ Testează</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3/dist/hanzi-writer.min.js"></script>
 <script src="./data/extra-hanja.js"></script>
 <script src="./data/verified-breakdowns.js"></script>
 <script src="./app.js"></script>

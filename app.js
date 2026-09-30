@@ -298,6 +298,20 @@ var elTileBank        = document.getElementById('tileBank');
 var elPuzzleFeedback  = document.getElementById('puzzleFeedback');
 var elPuzzleNextBtn   = document.getElementById('puzzleNextBtn');
 
+var elSearchBtn     = document.getElementById('searchBtn');
+var elSearchOverlay = document.getElementById('searchOverlay');
+var elSearchInput   = document.getElementById('searchInput');
+var elSearchClear   = document.getElementById('searchClear');
+var elSearchResults = document.getElementById('searchResults');
+
+var elStrokeBtn     = document.getElementById('strokeBtn');
+var elStrokePanel   = document.getElementById('strokePanel');
+var elStrokeClose   = document.getElementById('strokeClose');
+var elStrokeTitle   = document.getElementById('strokeTitle');
+var elStrokeWriter  = document.getElementById('strokeWriter');
+var elStrokeAnimate = document.getElementById('strokeAnimate');
+var elStrokeQuiz    = document.getElementById('strokeQuiz');
+
 /* ── boot ─────────────────────────────────────────────────── */
 fetch('./data/hanja.json')
   .then(function(r) { return r.json(); })
@@ -365,6 +379,137 @@ function boot() {
     var slot = e.target.closest('.slot.filled');
     if (slot && !puzzleLocked) removeTile(Number(slot.dataset.id));
   });
+
+  elSearchBtn.addEventListener('click', openSearch);
+  elSearchClear.addEventListener('click', function() {
+    elSearchInput.value = '';
+    elSearchResults.innerHTML = '';
+    elSearchInput.focus();
+  });
+  elSearchInput.addEventListener('input', function() { doSearch(this.value); });
+  elSearchOverlay.addEventListener('click', function(e) {
+    if (e.target === elSearchOverlay) closeSearch();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeSearch(); closeStroke(); return; }
+    if (e.key !== '/') return;
+    if (!elSearchOverlay.classList.contains('hidden')) return;
+    if (e.target === elSearchInput) return;
+    e.preventDefault();
+    openSearch();
+  });
+
+  elStrokeBtn.addEventListener('click', openStroke);
+  elStrokeClose.addEventListener('click', closeStroke);
+  elStrokePanel.addEventListener('click', function(e) {
+    if (e.target === elStrokePanel) closeStroke();
+  });
+  elStrokeAnimate.addEventListener('click', function() { if (hwWriter) hwWriter.animateCharacter(); });
+  elStrokeQuiz.addEventListener('click', function() { if (hwWriter) hwWriter.quiz(); });
+}
+
+/* ── search — jump straight to any of the 214 roots ──────────
+   Matches on the hanja itself, its Hangul reading(s), or its
+   meaning in either language; ranked so an exact/prefix match on
+   the reading beats a loose meaning match. */
+function openSearch() {
+  elSearchOverlay.classList.remove('hidden');
+  elSearchInput.value = '';
+  elSearchResults.innerHTML = '';
+  setTimeout(function() { elSearchInput.focus(); }, 60);
+}
+
+function closeSearch() {
+  elSearchOverlay.classList.add('hidden');
+}
+
+function doSearch(q) {
+  elSearchResults.innerHTML = '';
+  if (!q.trim()) return;
+  var ql = q.trim().toLowerCase();
+  var hits = [];
+  for (var i = 0; i < DATA.length; i++) {
+    var d = DATA[i];
+    var reading = primaryReading(d);
+    var meaningL = (d.meaning[lang] || d.meaning.ro).toLowerCase();
+    var meaningRo = d.meaning.ro.toLowerCase();
+    var meaningEn = d.meaning.en.toLowerCase();
+    var score = 0;
+    if (d.hanja === q)                          score = 100;
+    else if (readingList(d).indexOf(ql) >= 0)   score = 80;
+    else if (reading.indexOf(ql) === 0)         score = 70;
+    else if (meaningL.indexOf(ql) === 0)        score = 60;
+    else if (meaningRo.indexOf(ql) >= 0)        score = 40;
+    else if (meaningEn.indexOf(ql) >= 0)        score = 35;
+    else if (reading.indexOf(ql) >= 0)          score = 30;
+    if (score > 0) hits.push({ i: i, score: score });
+  }
+  hits.sort(function(a, b) { return b.score - a.score; });
+  hits = hits.slice(0, 20);
+  if (!hits.length) {
+    elSearchResults.innerHTML = '<div class="searchEmpty">' + (lang === 'ro' ? 'Niciun rezultat' : 'No results') + '</div>';
+    return;
+  }
+  hits.forEach(function(h) {
+    var d  = DATA[h.i];
+    var el = document.createElement('div');
+    el.className = 'searchItem';
+    el.innerHTML =
+      '<span class="si-glyph">' + escapeHtml(d.hanja) + '</span>' +
+      '<span class="si-info">' +
+        '<span class="si-reading">' + escapeHtml(primaryReading(d)) + ' · ' + escapeHtml(d.meaning[lang] || d.meaning.ro) + '</span>' +
+        '<span class="si-pos">#' + (h.i + 1) + '</span>' +
+      '</span>';
+    el.addEventListener('click', function() {
+      closeSearch();
+      learnPos = h.i;
+      Store.set('KBH_LEARN_POS', learnPos);
+      setMode('learn');
+      renderLearn();
+    });
+    elSearchResults.appendChild(el);
+  });
+}
+
+/* ── stroke order — HanziWriter for the current Learn-mode root ──
+   Writing/stroke order is never tested elsewhere in the app (this
+   app teaches the Hangul reading, not Chinese calligraphy) — it's
+   purely an optional reference/practice tool for the curious. */
+var hwWriter = null;
+
+function openStroke() {
+  if (!DATA.length) return;
+  var item = DATA[learnPos];
+  var isDark = document.body.classList.contains('dark-mode');
+
+  elStrokeTitle.textContent = item.hanja + '  ·  ' + primaryReading(item) + '  ·  ' + (item.meaning[lang] || item.meaning.ro);
+
+  elStrokeWriter.innerHTML = '';
+  hwWriter = null;
+
+  if (typeof HanziWriter !== 'undefined') {
+    hwWriter = HanziWriter.create('strokeWriter', item.hanja, {
+      width: 200, height: 200, padding: 16,
+      showOutline: true,
+      strokeColor: isDark ? '#f2e9d8' : '#211c14',
+      outlineColor: isDark ? 'rgba(242,233,216,.1)' : 'rgba(33,28,20,.12)',
+      drawingColor: '#b3402c',
+      highlightColor: '#c9973a',
+      strokeAnimationSpeed: 1,
+      delayBetweenStrokes: 180
+    });
+    hwWriter.animateCharacter();
+  } else {
+    elStrokeWriter.style.cssText = 'font-size:140px;line-height:200px;text-align:center;font-family:"Noto Sans KR",sans-serif;color:var(--ink)';
+    elStrokeWriter.textContent = item.hanja;
+  }
+
+  elStrokePanel.classList.remove('hidden');
+}
+
+function closeStroke() {
+  elStrokePanel.classList.add('hidden');
+  hwWriter = null;
 }
 
 function setMode(m) {
@@ -398,6 +543,10 @@ function renderStatic() {
   elLearnEtymLabel.textContent = l.learnEtym;
   elPuzzleTypeLabel.textContent = l.puzzleType;
   elPuzzleNextBtn.textContent = l.next;
+
+  elSearchBtn.title = lang === 'ro' ? 'Caută (/)' : 'Search (/)';
+  elSearchInput.placeholder = lang === 'ro' ? 'Caută hanja, citire, sens…' : 'Search hanja, reading, meaning…';
+  elStrokeBtn.title = lang === 'ro' ? 'Ordinea trăsăturilor' : 'Stroke order';
 }
 
 /* ── mastery / progress ──────────────────────────────────── */
