@@ -248,8 +248,17 @@ html, body {
   color: var(--gold);
   margin-top: 2px;
 }
-.lwSentence { font-size: 17px; color: var(--ink); margin-top: 10px; line-height: 1.55; }
+.lwSentence { font-size: 17px; color: var(--ink); line-height: 1.55; }
 .lwSentenceTr { font-size: 15px; color: var(--ink3); margin-top: 4px; font-style: italic; line-height: 1.4; }
+
+.lwSentenceRow { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; }
+.lwSentenceRow .lwSentence { flex: 1; min-width: 0; }
+.lwSentenceSpeak {
+  width: 24px; height: 24px;
+  font-size: 9px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
 
 /* Panoul detaliat "hanja pe silabă" (tabel) — vezi VERIFIED_BREAKDOWNS.
    Pe ecrane late, stă lângă conținutul principal (nu sub el), ca să

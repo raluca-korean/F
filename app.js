@@ -487,7 +487,10 @@ function renderLearn() {
       '<div class="learnWord' + (breakdown ? ' hasBreak' : '') + '">' +
         '<div class="lwMain">' +
           head +
-          '<div class="lwSentence">' + sentence + '</div>' +
+          '<div class="lwSentenceRow">' +
+            '<div class="lwSentence">' + sentence + '</div>' +
+            '<button type="button" class="lwSpeak lwSentenceSpeak" data-say="' + escapeHtml(w.sentence) + '">▶</button>' +
+          '</div>' +
           '<div class="lwSentenceTr">' + escapeHtml(w['sentence_' + lang] || w.sentence_ro) + '</div>' +
         '</div>' +
         panel +
