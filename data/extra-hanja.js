@@ -264,5 +264,18 @@ var EXTRA_HANJA = {
   '替': { reading: '체', meaning: { ro: 'a înlocui', en: 'to replace' } },
   '屬': { reading: '속', meaning: { ro: 'a aparține', en: 'to belong' } },
   '迅': { reading: '신', meaning: { ro: 'rapid', en: 'swift' } },
-  '元': { reading: '원', meaning: { ro: 'șef, original', en: 'chief, original' } }
+  '元': { reading: '원', meaning: { ro: 'șef, original', en: 'chief, original' } },
+
+  '務': { reading: '무', meaning: { ro: 'datorie, sarcină', en: 'duty, task' } },
+  '員': { reading: '원', meaning: { ro: 'membru', en: 'member' } },
+  '江': { reading: '강', meaning: { ro: 'râu', en: 'river' } },
+  '菊': { reading: '국', meaning: { ro: 'crizantemă', en: 'chrysanthemum' } },
+  '汽': { reading: '기', meaning: { ro: 'abur', en: 'steam' } },
+  '拂': { reading: '불', meaning: { ro: 'a plăti', en: 'to pay' } },
+  '扇': { reading: '선', meaning: { ro: 'evantai, ventilator', en: 'fan' } },
+  '整': { reading: '정', meaning: { ro: 'a aranja, întreg', en: 'to arrange, whole' } },
+  '豐': { reading: '풍', meaning: { ro: 'abundent', en: 'abundant' } },
+  '裝': { reading: '장', meaning: { ro: 'a se îmbrăca; echipament', en: 'to dress; equipment' } },
+  '比': { reading: '비', meaning: { ro: 'a compara', en: 'to compare' } },
+  '庶': { reading: '서', meaning: { ro: 'obișnuit, popor', en: 'common, populace' } }
 };
