@@ -649,4 +649,7 @@ var EXTRA_HANJA = {
   '妊': { reading: '임', meaning: { ro: 'sarcină', en: 'pregnancy' } },
   '焰': { reading: '염', meaning: { ro: 'flacără', en: 'flame' } },
   '干': { reading: '간', meaning: { ro: 'a se amesteca, uscat', en: 'to interfere, dry' } },
+
+  /* Al șaptesprezecelea val — 1 hanja (round 17). */
+  '接': { reading: '접', meaning: { ro: 'a atinge, a se apropia', en: 'to touch, approach' } },
 };

@@ -1447,4 +1447,15 @@ var VERIFIED_BREAKDOWNS = {
   '회임':      ['懷', '妊'],
   '화염':      ['火', '焰'],
   '난간':      ['欄', '干'],
+
+  /* Al șaptesprezecelea val — 7 cuvinte (round 17), 6 din ele găsite
+     gratuite — hanja deja disponibil din round-urile anterioare, dar
+     omise din greșeală atunci (점화, 본사, 혁신, 즉시, 가절, 아호). */
+  '점화':      ['點', '火'],
+  '본사':      ['本', '社'],
+  '혁신':      ['革', '新'],
+  '즉시':      ['卽', '時'],
+  '가절':      ['佳', '節'],
+  '아호':      ['雅', '號'],
+  '접근':      ['接', '近'],
 };
