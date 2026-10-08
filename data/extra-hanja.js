@@ -639,4 +639,14 @@ var EXTRA_HANJA = {
   '玩': { reading: '완', meaning: { ro: 'a se juca', en: 'to play' } },
   '曲': { reading: '곡', meaning: { ro: 'melodie, curbă', en: 'tune, curve' } },
   '橫': { reading: '횡', meaning: { ro: 'orizontal, transversal', en: 'horizontal, transverse' } },
+
+  /* Al șaisprezecelea val — 7 hanja (round 16), fiecare pentru un
+     cuvânt de nișă dar legitim, cu un singur caracter nou necesar. */
+  '銜': { reading: '함', meaning: { ro: 'a purta în gură, titlu', en: 'to hold in mouth, title' } },
+  '郭': { reading: '곽', meaning: { ro: 'zid exterior', en: 'outer wall' } },
+  '綜': { reading: '종', meaning: { ro: 'a aduna, cuprinzător', en: 'to gather, comprehensive' } },
+  '遁': { reading: '둔', meaning: { ro: 'a fugi, a se ascunde', en: 'to flee, hide' } },
+  '妊': { reading: '임', meaning: { ro: 'sarcină', en: 'pregnancy' } },
+  '焰': { reading: '염', meaning: { ro: 'flacără', en: 'flame' } },
+  '干': { reading: '간', meaning: { ro: 'a se amesteca, uscat', en: 'to interfere, dry' } },
 };
