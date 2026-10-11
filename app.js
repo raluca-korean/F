@@ -199,6 +199,12 @@ var session = { correct: 0, total: 0, streak: 0 };
 var mode = 'learn';   // 'learn' | 'practice' | 'puzzle'
 var learnPos = Store.get('KBH_LEARN_POS', 0);
 
+/* "Recapitulare greșeli" — when on, both queues below pull only from
+   roots currently at reps===0 (attempted before, not yet recovered to
+   mastery) instead of the normal SRS-due pool. Derived live from
+   srsData, no separate tracking needed. */
+var reviewMode = false;
+
 var puzzleQueue = [];      // array of DATA indices, prioritized by SRS due date (own queue, independent of Practice's)
 var puzzleCurrent = null;  // { di, item, word, tiles: [{id,ch}], placed: [id,...] }
 var puzzleLocked = false;
@@ -229,7 +235,10 @@ var UI = {
     footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser',
     statsTitle: 'Statistici', statsToday: 'Azi', statsStreak: 'Cel mai bun streak',
     statsTotal: 'Total răspunsuri', statsAccuracy: 'Acuratețe', statsMastered: 'Rădăcini stăpânite',
-    statsLevel: 'Nivel', statsNoData: 'Niciun răspuns încă — începe din Exersează sau Puzzle.'
+    statsLevel: 'Nivel', statsNoData: 'Niciun răspuns încă — începe din Exersează sau Puzzle.',
+    review: 'Recapitulare',
+    reviewOnHint: 'Recapitulare activă — exersezi doar greșelile. Apasă ca să oprești.',
+    reviewOffHint: 'Exersează doar rădăcinile greșite recent'
   },
   en: {
     title: 'Korean by Hanja',
@@ -254,7 +263,10 @@ var UI = {
     footer: 'Standalone app · no account, no server · progress is saved locally in this browser',
     statsTitle: 'Statistics', statsToday: 'Today', statsStreak: 'Best streak',
     statsTotal: 'Total answers', statsAccuracy: 'Accuracy', statsMastered: 'Roots mastered',
-    statsLevel: 'Level', statsNoData: 'No answers yet — start in Practice or Puzzle.'
+    statsLevel: 'Level', statsNoData: 'No answers yet — start in Practice or Puzzle.',
+    review: 'Review',
+    reviewOnHint: 'Review mode active — only recent mistakes. Click to stop.',
+    reviewOffHint: 'Practice only your recently-missed roots'
   }
 };
 function t() { return UI[lang]; }
@@ -265,6 +277,8 @@ var elTotal    = document.getElementById('bTotal');
 var elStreak   = document.getElementById('bStreak');
 var elXP       = document.getElementById('bXP');
 var elMastered = document.getElementById('bMastered');
+var elReview     = document.getElementById('bReview');
+var elReviewText = document.getElementById('bReviewText');
 var elBarFill  = document.getElementById('barFill');
 var elTypeLbl  = document.getElementById('typeLabel');
 var elPrompt   = document.getElementById('promptText');
@@ -435,6 +449,8 @@ function boot() {
     if (this.files[0]) importProgressFile(this.files[0]);
     this.value = '';
   });
+
+  elReview.addEventListener('click', toggleReviewMode);
 }
 
 /* ── search — jump straight to any of the 214 roots ──────────
@@ -709,6 +725,22 @@ function updateBadges() {
   var m = masteredCount();
   elMastered.querySelector('span:last-child').textContent = l.mastered + ': ' + m + '/' + DATA.length;
   elBarFill.style.width = (DATA.length ? Math.round(m / DATA.length * 100) : 0) + '%';
+
+  var weakCount = weakRoots().length;
+  elReviewText.textContent = l.review + ': ' + weakCount;
+  elReview.disabled = weakCount === 0;
+  elReview.classList.toggle('active', reviewMode);
+  elReview.title = reviewMode ? l.reviewOnHint : l.reviewOffHint;
+}
+
+function toggleReviewMode() {
+  if (!reviewMode && weakRoots().length === 0) return;
+  reviewMode = !reviewMode;
+  queue = [];
+  puzzleQueue = [];
+  updateBadges();
+  if (mode === 'practice') nextQuestion();
+  else if (mode === 'puzzle') nextPuzzle();
 }
 
 /* ── learn mode — sequential, one hanja at a time ──────────────
@@ -792,10 +824,21 @@ function renderLearn() {
   elLearnEtym.textContent = item.etymology[lang] || item.etymology.ro;
 }
 
+/* Roots attempted at least once but not yet back at full strength —
+   the pool reviewMode draws from. */
+function weakRoots() {
+  var out = [];
+  for (var i = 0; i < DATA.length; i++) {
+    if (srsData[i] && srsData[i].reps === 0) out.push(i);
+  }
+  return out;
+}
+
 /* ── question queue — SRS-aware ──────────────────────────────
    Prioritizează hanja "due" sau noi; dacă nu mai e nimic due,
    reciclează toată colecția, ca practica să nu se blocheze. */
 function buildQueue() {
+  if (reviewMode) { queue = shuffle(weakRoots()); return; }
   var now = Date.now();
   var due = [];
   for (var i = 0; i < DATA.length; i++) {
@@ -808,6 +851,7 @@ function buildQueue() {
 
 function pickItem() {
   if (!queue.length) buildQueue();
+  if (!queue.length && reviewMode) { reviewMode = false; buildQueue(); updateBadges(); } // ran out of mistakes to review — fall back to the normal pool
   return queue.pop(); // DATA index
 }
 
@@ -815,6 +859,7 @@ function pickItem() {
    but tracked separately so switching tabs mid-question doesn't
    consume or reshuffle the other mode's queue. */
 function buildPuzzleQueue() {
+  if (reviewMode) { puzzleQueue = shuffle(weakRoots()); return; }
   var now = Date.now();
   var due = [];
   for (var i = 0; i < DATA.length; i++) {
@@ -827,6 +872,7 @@ function buildPuzzleQueue() {
 
 function pickPuzzleItem() {
   if (!puzzleQueue.length) buildPuzzleQueue();
+  if (!puzzleQueue.length && reviewMode) { reviewMode = false; buildPuzzleQueue(); updateBadges(); }
   return puzzleQueue.pop();
 }
 

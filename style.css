@@ -113,6 +113,10 @@ html, body {
 }
 .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 .badge.ok .dot { background: var(--ok); }
+button.badge { font: inherit; cursor: pointer; }
+button.badge:disabled { opacity: .4; cursor: default; }
+button.badge.active { border-color: var(--seal); color: var(--seal); }
+button.badge.active .dot { background: var(--seal); }
 
 .kbh-barWrap {
   max-width: 640px;
