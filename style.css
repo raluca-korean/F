@@ -851,3 +851,22 @@ html, body {
 .statValue .statSub { font-size: 13px; font-weight: 600; color: var(--ink3); margin-left: 4px; }
 .statBarBg { height: 6px; border-radius: 999px; background: var(--bd); overflow: hidden; }
 .statBarFill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--gold), var(--seal)); }
+
+#statsBackup {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding-top: 2px;
+}
+#statsExport, #statsImport {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--bd);
+  background: none;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+#statsExport:hover, #statsImport:hover { border-color: var(--gold); color: var(--gold); }

@@ -325,6 +325,9 @@ var elStatsPanel = document.getElementById('statsPanel');
 var elStatsClose = document.getElementById('statsClose');
 var elStatsTitle = document.getElementById('statsTitle');
 var elStatsGrid  = document.getElementById('statsGrid');
+var elStatsExport    = document.getElementById('statsExport');
+var elStatsImport     = document.getElementById('statsImport');
+var elStatsImportFile = document.getElementById('statsImportFile');
 
 /* ── boot ─────────────────────────────────────────────────── */
 fetch('./data/hanja.json')
@@ -425,6 +428,12 @@ function boot() {
   elStatsClose.addEventListener('click', closeStats);
   elStatsPanel.addEventListener('click', function(e) {
     if (e.target === elStatsPanel) closeStats();
+  });
+  elStatsExport.addEventListener('click', exportProgress);
+  elStatsImport.addEventListener('click', function() { elStatsImportFile.click(); });
+  elStatsImportFile.addEventListener('change', function() {
+    if (this.files[0]) importProgressFile(this.files[0]);
+    this.value = '';
   });
 }
 
@@ -575,6 +584,58 @@ function renderStats() {
     row(l.statsStreak, s.bestStreak) +
     row(l.statsMastered, mastered + '/' + DATA.length) +
     row(l.statsLevel, '⭐ ' + xpData.total + ' XP · ' + (lvl['title_' + lang] || lvl.title_ro));
+}
+
+/* ── BACKUP (export/import progress) ──────────────────────
+   Everything lives only in this browser's localStorage, so clearing
+   site data or switching devices loses it all with no warning. This
+   lets a user save a snapshot and restore it elsewhere, with no
+   server involved — the file never leaves their machine except by
+   their own choice. */
+var BACKUP_KEYS = ['KBH_LANG', 'KBH_THEME', 'KBH_LEARN_POS', 'KBH_SRS', 'KBH_XP', 'KBH_STATS'];
+
+function exportProgress() {
+  var payload = { app: 'korean-by-hanja', version: 1, exportedAt: new Date().toISOString(), data: {} };
+  BACKUP_KEYS.forEach(function(k) {
+    var raw = localStorage.getItem(k);
+    if (raw !== null) {
+      try { payload.data[k] = JSON.parse(raw); } catch (e) {}
+    }
+  });
+  var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'korean-by-hanja-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importProgressFile(file) {
+  var isRo = lang === 'ro';
+  var reader = new FileReader();
+  reader.onload = function() {
+    var parsed;
+    try { parsed = JSON.parse(reader.result); } catch (e) {
+      alert(isRo ? 'Fișierul nu e un JSON valid.' : 'That file is not valid JSON.');
+      return;
+    }
+    if (!parsed || parsed.app !== 'korean-by-hanja' || !parsed.data) {
+      alert(isRo ? 'Acesta nu pare un fișier de backup Korean by Hanja.' : 'This doesn\'t look like a Korean by Hanja backup file.');
+      return;
+    }
+    var msg = isRo
+      ? 'Importul va înlocui tot progresul curent din acest browser (XP, repetiție spațiată, statistici). Continui?'
+      : 'Importing will replace all current progress in this browser (XP, spaced repetition, stats). Continue?';
+    if (!confirm(msg)) return;
+    BACKUP_KEYS.forEach(function(k) {
+      if (parsed.data[k] !== undefined) localStorage.setItem(k, JSON.stringify(parsed.data[k]));
+    });
+    location.reload();
+  };
+  reader.readAsText(file);
 }
 
 function setMode(m) {
