@@ -915,7 +915,7 @@ button.badge.active .dot { background: var(--seal); }
 }
 .lessonRoundBtn:hover { background: var(--seal); color: #fff; }
 
-#lessonRoundBar {
+#lessonRoundBar, #puzzleRoundBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -923,15 +923,15 @@ button.badge.active .dot { background: var(--seal); }
   padding-bottom: 12px;
   border-bottom: 1px solid var(--bd);
 }
-#lessonRoundBar.hidden { display: none; }
-#lessonRoundProgress {
+#lessonRoundBar.hidden, #puzzleRoundBar.hidden { display: none; }
+#lessonRoundProgress, #puzzleRoundProgress {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .4px;
   color: var(--seal);
   text-transform: uppercase;
 }
-#lessonRoundExit {
+#lessonRoundExit, #puzzleRoundExit {
   font-size: 12px;
   font-weight: 700;
   color: var(--ink3);
@@ -940,7 +940,7 @@ button.badge.active .dot { background: var(--seal); }
   cursor: pointer;
   padding: 4px 6px;
 }
-#lessonRoundExit:hover { color: var(--seal); }
+#lessonRoundExit:hover, #puzzleRoundExit:hover { color: var(--seal); }
 
 #roundSummary {
   position: fixed;

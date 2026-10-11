@@ -236,6 +236,24 @@ var lessonRoundQueue = [];
 var lessonRoundIndex = 0;
 var lessonRoundScore = { correct: 0, total: 0 };
 
+/* Same idea, for Puzzle — one tile-building question per word
+   instead of 5 question types, so a single-root round is usually
+   shorter than 20 (exactly that root's own word count), uncapped
+   padding on purpose; a cumulative round across several roots
+   reaches 20 easily. */
+var puzzleRoundActive = false;
+var puzzleRoundMode = null;
+var puzzleRoundDi = null;
+var puzzleRoundMaxDi = null;
+var puzzleRoundQueue = [];
+var puzzleRoundIndex = 0;
+var puzzleRoundScore = { correct: 0, total: 0 };
+
+/* Which kind of round the shared #roundSummary modal is currently
+   showing results for, so its Again/Exit buttons call the right
+   pair of functions. */
+var roundSummaryKind = null; // 'practice' | 'puzzle'
+
 var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word', 'breakdown-word'];
 
 var UI = {
@@ -274,7 +292,9 @@ var UI = {
     roundAgain: '↺ Din nou',
     roundExit: '← Exersare liberă',
     cumulativeRoundBtn: '📚 Recapitulare generală ({n} întrebări)',
-    cumulativeRoundProgress: 'Recapitulare generală: {i} / {n}'
+    cumulativeRoundProgress: 'Recapitulare generală: {i} / {n}',
+    puzzleLessonRoundBtn: '🧩 Formează cuvintele lecției asta ({n} cuvinte)',
+    puzzleCumulativeRoundBtn: '📚 Recapitulare generală — Puzzle ({n} cuvinte)'
   },
   en: {
     title: 'Korean by Hanja',
@@ -311,7 +331,9 @@ var UI = {
     roundAgain: '↺ Again',
     roundExit: '← Free practice',
     cumulativeRoundBtn: '📚 General review ({n} questions)',
-    cumulativeRoundProgress: 'General review: {i} / {n}'
+    cumulativeRoundProgress: 'General review: {i} / {n}',
+    puzzleLessonRoundBtn: '🧩 Build this lesson\'s words ({n} words)',
+    puzzleCumulativeRoundBtn: '📚 General review — Puzzle ({n} words)'
   }
 };
 function t() { return UI[lang]; }
@@ -371,6 +393,13 @@ var elCumulativeRoundBtn  = document.getElementById('cumulativeRoundBtn');
 var elLessonRoundBar      = document.getElementById('lessonRoundBar');
 var elLessonRoundProgress = document.getElementById('lessonRoundProgress');
 var elLessonRoundExit     = document.getElementById('lessonRoundExit');
+
+var elPuzzleLessonRoundBtn     = document.getElementById('puzzleLessonRoundBtn');
+var elPuzzleCumulativeRoundBtn = document.getElementById('puzzleCumulativeRoundBtn');
+var elPuzzleRoundBar      = document.getElementById('puzzleRoundBar');
+var elPuzzleRoundProgress = document.getElementById('puzzleRoundProgress');
+var elPuzzleRoundExit     = document.getElementById('puzzleRoundExit');
+
 var elRoundSummary        = document.getElementById('roundSummary');
 var elRoundSummaryEmoji   = document.getElementById('roundSummaryEmoji');
 var elRoundSummaryMsg     = document.getElementById('roundSummaryMsg');
@@ -428,7 +457,8 @@ function boot() {
     renderLearn();
     if (puzzleCurrent) renderPuzzle();
     renderLessonRoundProgress();
-    if (!elRoundSummary.classList.contains('hidden')) showRoundSummary();
+    renderPuzzleRoundProgress();
+    if (!elRoundSummary.classList.contains('hidden')) showRoundSummary(roundSummaryKind);
   });
   elDarkBtn.addEventListener('click', function() {
     var isDark = !document.body.classList.contains('dark-mode');
@@ -520,8 +550,19 @@ function boot() {
   elLessonRoundBtn.addEventListener('click', function() { startLessonRound(learnPos); });
   elCumulativeRoundBtn.addEventListener('click', function() { startCumulativeRound(learnPos); });
   elLessonRoundExit.addEventListener('click', exitLessonRound);
-  elRoundSummaryAgain.addEventListener('click', restartRound);
-  elRoundSummaryExit.addEventListener('click', exitLessonRound);
+
+  elPuzzleLessonRoundBtn.addEventListener('click', function() { startPuzzleLessonRound(learnPos); });
+  elPuzzleCumulativeRoundBtn.addEventListener('click', function() { startPuzzleCumulativeRound(learnPos); });
+  elPuzzleRoundExit.addEventListener('click', exitPuzzleRound);
+
+  elRoundSummaryAgain.addEventListener('click', function() {
+    if (roundSummaryKind === 'puzzle') restartPuzzleRound();
+    else restartRound();
+  });
+  elRoundSummaryExit.addEventListener('click', function() {
+    if (roundSummaryKind === 'puzzle') exitPuzzleRound();
+    else exitLessonRound();
+  });
 }
 
 /* ── search — jump straight to any of the 214 roots ──────────
@@ -846,6 +887,12 @@ function renderLearn() {
   var cumulativeSize = buildRoundQueue(rangeTo(learnPos)).length;
   elCumulativeRoundBtn.textContent = t().cumulativeRoundBtn.replace('{n}', cumulativeSize);
 
+  var puzzleRoundSize = buildPuzzleRoundQueue([learnPos]).length;
+  elPuzzleLessonRoundBtn.textContent = t().puzzleLessonRoundBtn.replace('{n}', puzzleRoundSize);
+
+  var puzzleCumulativeSize = buildPuzzleRoundQueue(rangeTo(learnPos)).length;
+  elPuzzleCumulativeRoundBtn.textContent = t().puzzleCumulativeRoundBtn.replace('{n}', puzzleCumulativeSize);
+
   elLearnWords.innerHTML = item.words.map(function(w) {
     var sentence = highlightSyllable(w.sentence, item);
     var breakdown = wordBreakdown(w);
@@ -1086,6 +1133,22 @@ function buildRoundQueue(diList) {
   return shuffle(combos).slice(0, LESSON_ROUND_SIZE);
 }
 
+/* Same idea as buildRoundQueue, but one entry per word — Puzzle has
+   only one question "type" (build the tiles), so there's no 5x
+   multiplication per root. A single root's round is usually well
+   under LESSON_ROUND_SIZE (exactly its own word count, left short
+   rather than padded with repeats); a cumulative round across many
+   roots hits the same cap as Practice's. */
+function buildPuzzleRoundQueue(diList) {
+  var combos = [];
+  diList.forEach(function(di) {
+    DATA[di].words.forEach(function(w) {
+      combos.push({ di: di, word: w });
+    });
+  });
+  return shuffle(combos).slice(0, LESSON_ROUND_SIZE);
+}
+
 function rangeTo(maxDi) {
   var out = [];
   for (var i = 0; i <= maxDi; i++) out.push(i);
@@ -1145,16 +1208,74 @@ function renderLessonRoundProgress() {
   elLessonRoundExit.textContent = l.lessonRoundExit;
 }
 
-function showRoundSummary() {
+/* Puzzle-side mirror of startLessonRound/startCumulativeRound/
+   restartRound/exitLessonRound/renderLessonRoundProgress above —
+   same mechanics, drawing from buildPuzzleRoundQueue instead. */
+function startPuzzleLessonRound(di) {
+  puzzleRoundActive = true;
+  puzzleRoundMode = 'single';
+  puzzleRoundDi = di;
+  puzzleRoundQueue = buildPuzzleRoundQueue([di]);
+  puzzleRoundIndex = 0;
+  puzzleRoundScore = { correct: 0, total: 0 };
+  hideRoundSummary();
+  setMode('puzzle');
+  nextPuzzle();
+}
+
+function startPuzzleCumulativeRound(maxDi) {
+  puzzleRoundActive = true;
+  puzzleRoundMode = 'cumulative';
+  puzzleRoundMaxDi = maxDi;
+  puzzleRoundQueue = buildPuzzleRoundQueue(rangeTo(maxDi));
+  puzzleRoundIndex = 0;
+  puzzleRoundScore = { correct: 0, total: 0 };
+  hideRoundSummary();
+  setMode('puzzle');
+  nextPuzzle();
+}
+
+function restartPuzzleRound() {
+  if (puzzleRoundMode === 'cumulative') startPuzzleCumulativeRound(puzzleRoundMaxDi);
+  else startPuzzleLessonRound(puzzleRoundDi);
+}
+
+function exitPuzzleRound() {
+  puzzleRoundActive = false;
+  hideRoundSummary();
+  nextPuzzle();
+}
+
+function renderPuzzleRoundProgress() {
   var l = t();
-  var pct = lessonRoundScore.total ? Math.round((lessonRoundScore.correct / lessonRoundScore.total) * 100) : 0;
+  elPuzzleCumulativeRoundBtn.classList.toggle('hidden', puzzleRoundActive);
+  if (!puzzleRoundActive) {
+    elPuzzleRoundBar.classList.add('hidden');
+    return;
+  }
+  elPuzzleRoundBar.classList.remove('hidden');
+  var label = puzzleRoundMode === 'cumulative' ? l.cumulativeRoundProgress : l.lessonRoundProgress;
+  elPuzzleRoundProgress.textContent = label
+    .replace('{i}', Math.min(puzzleRoundIndex + 1, puzzleRoundQueue.length))
+    .replace('{n}', puzzleRoundQueue.length);
+  elPuzzleRoundExit.textContent = l.lessonRoundExit;
+}
+
+/* Shared by both Practice's and Puzzle's round-complete modal; `kind`
+   picks which score to show and which Again/Exit pair the buttons
+   dispatch to (see the elRoundSummaryAgain/Exit listeners in boot()). */
+function showRoundSummary(kind) {
+  roundSummaryKind = kind;
+  var l = t();
+  var score = kind === 'puzzle' ? puzzleRoundScore : lessonRoundScore;
+  var pct = score.total ? Math.round((score.correct / score.total) * 100) : 0;
   var msgs = pct === 100
     ? { emoji: '🏆' } : pct >= 80
     ? { emoji: '🎉' } : pct >= 60
     ? { emoji: '💪' } : { emoji: '📚' };
   elRoundSummaryEmoji.textContent = msgs.emoji;
   elRoundSummaryMsg.textContent = l.roundDoneMsg;
-  elRoundSummaryScore.textContent = lessonRoundScore.correct + ' / ' + lessonRoundScore.total;
+  elRoundSummaryScore.textContent = score.correct + ' / ' + score.total;
   elRoundSummaryAgain.textContent = l.roundAgain;
   elRoundSummaryExit.textContent = l.roundExit;
   elRoundSummary.classList.remove('hidden');
@@ -1166,7 +1287,7 @@ function hideRoundSummary() {
 
 function nextQuestion() {
   if (lessonRoundActive && lessonRoundIndex >= lessonRoundQueue.length) {
-    showRoundSummary();
+    showRoundSummary('practice');
     return;
   }
   locked = false;
@@ -1288,9 +1409,16 @@ function randomDecoySyllables(excludeWord, n) {
 }
 
 function buildPuzzleQuestion() {
-  var di = pickPuzzleItem();
+  var di, word;
+  if (puzzleRoundActive) {
+    var entry = puzzleRoundQueue[puzzleRoundIndex];
+    di = entry.di;
+    word = entry.word;
+  } else {
+    di = pickPuzzleItem();
+    word = DATA[di].words[Math.floor(Math.random() * DATA[di].words.length)];
+  }
   var item = DATA[di];
-  var word = item.words[Math.floor(Math.random() * item.words.length)];
   var answerChars = word.ko.split('');
   var decoyTable = PUZZLE_DECOYS[puzzleDifficulty];
   var decoyCount = answerChars.length <= 2 ? decoyTable[2] : (answerChars.length === 3 ? decoyTable[3] : decoyTable.more);
@@ -1300,6 +1428,10 @@ function buildPuzzleQuestion() {
 }
 
 function nextPuzzle() {
+  if (puzzleRoundActive && puzzleRoundIndex >= puzzleRoundQueue.length) {
+    showRoundSummary('puzzle');
+    return;
+  }
   puzzleLocked = false;
   puzzleCurrent = buildPuzzleQuestion();
   elPuzzleFeedback.textContent = '';
@@ -1307,6 +1439,7 @@ function nextPuzzle() {
   elPuzzleNextBtn.classList.remove('show');
   elPuzzleSpeak.classList.add('hidden');
   renderPuzzle();
+  renderPuzzleRoundProgress();
 }
 
 function setPuzzleDifficulty(d) {
@@ -1383,6 +1516,12 @@ function checkPuzzle() {
 
   updateSession(isCorrect);
   updateBadges();
+
+  if (puzzleRoundActive) {
+    puzzleRoundScore.total++;
+    if (isCorrect) puzzleRoundScore.correct++;
+    puzzleRoundIndex++;
+  }
 
   var l = t();
   elPuzzleFeedback.textContent = isCorrect ? '✓ ' + l.correctMsg : '✕ ' + l.wrongMsg + ' — ' + c.word.ko;
