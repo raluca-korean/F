@@ -209,6 +209,16 @@ var puzzleQueue = [];      // array of DATA indices, prioritized by SRS due date
 var puzzleCurrent = null;  // { di, item, word, tiles: [{id,ch}], placed: [id,...] }
 var puzzleLocked = false;
 
+/* Decoy tile count per answer length, by difficulty — 'normal' is the
+   original fixed values. */
+var PUZZLE_DECOYS = {
+  easy:   { 2: 2, 3: 2, more: 1 },
+  normal: { 2: 4, 3: 3, more: 2 },
+  hard:   { 2: 6, 3: 5, more: 4 }
+};
+var puzzleDifficulty = Store.get('KBH_PUZZLE_DIFF', 'normal');
+if (!PUZZLE_DECOYS[puzzleDifficulty]) puzzleDifficulty = 'normal';
+
 var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word', 'breakdown-word'];
 
 var UI = {
@@ -238,7 +248,8 @@ var UI = {
     statsLevel: 'Nivel', statsNoData: 'Niciun răspuns încă — începe din Exersează sau Puzzle.',
     review: 'Recapitulare',
     reviewOnHint: 'Recapitulare activă — exersezi doar greșelile. Apasă ca să oprești.',
-    reviewOffHint: 'Exersează doar rădăcinile greșite recent'
+    reviewOffHint: 'Exersează doar rădăcinile greșite recent',
+    diffEasy: 'Ușor', diffNormal: 'Normal', diffHard: 'Greu'
   },
   en: {
     title: 'Korean by Hanja',
@@ -266,7 +277,8 @@ var UI = {
     statsLevel: 'Level', statsNoData: 'No answers yet — start in Practice or Puzzle.',
     review: 'Review',
     reviewOnHint: 'Review mode active — only recent mistakes. Click to stop.',
-    reviewOffHint: 'Practice only your recently-missed roots'
+    reviewOffHint: 'Practice only your recently-missed roots',
+    diffEasy: 'Easy', diffNormal: 'Normal', diffHard: 'Hard'
   }
 };
 function t() { return UI[lang]; }
@@ -319,6 +331,7 @@ var elAnswerSlots     = document.getElementById('answerSlots');
 var elTileBank        = document.getElementById('tileBank');
 var elPuzzleFeedback  = document.getElementById('puzzleFeedback');
 var elPuzzleNextBtn   = document.getElementById('puzzleNextBtn');
+var elPuzzleDiffBtns  = document.querySelectorAll('.puzzleDiffBtn');
 
 var elSearchBtn     = document.getElementById('searchBtn');
 var elSearchOverlay = document.getElementById('searchOverlay');
@@ -451,6 +464,11 @@ function boot() {
   });
 
   elReview.addEventListener('click', toggleReviewMode);
+
+  elPuzzleDiffBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() { setPuzzleDifficulty(btn.dataset.diff); });
+  });
+  syncPuzzleDiffButtons();
 }
 
 /* ── search — jump straight to any of the 214 roots ──────────
@@ -685,6 +703,10 @@ function renderStatic() {
   elLearnEtymLabel.textContent = l.learnEtym;
   elPuzzleTypeLabel.textContent = l.puzzleType;
   elPuzzleNextBtn.textContent = l.next;
+  elPuzzleDiffBtns.forEach(function(btn) {
+    var key = 'diff' + btn.dataset.diff.charAt(0).toUpperCase() + btn.dataset.diff.slice(1);
+    btn.textContent = l[key];
+  });
 
   var isRo = lang === 'ro';
   elSearchBtn.title = isRo ? 'Caută (/)' : 'Search (/)';
@@ -1085,7 +1107,8 @@ function buildPuzzleQuestion() {
   var item = DATA[di];
   var word = item.words[Math.floor(Math.random() * item.words.length)];
   var answerChars = word.ko.split('');
-  var decoyCount = answerChars.length <= 2 ? 4 : (answerChars.length === 3 ? 3 : 2);
+  var decoyTable = PUZZLE_DECOYS[puzzleDifficulty];
+  var decoyCount = answerChars.length <= 2 ? decoyTable[2] : (answerChars.length === 3 ? decoyTable[3] : decoyTable.more);
   var pool = answerChars.concat(randomDecoySyllables(word.ko, decoyCount));
   var tiles = pool.map(function(ch, i) { return { id: i, ch: ch }; });
   return { di: di, item: item, word: word, answerLen: answerChars.length, tiles: shuffle(tiles), placed: [] };
@@ -1099,6 +1122,20 @@ function nextPuzzle() {
   elPuzzleNextBtn.classList.remove('show');
   elPuzzleSpeak.classList.add('hidden');
   renderPuzzle();
+}
+
+function setPuzzleDifficulty(d) {
+  if (!PUZZLE_DECOYS[d] || d === puzzleDifficulty) return;
+  puzzleDifficulty = d;
+  Store.set('KBH_PUZZLE_DIFF', d);
+  syncPuzzleDiffButtons();
+  if (puzzleCurrent) nextPuzzle();
+}
+
+function syncPuzzleDiffButtons() {
+  elPuzzleDiffBtns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.diff === puzzleDifficulty);
+  });
 }
 
 function renderPuzzle() {
