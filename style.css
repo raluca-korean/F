@@ -774,3 +774,80 @@ html, body {
 }
 #strokeAnimate:hover { border-color: var(--seal); color: var(--seal); }
 #strokeQuiz:hover { border-color: var(--ok); color: var(--ok); }
+
+/* ── STATS PANEL ──────────────────────────────────────────── */
+#statsPanel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: min(360px, 92vw);
+  background: var(--paper);
+  border: 1px solid var(--bd);
+  border-radius: 20px;
+  padding: 26px 24px 22px;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+#statsPanel.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.88);
+}
+#statsPanel::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: -1;
+  transition: opacity .25s;
+}
+#statsPanel.hidden::before { opacity: 0; }
+#statsClose {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--bd);
+  background: none;
+  color: var(--ink3);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+#statsClose:hover { border-color: var(--seal); color: var(--seal); }
+#statsTitle {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--ink2);
+  text-align: center;
+  margin-top: 4px;
+}
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.statRow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--bg2);
+  border: 1px solid var(--bd);
+}
+.statRow.statWide { flex-direction: column; align-items: stretch; gap: 8px; }
+.statLabel { font-size: 13px; color: var(--ink2); }
+.statValue { font-size: 20px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+.statValue .statSub { font-size: 13px; font-weight: 600; color: var(--ink3); margin-left: 4px; }
+.statBarBg { height: 6px; border-radius: 999px; background: var(--bd); overflow: hidden; }
+.statBarFill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--gold), var(--seal)); }

@@ -19,6 +19,7 @@
     <p class="kbh-sub" id="pgSub">Învață coreeana prin cele 214 hanja de bază</p>
   </div>
   <div class="kbh-controls">
+    <button type="button" id="statsBtn" class="ctrlBtn" title="Statistici" aria-label="Statistici">📊</button>
     <button type="button" id="searchBtn" class="ctrlBtn" title="Caută (/)" aria-label="Caută">🔍</button>
     <button type="button" id="langBtn" class="ctrlBtn" aria-label="Schimbă limba"></button>
     <button type="button" id="darkBtn" class="ctrlBtn" title="Temă" aria-label="Schimbă tema">◐</button>
@@ -117,6 +118,13 @@
     <button type="button" id="strokeAnimate">▶ Animație</button>
     <button type="button" id="strokeQuiz">✎ Testează</button>
   </div>
+</div>
+
+<!-- STATS PANEL -->
+<div id="statsPanel" class="hidden">
+  <button type="button" id="statsClose" aria-label="Închide">✕</button>
+  <div id="statsTitle"></div>
+  <div class="statsGrid" id="statsGrid"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3/dist/hanzi-writer.min.js"></script>

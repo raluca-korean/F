@@ -226,7 +226,10 @@ var UI = {
     puzzleType: 'Formează cuvântul',
     puzzleRoot: 'rădăcină',
     puzzleWrongMsg: 'Cuvântul corect era',
-    footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser'
+    footer: 'Aplicație independentă · fără cont, fără server · progresul se salvează local, în acest browser',
+    statsTitle: 'Statistici', statsToday: 'Azi', statsStreak: 'Cel mai bun streak',
+    statsTotal: 'Total răspunsuri', statsAccuracy: 'Acuratețe', statsMastered: 'Rădăcini stăpânite',
+    statsLevel: 'Nivel', statsNoData: 'Niciun răspuns încă — începe din Exersează sau Puzzle.'
   },
   en: {
     title: 'Korean by Hanja',
@@ -248,7 +251,10 @@ var UI = {
     puzzleType: 'Build the word',
     puzzleRoot: 'root',
     puzzleWrongMsg: 'The correct word was',
-    footer: 'Standalone app · no account, no server · progress is saved locally in this browser'
+    footer: 'Standalone app · no account, no server · progress is saved locally in this browser',
+    statsTitle: 'Statistics', statsToday: 'Today', statsStreak: 'Best streak',
+    statsTotal: 'Total answers', statsAccuracy: 'Accuracy', statsMastered: 'Roots mastered',
+    statsLevel: 'Level', statsNoData: 'No answers yet — start in Practice or Puzzle.'
   }
 };
 function t() { return UI[lang]; }
@@ -313,6 +319,12 @@ var elStrokeTitle   = document.getElementById('strokeTitle');
 var elStrokeWriter  = document.getElementById('strokeWriter');
 var elStrokeAnimate = document.getElementById('strokeAnimate');
 var elStrokeQuiz    = document.getElementById('strokeQuiz');
+
+var elStatsBtn   = document.getElementById('statsBtn');
+var elStatsPanel = document.getElementById('statsPanel');
+var elStatsClose = document.getElementById('statsClose');
+var elStatsTitle = document.getElementById('statsTitle');
+var elStatsGrid  = document.getElementById('statsGrid');
 
 /* ── boot ─────────────────────────────────────────────────── */
 fetch('./data/hanja.json')
@@ -393,7 +405,7 @@ function boot() {
     if (e.target === elSearchOverlay) closeSearch();
   });
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeSearch(); closeStroke(); return; }
+    if (e.key === 'Escape') { closeSearch(); closeStroke(); closeStats(); return; }
     if (e.key !== '/') return;
     if (!elSearchOverlay.classList.contains('hidden')) return;
     if (e.target === elSearchInput) return;
@@ -408,6 +420,12 @@ function boot() {
   });
   elStrokeAnimate.addEventListener('click', function() { if (hwWriter) hwWriter.animateCharacter(); });
   elStrokeQuiz.addEventListener('click', function() { if (hwWriter) hwWriter.quiz(); });
+
+  elStatsBtn.addEventListener('click', openStats);
+  elStatsClose.addEventListener('click', closeStats);
+  elStatsPanel.addEventListener('click', function(e) {
+    if (e.target === elStatsPanel) closeStats();
+  });
 }
 
 /* ── search — jump straight to any of the 214 roots ──────────
@@ -514,6 +532,51 @@ function closeStroke() {
   hwWriter = null;
 }
 
+/* ── STATS ─────────────────────────────────────────────── */
+function openStats() {
+  renderStats();
+  elStatsPanel.classList.remove('hidden');
+}
+
+function closeStats() {
+  elStatsPanel.classList.add('hidden');
+}
+
+function renderStats() {
+  var l = t();
+  elStatsTitle.textContent = l.statsTitle;
+
+  var s = Store.get('KBH_STATS', null);
+  var mastered = masteredCount();
+  var lvl = xpLevel(xpData.total);
+
+  if (!s || s.total === 0) {
+    elStatsGrid.innerHTML = '<div class="statRow statWide"><div class="statLabel">' + escapeHtml(l.statsNoData) + '</div></div>';
+    return;
+  }
+
+  var todayPct = s.todayTotal ? Math.round((s.todayCorrect / s.todayTotal) * 100) : 0;
+  var totalPct = s.total ? Math.round((s.correct / s.total) * 100) : 0;
+
+  function row(label, value, sub) {
+    return '<div class="statRow"><span class="statLabel">' + escapeHtml(label) + '</span>' +
+      '<span class="statValue">' + escapeHtml(String(value)) + (sub ? '<span class="statSub">' + escapeHtml(sub) + '</span>' : '') + '</span></div>';
+  }
+  function barRow(label, value, pct) {
+    return '<div class="statRow statWide">' +
+      '<div style="display:flex;justify-content:space-between"><span class="statLabel">' + escapeHtml(label) + '</span>' +
+      '<span class="statValue">' + escapeHtml(String(value)) + '</span></div>' +
+      '<div class="statBarBg"><div class="statBarFill" style="width:' + pct + '%"></div></div></div>';
+  }
+
+  elStatsGrid.innerHTML =
+    barRow(l.statsToday, s.todayCorrect + '/' + s.todayTotal + ' (' + todayPct + '%)', todayPct) +
+    barRow(l.statsTotal, s.correct + '/' + s.total + ' (' + totalPct + '%)', totalPct) +
+    row(l.statsStreak, s.bestStreak) +
+    row(l.statsMastered, mastered + '/' + DATA.length) +
+    row(l.statsLevel, '⭐ ' + xpData.total + ' XP · ' + (lvl['title_' + lang] || lvl.title_ro));
+}
+
 function setMode(m) {
   mode = m;
   elTabLearn.classList.toggle('active', m === 'learn');
@@ -562,6 +625,10 @@ function renderStatic() {
   elLearnSpeak.setAttribute('aria-label', isRo ? 'Ascultă citirea' : 'Listen to reading');
   elSpeakBtn.setAttribute('aria-label', isRo ? 'Ascultă' : 'Listen');
   elPuzzleSpeak.setAttribute('aria-label', isRo ? 'Ascultă cuvântul' : 'Listen to word');
+  elStatsBtn.title = isRo ? 'Statistici' : 'Statistics';
+  elStatsBtn.setAttribute('aria-label', isRo ? 'Statistici' : 'Statistics');
+  elStatsClose.setAttribute('aria-label', isRo ? 'Închide' : 'Close');
+  if (!elStatsPanel.classList.contains('hidden')) renderStats();
 }
 
 /* ── mastery / progress ──────────────────────────────────── */
