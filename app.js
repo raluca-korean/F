@@ -219,6 +219,21 @@ var PUZZLE_DECOYS = {
 var puzzleDifficulty = Store.get('KBH_PUZZLE_DIFF', 'normal');
 if (!PUZZLE_DECOYS[puzzleDifficulty]) puzzleDifficulty = 'normal';
 
+/* "Exersează lecția" — a bounded, non-repeating round of (word, type)
+   question combinations drawn only from the root currently open in
+   Learn (learnPos), instead of Practice's normal open-ended SRS-wide
+   stream. Every word under that root gets its chance (via
+   word-meaning + meaning-word for each, plus breakdown-word for the
+   ones with a verified breakdown), shuffled and capped at
+   LESSON_ROUND_SIZE so repeats within one round are impossible until
+   the pool itself is exhausted. */
+var LESSON_ROUND_SIZE = 20;
+var lessonRoundActive = false;
+var lessonRoundDi = null;
+var lessonRoundQueue = [];
+var lessonRoundIndex = 0;
+var lessonRoundScore = { correct: 0, total: 0 };
+
 var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word', 'breakdown-word'];
 
 var UI = {
@@ -249,7 +264,13 @@ var UI = {
     review: 'Recapitulare',
     reviewOnHint: 'Recapitulare activă — exersezi doar greșelile. Apasă ca să oprești.',
     reviewOffHint: 'Exersează doar rădăcinile greșite recent',
-    diffEasy: 'Ușor', diffNormal: 'Normal', diffHard: 'Greu'
+    diffEasy: 'Ușor', diffNormal: 'Normal', diffHard: 'Greu',
+    lessonRoundBtn: '🎯 Exersează lecția asta ({n} întrebări)',
+    lessonRoundProgress: 'Lecție: {i} / {n}',
+    lessonRoundExit: 'Ieși din lecție',
+    roundDoneMsg: 'Lecție terminată!',
+    roundAgain: '↺ Din nou',
+    roundExit: '← Exersare liberă'
   },
   en: {
     title: 'Korean by Hanja',
@@ -278,7 +299,13 @@ var UI = {
     review: 'Review',
     reviewOnHint: 'Review mode active — only recent mistakes. Click to stop.',
     reviewOffHint: 'Practice only your recently-missed roots',
-    diffEasy: 'Easy', diffNormal: 'Normal', diffHard: 'Hard'
+    diffEasy: 'Easy', diffNormal: 'Normal', diffHard: 'Hard',
+    lessonRoundBtn: '🎯 Practice this lesson ({n} questions)',
+    lessonRoundProgress: 'Lesson: {i} / {n}',
+    lessonRoundExit: 'Exit lesson',
+    roundDoneMsg: 'Lesson complete!',
+    roundAgain: '↺ Again',
+    roundExit: '← Free practice'
   }
 };
 function t() { return UI[lang]; }
@@ -333,6 +360,17 @@ var elPuzzleFeedback  = document.getElementById('puzzleFeedback');
 var elPuzzleNextBtn   = document.getElementById('puzzleNextBtn');
 var elPuzzleDiffBtns  = document.querySelectorAll('.puzzleDiffBtn');
 
+var elLessonRoundBtn      = document.getElementById('lessonRoundBtn');
+var elLessonRoundBar      = document.getElementById('lessonRoundBar');
+var elLessonRoundProgress = document.getElementById('lessonRoundProgress');
+var elLessonRoundExit     = document.getElementById('lessonRoundExit');
+var elRoundSummary        = document.getElementById('roundSummary');
+var elRoundSummaryEmoji   = document.getElementById('roundSummaryEmoji');
+var elRoundSummaryMsg     = document.getElementById('roundSummaryMsg');
+var elRoundSummaryScore   = document.getElementById('roundSummaryScore');
+var elRoundSummaryAgain   = document.getElementById('roundSummaryAgain');
+var elRoundSummaryExit    = document.getElementById('roundSummaryExit');
+
 var elSearchBtn     = document.getElementById('searchBtn');
 var elSearchOverlay = document.getElementById('searchOverlay');
 var elSearchInput   = document.getElementById('searchInput');
@@ -382,6 +420,8 @@ function boot() {
     if (current) renderQuestion();
     renderLearn();
     if (puzzleCurrent) renderPuzzle();
+    renderLessonRoundProgress();
+    if (!elRoundSummary.classList.contains('hidden')) showRoundSummary();
   });
   elDarkBtn.addEventListener('click', function() {
     var isDark = !document.body.classList.contains('dark-mode');
@@ -469,6 +509,11 @@ function boot() {
     btn.addEventListener('click', function() { setPuzzleDifficulty(btn.dataset.diff); });
   });
   syncPuzzleDiffButtons();
+
+  elLessonRoundBtn.addEventListener('click', function() { startLessonRound(learnPos); });
+  elLessonRoundExit.addEventListener('click', exitLessonRound);
+  elRoundSummaryAgain.addEventListener('click', function() { startLessonRound(lessonRoundDi); });
+  elRoundSummaryExit.addEventListener('click', exitLessonRound);
 }
 
 /* ── search — jump straight to any of the 214 roots ──────────
@@ -787,6 +832,9 @@ function renderLearn() {
   elLearnRoot.innerHTML = rootDisplay(item);
   elLearnMeaning.textContent = item.meaning[lang] || item.meaning.ro;
 
+  var roundSize = buildLessonRoundQueue(learnPos).length;
+  elLessonRoundBtn.textContent = t().lessonRoundBtn.replace('{n}', roundSize);
+
   elLearnWords.innerHTML = item.words.map(function(w) {
     var sentence = highlightSyllable(w.sentence, item);
     var breakdown = wordBreakdown(w);
@@ -943,12 +991,24 @@ function distractWords(correctKey, n) {
 }
 
 function buildQuestion() {
+  if (lessonRoundActive) {
+    var entry = lessonRoundQueue[lessonRoundIndex];
+    return buildQuestionFor(lessonRoundDi, entry.type, entry.word);
+  }
   var di = pickItem();
   var item = DATA[di];
   var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
-
   var types = breakdownWords.length ? TYPES : TYPES.filter(function(ty) { return ty !== 'breakdown-word'; });
   var type = types[Math.floor(Math.random() * types.length)];
+  return buildQuestionFor(di, type, null);
+}
+
+/* Builds one question for a known (di, type) — shared by normal
+   practice (random di/type, no forced word) and lesson rounds (fixed
+   di, type and word spelled out by buildLessonRoundQueue). */
+function buildQuestionFor(di, type, forcedWord) {
+  var item = DATA[di];
+  var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
 
   var correctKey, correctLabel, options, wordUsed = null, breakdownMeanings = null;
 
@@ -961,18 +1021,18 @@ function buildQuestion() {
     correctKey = di;
     options = distractRoots(di, 3).concat([{ key: di, label: correctLabel, tag: item.hanja }]);
   } else if (type === 'word-meaning') {
-    wordUsed = item.words[Math.floor(Math.random() * item.words.length)];
+    wordUsed = forcedWord || item.words[Math.floor(Math.random() * item.words.length)];
     correctLabel = item.meaning[lang] || item.meaning.ro;
     correctKey = correctLabel;
     options = distractMeanings(di, 3).concat([{ key: correctKey, label: correctLabel }]);
   } else if (type === 'breakdown-word') {
-    wordUsed = breakdownWords[Math.floor(Math.random() * breakdownWords.length)];
+    wordUsed = forcedWord || breakdownWords[Math.floor(Math.random() * breakdownWords.length)];
     breakdownMeanings = wordBreakdown(wordUsed).meanings.join(' + ');
     correctKey = di + '_' + wordUsed.ko;
     correctLabel = wordUsed.ko;
     options = distractWords(correctKey, 3).concat([{ key: correctKey, label: correctLabel }]);
   } else { // meaning-word
-    wordUsed = item.words[Math.floor(Math.random() * item.words.length)];
+    wordUsed = forcedWord || item.words[Math.floor(Math.random() * item.words.length)];
     correctKey = di + '_' + wordUsed.ko;
     correctLabel = wordUsed.ko;
     options = distractWords(correctKey, 3).concat([{ key: correctKey, label: correctLabel }]);
@@ -990,13 +1050,86 @@ function buildQuestion() {
   };
 }
 
+/* All (word, type) combinations available for a root, shuffled and
+   capped at LESSON_ROUND_SIZE. For a typical 6-8 word root this is
+   comfortably above 20 (2 root-level + 2 per word + 1 breakdown-word
+   per word with a verified breakdown); a sparse 4-word root falls a
+   little short rather than repeating — "about 20", not padded. */
+function buildLessonRoundQueue(di) {
+  var item = DATA[di];
+  var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
+  var combos = [{ type: 'root-meaning' }, { type: 'meaning-root' }];
+  item.words.forEach(function(w) {
+    combos.push({ type: 'word-meaning', word: w });
+    combos.push({ type: 'meaning-word', word: w });
+  });
+  breakdownWords.forEach(function(w) {
+    combos.push({ type: 'breakdown-word', word: w });
+  });
+  return shuffle(combos).slice(0, LESSON_ROUND_SIZE);
+}
+
+function startLessonRound(di) {
+  lessonRoundActive = true;
+  lessonRoundDi = di;
+  lessonRoundQueue = buildLessonRoundQueue(di);
+  lessonRoundIndex = 0;
+  lessonRoundScore = { correct: 0, total: 0 };
+  hideRoundSummary();
+  setMode('practice');
+  nextQuestion();
+}
+
+function exitLessonRound() {
+  lessonRoundActive = false;
+  hideRoundSummary();
+  nextQuestion();
+}
+
+function renderLessonRoundProgress() {
+  var l = t();
+  if (!lessonRoundActive) {
+    elLessonRoundBar.classList.add('hidden');
+    return;
+  }
+  elLessonRoundBar.classList.remove('hidden');
+  elLessonRoundProgress.textContent = l.lessonRoundProgress
+    .replace('{i}', Math.min(lessonRoundIndex + 1, lessonRoundQueue.length))
+    .replace('{n}', lessonRoundQueue.length);
+  elLessonRoundExit.textContent = l.lessonRoundExit;
+}
+
+function showRoundSummary() {
+  var l = t();
+  var pct = lessonRoundScore.total ? Math.round((lessonRoundScore.correct / lessonRoundScore.total) * 100) : 0;
+  var msgs = pct === 100
+    ? { emoji: '🏆' } : pct >= 80
+    ? { emoji: '🎉' } : pct >= 60
+    ? { emoji: '💪' } : { emoji: '📚' };
+  elRoundSummaryEmoji.textContent = msgs.emoji;
+  elRoundSummaryMsg.textContent = l.roundDoneMsg;
+  elRoundSummaryScore.textContent = lessonRoundScore.correct + ' / ' + lessonRoundScore.total;
+  elRoundSummaryAgain.textContent = l.roundAgain;
+  elRoundSummaryExit.textContent = l.roundExit;
+  elRoundSummary.classList.remove('hidden');
+}
+
+function hideRoundSummary() {
+  elRoundSummary.classList.add('hidden');
+}
+
 function nextQuestion() {
+  if (lessonRoundActive && lessonRoundIndex >= lessonRoundQueue.length) {
+    showRoundSummary();
+    return;
+  }
   locked = false;
   current = buildQuestion();
   elFeedback.textContent = '';
   elFeedback.className = 'feedback';
   elNextBtn.classList.remove('show');
   renderQuestion();
+  renderLessonRoundProgress();
 }
 
 function renderQuestion() {
@@ -1064,6 +1197,12 @@ function submitAnswer(key, btn) {
 
   updateSession(isCorrect);
   updateBadges();
+
+  if (lessonRoundActive) {
+    lessonRoundScore.total++;
+    if (isCorrect) lessonRoundScore.correct++;
+    lessonRoundIndex++;
+  }
 
   var l = t();
   elFeedback.textContent = isCorrect ? '✓ ' + l.correctMsg : '✕ ' + l.wrongMsg + ' — ' + c.correctLabel;

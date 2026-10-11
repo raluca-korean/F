@@ -62,6 +62,7 @@
       </div>
     </div>
     <div id="learnMeaning"></div>
+    <button type="button" id="lessonRoundBtn" class="lessonRoundBtn"></button>
     <div class="learnSectionLabel" id="learnWordsLabel"></div>
     <div id="learnWords"></div>
     <div class="learnSectionLabel" id="learnEtymLabel"></div>
@@ -71,6 +72,10 @@
 
 <main class="kbh-main hidden" id="practiceView">
   <div class="kbh-card">
+    <div id="lessonRoundBar" class="hidden">
+      <span id="lessonRoundProgress"></span>
+      <button type="button" id="lessonRoundExit"></button>
+    </div>
     <div class="typeLabel" id="typeLabel"></div>
     <div class="promptWrap">
       <div id="promptText"></div>
@@ -137,6 +142,17 @@
     <button type="button" id="statsExport">⬇ Export</button>
     <button type="button" id="statsImport">⬆ Import</button>
     <input type="file" id="statsImportFile" accept="application/json" class="hidden">
+  </div>
+</div>
+
+<!-- LESSON ROUND SUMMARY -->
+<div id="roundSummary" class="hidden">
+  <div id="roundSummaryEmoji"></div>
+  <div id="roundSummaryMsg"></div>
+  <div id="roundSummaryScore"></div>
+  <div id="roundSummaryActions">
+    <button type="button" id="roundSummaryAgain"></button>
+    <button type="button" id="roundSummaryExit"></button>
   </div>
 </div>
 

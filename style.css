@@ -898,3 +898,98 @@ button.badge.active .dot { background: var(--seal); }
   transition: border-color .2s, color .2s;
 }
 #statsExport:hover, #statsImport:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── LESSON ROUND ─────────────────────────────────────────── */
+.lessonRoundBtn {
+  display: block;
+  margin: 2px auto 18px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 20px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--seal) 45%, transparent);
+  background: none;
+  color: var(--seal);
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.lessonRoundBtn:hover { background: var(--seal); color: #fff; }
+
+#lessonRoundBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--bd);
+}
+#lessonRoundBar.hidden { display: none; }
+#lessonRoundProgress {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .4px;
+  color: var(--seal);
+  text-transform: uppercase;
+}
+#lessonRoundExit {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+#lessonRoundExit:hover { color: var(--seal); }
+
+#roundSummary {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: min(340px, 90vw);
+  background: var(--paper);
+  border: 1px solid var(--bd);
+  border-radius: 24px;
+  padding: 36px 28px 28px;
+  z-index: 102;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,.4);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+#roundSummary.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.88);
+}
+#roundSummary::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: -1;
+  transition: opacity .25s;
+}
+#roundSummary.hidden::before { opacity: 0; }
+#roundSummaryEmoji { font-size: 56px; line-height: 1; }
+#roundSummaryMsg { font-size: 20px; font-weight: 700; color: var(--ink); }
+#roundSummaryScore { font-size: 36px; font-weight: 900; color: var(--seal); }
+#roundSummaryActions { display: flex; gap: 10px; margin-top: 8px; }
+#roundSummaryAgain, #roundSummaryExit {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--bd);
+  background: none;
+  color: var(--ink2);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+#roundSummaryAgain { border-color: var(--seal); color: var(--seal); }
+#roundSummaryAgain:hover { background: var(--seal); color: #fff; }
+#roundSummaryExit:hover { border-color: var(--ink2); color: var(--ink); }
