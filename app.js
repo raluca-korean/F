@@ -544,9 +544,22 @@ function renderStatic() {
   elPuzzleTypeLabel.textContent = l.puzzleType;
   elPuzzleNextBtn.textContent = l.next;
 
-  elSearchBtn.title = lang === 'ro' ? 'Caută (/)' : 'Search (/)';
-  elSearchInput.placeholder = lang === 'ro' ? 'Caută hanja, citire, sens…' : 'Search hanja, reading, meaning…';
-  elStrokeBtn.title = lang === 'ro' ? 'Ordinea trăsăturilor' : 'Stroke order';
+  var isRo = lang === 'ro';
+  elSearchBtn.title = isRo ? 'Caută (/)' : 'Search (/)';
+  elSearchBtn.setAttribute('aria-label', isRo ? 'Caută' : 'Search');
+  elSearchInput.placeholder = isRo ? 'Caută hanja, citire, sens…' : 'Search hanja, reading, meaning…';
+  elSearchInput.setAttribute('aria-label', isRo ? 'Caută hanja, citire, sens' : 'Search hanja, reading, meaning');
+  elSearchClear.setAttribute('aria-label', isRo ? 'Șterge căutarea' : 'Clear search');
+  elStrokeBtn.title = isRo ? 'Ordinea trăsăturilor' : 'Stroke order';
+  elStrokeBtn.setAttribute('aria-label', isRo ? 'Arată ordinea trăsăturilor' : 'Show stroke order');
+  elStrokeClose.setAttribute('aria-label', isRo ? 'Închide' : 'Close');
+  elDarkBtn.setAttribute('aria-label', isRo ? 'Schimbă tema' : 'Toggle theme');
+  elLangBtn.setAttribute('aria-label', isRo ? 'Schimbă limba' : 'Switch language');
+  elLearnPrev.setAttribute('aria-label', isRo ? 'Hanja anterior' : 'Previous hanja');
+  elLearnNext.setAttribute('aria-label', isRo ? 'Hanja următor' : 'Next hanja');
+  elLearnSpeak.setAttribute('aria-label', isRo ? 'Ascultă citirea' : 'Listen to reading');
+  elSpeakBtn.setAttribute('aria-label', isRo ? 'Ascultă' : 'Listen');
+  elPuzzleSpeak.setAttribute('aria-label', isRo ? 'Ascultă cuvântul' : 'Listen to word');
 }
 
 /* ── mastery / progress ──────────────────────────────────── */
