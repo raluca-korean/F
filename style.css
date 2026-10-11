@@ -123,6 +123,13 @@ button.badge.active .dot { background: var(--seal); }
   margin: 0 auto;
   padding: 0 18px 16px;
 }
+
+/* On wider screens (tablets+) there's room for all 6 badges on one
+   row — the 640px cap above is sized for phones and wraps them to 2
+   rows even when the viewport itself is much wider (e.g. iPad). */
+@media (min-width: 860px) {
+  .kbh-header, .kbh-badges, .kbh-barWrap { max-width: 820px; }
+}
 .kbh-barBg {
   height: 6px;
   border-radius: 999px;
