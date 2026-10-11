@@ -229,7 +229,9 @@ if (!PUZZLE_DECOYS[puzzleDifficulty]) puzzleDifficulty = 'normal';
    the pool itself is exhausted. */
 var LESSON_ROUND_SIZE = 20;
 var lessonRoundActive = false;
-var lessonRoundDi = null;
+var lessonRoundMode = null;   // 'single' (just this root) | 'cumulative' (every root so far)
+var lessonRoundDi = null;     // for 'single'
+var lessonRoundMaxDi = null;  // for 'cumulative'
 var lessonRoundQueue = [];
 var lessonRoundIndex = 0;
 var lessonRoundScore = { correct: 0, total: 0 };
@@ -270,7 +272,9 @@ var UI = {
     lessonRoundExit: 'Ieși din lecție',
     roundDoneMsg: 'Lecție terminată!',
     roundAgain: '↺ Din nou',
-    roundExit: '← Exersare liberă'
+    roundExit: '← Exersare liberă',
+    cumulativeRoundBtn: '📚 Recapitulare generală ({n} întrebări)',
+    cumulativeRoundProgress: 'Recapitulare generală: {i} / {n}'
   },
   en: {
     title: 'Korean by Hanja',
@@ -305,7 +309,9 @@ var UI = {
     lessonRoundExit: 'Exit lesson',
     roundDoneMsg: 'Lesson complete!',
     roundAgain: '↺ Again',
-    roundExit: '← Free practice'
+    roundExit: '← Free practice',
+    cumulativeRoundBtn: '📚 General review ({n} questions)',
+    cumulativeRoundProgress: 'General review: {i} / {n}'
   }
 };
 function t() { return UI[lang]; }
@@ -361,6 +367,7 @@ var elPuzzleNextBtn   = document.getElementById('puzzleNextBtn');
 var elPuzzleDiffBtns  = document.querySelectorAll('.puzzleDiffBtn');
 
 var elLessonRoundBtn      = document.getElementById('lessonRoundBtn');
+var elCumulativeRoundBtn  = document.getElementById('cumulativeRoundBtn');
 var elLessonRoundBar      = document.getElementById('lessonRoundBar');
 var elLessonRoundProgress = document.getElementById('lessonRoundProgress');
 var elLessonRoundExit     = document.getElementById('lessonRoundExit');
@@ -511,8 +518,9 @@ function boot() {
   syncPuzzleDiffButtons();
 
   elLessonRoundBtn.addEventListener('click', function() { startLessonRound(learnPos); });
+  elCumulativeRoundBtn.addEventListener('click', function() { startCumulativeRound(learnPos); });
   elLessonRoundExit.addEventListener('click', exitLessonRound);
-  elRoundSummaryAgain.addEventListener('click', function() { startLessonRound(lessonRoundDi); });
+  elRoundSummaryAgain.addEventListener('click', restartRound);
   elRoundSummaryExit.addEventListener('click', exitLessonRound);
 }
 
@@ -832,8 +840,11 @@ function renderLearn() {
   elLearnRoot.innerHTML = rootDisplay(item);
   elLearnMeaning.textContent = item.meaning[lang] || item.meaning.ro;
 
-  var roundSize = buildLessonRoundQueue(learnPos).length;
+  var roundSize = buildRoundQueue([learnPos]).length;
   elLessonRoundBtn.textContent = t().lessonRoundBtn.replace('{n}', roundSize);
+
+  var cumulativeSize = buildRoundQueue(rangeTo(learnPos)).length;
+  elCumulativeRoundBtn.textContent = t().cumulativeRoundBtn.replace('{n}', cumulativeSize);
 
   elLearnWords.innerHTML = item.words.map(function(w) {
     var sentence = highlightSyllable(w.sentence, item);
@@ -993,7 +1004,7 @@ function distractWords(correctKey, n) {
 function buildQuestion() {
   if (lessonRoundActive) {
     var entry = lessonRoundQueue[lessonRoundIndex];
-    return buildQuestionFor(lessonRoundDi, entry.type, entry.word);
+    return buildQuestionFor(entry.di, entry.type, entry.word);
   }
   var di = pickItem();
   var item = DATA[di];
@@ -1004,8 +1015,8 @@ function buildQuestion() {
 }
 
 /* Builds one question for a known (di, type) — shared by normal
-   practice (random di/type, no forced word) and lesson rounds (fixed
-   di, type and word spelled out by buildLessonRoundQueue). */
+   practice (random di/type, no forced word) and lesson/cumulative
+   rounds (di, type and word spelled out by buildRoundQueue). */
 function buildQuestionFor(di, type, forcedWord) {
   var item = DATA[di];
   var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
@@ -1050,34 +1061,67 @@ function buildQuestionFor(di, type, forcedWord) {
   };
 }
 
-/* All (word, type) combinations available for a root, shuffled and
-   capped at LESSON_ROUND_SIZE. For a typical 6-8 word root this is
-   comfortably above 20 (2 root-level + 2 per word + 1 breakdown-word
-   per word with a verified breakdown); a sparse 4-word root falls a
-   little short rather than repeating — "about 20", not padded. */
-function buildLessonRoundQueue(di) {
-  var item = DATA[di];
-  var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
-  var combos = [{ type: 'root-meaning' }, { type: 'meaning-root' }];
-  item.words.forEach(function(w) {
-    combos.push({ type: 'word-meaning', word: w });
-    combos.push({ type: 'meaning-word', word: w });
-  });
-  breakdownWords.forEach(function(w) {
-    combos.push({ type: 'breakdown-word', word: w });
+/* All (di, word, type) combinations available across a set of roots,
+   shuffled and capped at LESSON_ROUND_SIZE. For a typical 6-8 word
+   root this is comfortably above 20 per root alone (2 root-level + 2
+   per word + 1 breakdown-word per word with a verified breakdown);
+   a sparse 4-word root falls a little short rather than repeating —
+   "about 20", not padded. Used both for a single-root lesson round
+   and for the cumulative round across every root studied so far. */
+function buildRoundQueue(diList) {
+  var combos = [];
+  diList.forEach(function(di) {
+    var item = DATA[di];
+    var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
+    combos.push({ di: di, type: 'root-meaning' });
+    combos.push({ di: di, type: 'meaning-root' });
+    item.words.forEach(function(w) {
+      combos.push({ di: di, type: 'word-meaning', word: w });
+      combos.push({ di: di, type: 'meaning-word', word: w });
+    });
+    breakdownWords.forEach(function(w) {
+      combos.push({ di: di, type: 'breakdown-word', word: w });
+    });
   });
   return shuffle(combos).slice(0, LESSON_ROUND_SIZE);
 }
 
+function rangeTo(maxDi) {
+  var out = [];
+  for (var i = 0; i <= maxDi; i++) out.push(i);
+  return out;
+}
+
 function startLessonRound(di) {
   lessonRoundActive = true;
+  lessonRoundMode = 'single';
   lessonRoundDi = di;
-  lessonRoundQueue = buildLessonRoundQueue(di);
+  lessonRoundQueue = buildRoundQueue([di]);
   lessonRoundIndex = 0;
   lessonRoundScore = { correct: 0, total: 0 };
   hideRoundSummary();
   setMode('practice');
   nextQuestion();
+}
+
+/* "Recapitulare generală" — a round drawn from every root studied so
+   far (index 0 through the current Learn position), not just the
+   most recent one, so review doesn't stop at yesterday's lesson. */
+function startCumulativeRound(maxDi) {
+  lessonRoundActive = true;
+  lessonRoundMode = 'cumulative';
+  lessonRoundMaxDi = maxDi;
+  lessonRoundQueue = buildRoundQueue(rangeTo(maxDi));
+  lessonRoundIndex = 0;
+  lessonRoundScore = { correct: 0, total: 0 };
+  hideRoundSummary();
+  setMode('practice');
+  nextQuestion();
+}
+
+function restartRound() {
+  if (lessonRoundMode === 'cumulative') startCumulativeRound(lessonRoundMaxDi);
+  else startLessonRound(lessonRoundDi);
 }
 
 function exitLessonRound() {
@@ -1088,12 +1132,14 @@ function exitLessonRound() {
 
 function renderLessonRoundProgress() {
   var l = t();
+  elCumulativeRoundBtn.classList.toggle('hidden', lessonRoundActive);
   if (!lessonRoundActive) {
     elLessonRoundBar.classList.add('hidden');
     return;
   }
   elLessonRoundBar.classList.remove('hidden');
-  elLessonRoundProgress.textContent = l.lessonRoundProgress
+  var label = lessonRoundMode === 'cumulative' ? l.cumulativeRoundProgress : l.lessonRoundProgress;
+  elLessonRoundProgress.textContent = label
     .replace('{i}', Math.min(lessonRoundIndex + 1, lessonRoundQueue.length))
     .replace('{n}', lessonRoundQueue.length);
   elLessonRoundExit.textContent = l.lessonRoundExit;
