@@ -203,7 +203,7 @@ var puzzleQueue = [];      // array of DATA indices, prioritized by SRS due date
 var puzzleCurrent = null;  // { di, item, word, tiles: [{id,ch}], placed: [id,...] }
 var puzzleLocked = false;
 
-var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word'];
+var TYPES = ['root-meaning', 'meaning-root', 'word-meaning', 'meaning-word', 'breakdown-word'];
 
 var UI = {
   ro: {
@@ -214,7 +214,8 @@ var UI = {
       'root-meaning': 'Ce înseamnă această silabă coreeană?',
       'meaning-root': 'Care silabă coreeană are acest sens?',
       'word-meaning': 'Ce înseamnă silaba evidențiată din acest cuvânt?',
-      'meaning-word': 'Care e cuvântul coreean corect?'
+      'meaning-word': 'Care e cuvântul coreean corect?',
+      'breakdown-word': 'Ce cuvânt formează aceste sensuri?'
     },
     correctMsg: 'Corect!', wrongMsg: 'Greșit',
     next: 'Următorul →',
@@ -235,7 +236,8 @@ var UI = {
       'root-meaning': 'What does this Korean syllable mean?',
       'meaning-root': 'Which Korean syllable has this meaning?',
       'word-meaning': 'What does the highlighted syllable mean in this word?',
-      'meaning-word': 'Which is the correct Korean word?'
+      'meaning-word': 'Which is the correct Korean word?',
+      'breakdown-word': 'Which word do these meanings form?'
     },
     correctMsg: 'Correct!', wrongMsg: 'Wrong',
     next: 'Next →',
@@ -747,9 +749,12 @@ function distractWords(correctKey, n) {
 function buildQuestion() {
   var di = pickItem();
   var item = DATA[di];
-  var type = TYPES[Math.floor(Math.random() * TYPES.length)];
+  var breakdownWords = item.words.filter(function(w) { return !!wordBreakdown(w); });
 
-  var correctKey, correctLabel, options, wordUsed = null;
+  var types = breakdownWords.length ? TYPES : TYPES.filter(function(ty) { return ty !== 'breakdown-word'; });
+  var type = types[Math.floor(Math.random() * types.length)];
+
+  var correctKey, correctLabel, options, wordUsed = null, breakdownMeanings = null;
 
   if (type === 'root-meaning') {
     correctLabel = item.meaning[lang] || item.meaning.ro;
@@ -764,6 +769,12 @@ function buildQuestion() {
     correctLabel = item.meaning[lang] || item.meaning.ro;
     correctKey = correctLabel;
     options = distractMeanings(di, 3).concat([{ key: correctKey, label: correctLabel }]);
+  } else if (type === 'breakdown-word') {
+    wordUsed = breakdownWords[Math.floor(Math.random() * breakdownWords.length)];
+    breakdownMeanings = wordBreakdown(wordUsed).meanings.join(' + ');
+    correctKey = di + '_' + wordUsed.ko;
+    correctLabel = wordUsed.ko;
+    options = distractWords(correctKey, 3).concat([{ key: correctKey, label: correctLabel }]);
   } else { // meaning-word
     wordUsed = item.words[Math.floor(Math.random() * item.words.length)];
     correctKey = di + '_' + wordUsed.ko;
@@ -776,6 +787,7 @@ function buildQuestion() {
     item: item,
     di: di,
     wordUsed: wordUsed,
+    breakdownMeanings: breakdownMeanings,
     correctKey: correctKey,
     correctLabel: correctLabel,
     options: shuffle(options)
@@ -814,6 +826,9 @@ function renderQuestion() {
     elPromptHint.textContent = l.hlHint;
     elPromptHint.classList.remove('hidden');
     elSpeakBtn.classList.remove('hidden');
+  } else if (c.type === 'breakdown-word') {
+    elPrompt.textContent = c.breakdownMeanings;
+    elPromptSub.textContent = '';
   } else { // meaning-word
     elPrompt.textContent = c.wordUsed[lang] || c.wordUsed.ro;
     elPromptSub.textContent = '';
@@ -860,7 +875,7 @@ function submitAnswer(key, btn) {
   elNextBtn.classList.add('show');
 
   if (isCorrect) {
-    var say = (c.type === 'word-meaning' || c.type === 'meaning-word') ? c.wordUsed.ko : primaryReading(c.item);
+    var say = (c.type === 'word-meaning' || c.type === 'meaning-word' || c.type === 'breakdown-word') ? c.wordUsed.ko : primaryReading(c.item);
     speak(say);
   }
 

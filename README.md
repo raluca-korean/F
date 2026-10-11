@@ -23,12 +23,13 @@ Pentru o parte din cuvinte, arătate descompus, pe silabe — un rând scurt (`�
 
 Unele cuvinte au nevoie de un hanja care nu e printre cele 214 rădăcini pe care le înveți efectiv (ex. 校 pentru 학교, 都 pentru 도시). Acelea sunt în `data/extra-hanja.js` (`EXTRA_HANJA`) — un mic set suplimentar, **doar pentru afișarea descompunerii**, nu rădăcini noi de învățat/testat în Exersează sau Puzzle. Se extinde treptat, cuvânt cu cuvânt, cu aceeași verificare atentă. Pentru restul cuvintelor (încă majoritatea — extinderea e un proces continuu), rămâne formatul obișnuit: cuvântul întreg, cu silaba rădăcinii evidențiată. Nu se ghicește niciodată sensul unei silabe nesigure.
 
-**Exersează** — 4 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
+**Exersează** — 5 tipuri de întrebări, alese aleatoriu, cu prioritate pentru rădăcinile noi sau „due" pentru recapitulare (repetiție spațiată tip SM-2):
 
 - **Silabă → sens**: ce înseamnă această silabă coreeană
 - **Sens → silabă**: care silabă coreeană are acest sens
 - **Cuvânt → sens**: ce înseamnă silaba evidențiată dintr-un cuvânt coreean real
 - **Sens → cuvânt**: care e cuvântul coreean corect pentru un anumit sens
+- **Descompunere → cuvânt**: date fiind sensurile hanja-urilor componente (ex. „apă + a învăța"), care e cuvântul coreean care le combină — folosește exact aceeași listă verificată manual din `VERIFIED_BREAKDOWNS` ca și tabelul din Învață, deci apare doar pentru cuvinte cu descompunere confirmată; nu arată niciodată caracterul hanja, doar sensurile
 
 **Puzzle** — formează cuvântul: pornind de la sensul unui cuvânt real, atingi silabele corecte, în ordinea corectă, ca să-l reconstitui. Rădăcina hanja din care pornește cuvântul apare doar ca indiciu mic (silabă + etichetă hanja) — nu e niciodată dată de-a gata. Tava are mereu ~6 silabe (silabele cuvântului + „momeli" — silabe reale din alte cuvinte, care nu se folosesc), ca puzzle-ul să nu fie banal nici la un cuvânt de 2 silabe: trebuie mai întâi să recunoști care silabe aparțin cuvântului, apoi în ce ordine.
 
