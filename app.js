@@ -61,8 +61,9 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-/* Silaba coreeană mare, cu hanja-ul de origine ca etichetă mică, gri —
-   NICIODATĂ ca subiect de recunoscut/ales, doar ca dezambiguare vizuală
+/* Silaba coreeană mare + hanja-ul de origine dedesubt (amândouă roșii,
+   vezi .rootMain/.rootTag din style.css) — hanja-ul rămâne totuși
+   NICIODATĂ un subiect de recunoscut/ales, doar o dezambiguare vizuală
    pentru omofone (ex. 수 = 水/apă, 手/mână, 誰/cine, 須/trebuie — fără
    etichetă, cele 4 ar arăta identic într-un quiz). */
 function rootDisplay(item) {
