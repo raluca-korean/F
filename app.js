@@ -150,17 +150,49 @@ function srsStep(current, correct) {
   return s;
 }
 
-/* ── speech ───────────────────────────────────────────────── */
-function speak(text) {
-  if (!('speechSynthesis' in window) || !text) return;
-  var u = new SpeechSynthesisUtterance(text);
-  u.lang = 'ko-KR';
+/* ── speech ─────────────────────────────────────────────────
+   Chrome needs a short delay between cancel() and speak() or the
+   new utterance is silently dropped — hence the setTimeout below.
+   But that delay is exactly what broke repeated taps: each speak()
+   call used to schedule its own speechSynthesis.speak() ~30ms later
+   with no way to tell whether a NEWER tap had since called cancel()
+   again in between. Tapping fast enough (well under 30ms apart, easy
+   to do) left several of these delayed speak() calls firing one after
+   another into a queue that had already moved on, so utterances
+   overlapped or played back garbled/truncated. speakToken fixes that:
+   every call stamps the delayed speak with "the call count at the
+   time it was scheduled", and the delayed callback bails out if a
+   later tap has since bumped that counter — only the LAST tap in a
+   rapid burst ever actually speaks. */
+var speakToken = 0;
+
+/* Prefer a higher-quality voice when more than one Korean voice is
+   installed: browsers mark network/cloud voices (Google's, Apple's
+   "Enhanced"/"Premium" voices, etc.) as localService:false, and they
+   consistently sound less robotic than the always-available offline
+   ones — getVoices()[0] used to pick whichever the browser listed
+   first, which is often the low-quality local voice. */
+function _pickKoVoice() {
   var voices = speechSynthesis.getVoices().filter(function(v) {
     return v.lang && v.lang.toLowerCase().indexOf('ko') === 0;
   });
-  if (voices.length) u.voice = voices[0];
+  if (!voices.length) return null;
+  var networkVoice = voices.filter(function(v) { return v.localService === false; })[0];
+  return networkVoice || voices[0];
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window) || !text) return;
+  var myToken = ++speakToken;
   speechSynthesis.cancel();
-  setTimeout(function() { speechSynthesis.speak(u); }, 30);
+  setTimeout(function() {
+    if (myToken !== speakToken) return; // superseded by a newer tap
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ko-KR';
+    var voice = _pickKoVoice();
+    if (voice) u.voice = voice;
+    speechSynthesis.speak(u);
+  }, 30);
 }
 
 /* ── XP / level economy (self-contained, no external module) ── */
