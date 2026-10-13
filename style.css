@@ -1,40 +1,44 @@
 /* ══════════════════════════════════════════════════════════
-   KOREAN BY HANJA — standalone app, seal-ink theme
-   Deep charcoal paper + cinnabar-red seal accent. The Korean
-   syllable is always the headline; the hanja character only ever
-   appears as a small grey tag for disambiguation. No build step,
-   no external dependencies besides Google Fonts.
-   ══════════════════════════════════════════════════════════ */
+   KOREAN BY HANJA — standalone app, royal-palace theme
+   Deep indigo-night paper (like the tiled roofs of Gyeongbokgung
+   against a dark sky) + gold accent, in place of the earlier
+   charcoal-paper/cinnabar-seal palette. The Korean syllable is
+   always the headline; the hanja character only ever appears as a
+   small grey tag for disambiguation. The --seal variable name is
+   kept as-is (it's referenced throughout this file and app.js) even
+   though it now holds an indigo blue rather than a literal red seal
+   color — only the palette changed, not what each variable means.
+   No build step, no external dependencies besides Google Fonts. */
 
 :root {
-  --bg:     #16130f;
-  --bg2:    #1f1a14;
-  --paper:  #241f18;
-  --ink:    #f2e9d8;
-  --ink2:   rgba(242,233,216,.62);
-  --ink3:   rgba(242,233,216,.32);
-  --seal:   #b3402c;
-  --seal-glow: rgba(179,64,44,.28);
-  --gold:   #c9973a;
+  --bg:     #0b0e1f;
+  --bg2:    #141a3a;
+  --paper:  #1c2348;
+  --ink:    #f1ecdd;
+  --ink2:   rgba(241,236,221,.62);
+  --ink3:   rgba(241,236,221,.32);
+  --seal:   #4a6fd4;
+  --seal-glow: rgba(74,111,212,.30);
+  --gold:   #d4a94a;
   --ok:     #4caf6e;
   --bad:    #c9503f;
-  --bd:     rgba(242,233,216,.10);
+  --bd:     rgba(241,236,221,.10);
   --ease:   cubic-bezier(.16,1,.3,1);
 }
 
-body.dark-mode { --bg: #16130f; }
+body.dark-mode { --bg: #0b0e1f; }
 
 body:not(.dark-mode) {
-  --bg:    #f3ecd9;
-  --bg2:   #ece2c9;
-  --paper: #fbf6e8;
-  --ink:   #211c14;
-  --ink2:  rgba(33,28,20,.64);
-  --ink3:  rgba(33,28,20,.34);
-  --seal:  #a3341f;
-  --seal-glow: rgba(163,52,31,.16);
+  --bg:    #eef0f7;
+  --bg2:   #e3e7f2;
+  --paper: #f8f9fc;
+  --ink:   #1a2142;
+  --ink2:  rgba(26,33,66,.64);
+  --ink3:  rgba(26,33,66,.34);
+  --seal:  #35519e;
+  --seal-glow: rgba(53,81,158,.16);
   --gold:  #9c7325;
-  --bd:    rgba(33,28,20,.12);
+  --bd:    rgba(26,33,66,.12);
 }
 
 * { box-sizing: border-box; }
@@ -446,6 +450,20 @@ button.badge.active .dot { background: var(--seal); }
   padding: 30px 24px 26px;
   box-shadow: 0 20px 50px rgba(0,0,0,.28);
   position: relative;
+}
+
+/* Maehwa (plum blossom branch) — a small Korea-flavored watermark in
+   the corner of the Learn card, in the app's own gold/seal palette.
+   Sits in the card's empty top-right padding, so it never needs to
+   fight the centered glyph/text for stacking order. */
+.cardMotif {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 72px;
+  height: auto;
+  opacity: .5;
+  pointer-events: none;
 }
 
 .typeLabel {

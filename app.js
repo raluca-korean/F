@@ -648,10 +648,10 @@ function openStroke() {
     hwWriter = HanziWriter.create('strokeWriter', item.hanja, {
       width: 200, height: 200, padding: 16,
       showOutline: true,
-      strokeColor: isDark ? '#f2e9d8' : '#211c14',
-      outlineColor: isDark ? 'rgba(242,233,216,.1)' : 'rgba(33,28,20,.12)',
-      drawingColor: '#b3402c',
-      highlightColor: '#c9973a',
+      strokeColor: isDark ? '#f1ecdd' : '#1a2142',
+      outlineColor: isDark ? 'rgba(241,236,221,.1)' : 'rgba(26,33,66,.12)',
+      drawingColor: '#4a6fd4',
+      highlightColor: '#d4a94a',
       strokeAnimationSpeed: 1,
       delayBetweenStrokes: 180
     });
