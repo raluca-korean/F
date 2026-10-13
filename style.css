@@ -372,8 +372,8 @@ button.badge.active .dot { background: var(--seal); }
   color: var(--ink2);
   margin-bottom: 14px;
 }
-.hintChip .hcRoot { font-size: 14px; font-weight: 900; color: var(--ink); }
-.hintChip .hcTag { font-family: 'Noto Serif KR', serif; color: var(--ink3); }
+.hintChip .hcRoot { font-size: 14px; font-weight: 900; color: var(--glyph-red); }
+.hintChip .hcTag { font-family: 'Noto Serif KR', serif; color: var(--glyph-red); }
 
 #puzzlePrompt {
   font-size: 24px;
